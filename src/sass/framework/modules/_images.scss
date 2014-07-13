@@ -1,0 +1,276 @@
+// ===================================================
+// Image Helper
+// ===================================================
+
+// PRIVATE Mixin: Get Image Dimension
+// ----------------------------------
+// Write the dimension off a Image in the CSS
+//
+// @param $width [string] : The Width of the Image
+// @param $height [string] : The Height of the Image
+// @param $option [string] : both = height & width | width = width | height = height
+@mixin _getImageDimensions($width, $height, $option) {
+  @if $option == both {
+    width: $width;
+    height: $height; }
+  @else if $option == height {
+    height: $height; }
+  @else if $option == width {
+    width: $width; }
+}
+
+
+// Mixin: Images
+// -------------
+// Including Single Images from the Single Directory as Background Image.
+//
+// @param $image [string] : Name of the Image
+// @param $dimensions [string] : 'both' = height & width | 'width' = width | 'height' = height
+// @param $pos [string] : The Image Position - can be 'false'
+// @param $retina [boolean] : With set on 'true' the retina fallback will be included
+@mixin image($image, $dimensions: both, $pos: false, $retina: false) {
+
+  // Set the List target
+  $imageTarget: single-#{$image};
+
+  @if map-has-key($map-images,$imageTarget) {
+    $imgFile   : map-get(map-get($map-images,$imageTarget),file);
+    $imgWidth  : map-get(map-get($map-images,$imageTarget),width);
+    $imgHeight : map-get(map-get($map-images,$imageTarget),height);
+    $imgName   : map-get(map-get($map-images,$imageTarget),name);
+    $imgExt    : map-get(map-get($map-images,$imageTarget),extension);
+
+    // Include the Image and set the Repeat and Position (last only when is needed)
+    background-image: url('#{$single-url}#{$imgFile}');
+    background-repeat: no-repeat;
+    @if $pos != false { background-position: $pos; }
+
+    // Overwrite the Dimensions off the Container with the Dimensions off the Image
+    @include _getImageDimensions($imgWidth, $imgHeight, $dimensions);
+
+    // Write a Retina Fallback in the CSS file - Backgroundsize oriented to the the Size off the non retina Image
+    @if $retina != false {
+      $imageRetinaTarget: single-#{$image}-2x;
+      $secondaryImage: #{$single-url}#{$imgName}-2x#{$imgExt};
+
+      // Best use Case is to use Conditionizr and use .retina Classes
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: url('#{$single-url}#{$imgName}-2x#{$imgExt}');
+        background-size: $imgWidth $imgHeight;
+
+      }
+    }
+  } @else {
+    @debug 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
+  }
+}
+
+
+// Mixin: SVGPNG
+// -------------
+// Include the SVG Background Image with a PNG Fallback.
+//
+// @param $image [string] : Name of the Image - the SVG File must be in the Same directory
+// @param $dimensions [string] : 'both' = height & width | 'width' = width | 'height' = height
+// @param $pos [list] : The Image Position - can be 'false'
+@mixin svgpng($image, $dimensions: both, $pos: false) {
+
+  // Set the List target
+  $imageTarget: svg-#{$image};
+
+  @if map-has-key($map-images,$imageTarget) {
+    $imgFile   : map-get(map-get($map-images,$imageTarget),file);
+    $imgWidth  : map-get(map-get($map-images,$imageTarget),width );
+    $imgHeight : map-get(map-get($map-images,$imageTarget),height);
+    $imgName   : map-get(map-get($map-images,$imageTarget),name);
+    $imgExt    : map-get(map-get($map-images,$imageTarget),extension);
+
+    // Include the Image and set the Repeat and Position (last only when is needed)
+    background-image: url('#{$svg-url}#{$imgFile}');
+    background-repeat: no-repeat;
+
+    @if $pos != false { background-position: $pos; }
+
+    // Overwrite the Dimensions off the Container with the Dimensions off the Image
+    @include _getImageDimensions($imgWidth, $imgHeight, $dimensions);
+
+    // Load the SVG Image and paste it in the Container (png would be overwritten)
+    // The Size is oriented on the PNG Fallback Image
+    .svg & {
+      $ext: '.svg';
+      background-image: url('#{$svg-url}#{$imgName}#{$ext}');
+      background-size: $imgWidth $imgHeight;
+    }
+  } @else {
+    @debug 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
+  }
+}
+
+// Mixin: Textures
+// ---------------
+// Including Textures Images from the textures Directory as Background Image.
+//
+// @param $image [string] : Name of the Image
+// @param $repeat [string] : How the Image would be repeated. 'x' = repeat-x | 'y' = repeat-y
+// @param $pos [list] : The Image Position - can be 'false'
+// @param $retina [boolean] : With set on 'true' the retina fallback will be included
+@mixin texture($image, $repeat: d, $pos: false, $retina: false) {
+
+  // Set the List target
+  $imageTarget: textures-#{$image};
+
+  @if map-has-key($map-images,$imageTarget) {
+    $imgFile   : map-get(map-get($map-images,$imageTarget),file);
+    $imgWidth  : map-get(map-get($map-images,$imageTarget),width);
+    $imgHeight : map-get(map-get($map-images,$imageTarget),height);
+    $imgName   : map-get(map-get($map-images,$imageTarget),name);
+    $imgExt    : map-get(map-get($map-images,$imageTarget),extension);
+
+    // Include the Image and set the Position
+    background-image: url('#{$texture-url}#{$imgFile}');
+    @if $pos != false { background-position: $pos; }
+
+    // Set the Image Repeating - and the Dimensions
+    @if $repeat == x {
+      background-repeat: repeat-x;
+      height: $imgHeight;
+    } @else if $repeat == y {
+      background-repeat: repeat-y;
+      width: $imgWidth; }
+
+    // Write a Retina Fallback in the CSS file - Backgroundsize oriented to the the Size off the non retina Image
+    @if $retina != false {
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        background-image: url('#{$texture-url}#{$imgName}-2x#{$imgExt}');
+        background-size: $imgWidth $imgHeight;
+      }
+    }
+  } @else {
+    @debug 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
+  }
+}
+
+// Mixin: SVG
+// ----------
+// Include a SVG Background Image - without a PNG Fallback Image
+//
+// @param $image [string] : The Name of the SVG Image
+// @param $dimensions [list] : The Dimensions of the Image Container - can be 100%
+// @param $pos [list] : Image Position
+// @param $repeat [boolean] : Image Repeat - nativ CSS Declaration
+@mixin svg($image, $dimensions: 100, $pos: false, $repeat: false) {
+
+  // Initiate the Variables
+  $height: null !default;
+  $width: null !default;
+  $svgending: '.svg';
+  $mainImage: #{$svgonly-url}#{($image)}#{$svgending};
+
+  // Generate the Image Dimension Variables
+  @if length($dimensions) > 1 {
+
+    $height: nth($dimensions,2);
+    @if unitless($height) { $height: $height + 0%; }
+
+    $width: nth($dimensions,1);
+    @if unitless($width) { $width: $width + 0%; }
+  }
+
+  @else {
+    @if unitless($dimensions) { $dimensions: $dimensions + 0%; }
+    $height: $dimensions;
+    $width: $dimensions;
+  }
+
+  // Include the Image and set the Repeat and Position (last only when is needed)
+  background-image: url('#{$mainImage}');
+  @if $pos != false { background-position: $pos; }
+  @if $repeat == false { background-repeat: no-repeat; }
+  @else { background-repeat: $repeat; }
+
+  // Write the Dimensions
+  background-size: $width $height;
+  width: $width;
+  height: $height;
+}
+
+// Mixin: Sprite Generator
+// -----------------------
+// Generate the Sprite Container - retina and nonRetina
+//
+// @param $spritename [string] : The Master Sprite name
+@mixin sprite-generator($spritename: $image-sprite-name) {
+  %sprite-container {
+    $spriteEnding: '.png';
+    background-repeat: no-repeat;
+    background-image: url('#{$img-url}#{$spritename}#{$spriteEnding}')
+  }
+
+  @if $image-sprite-retina == true {
+    %sprite-container-retina {
+      $spriteEndingRetina: '@2x.png';
+      background-repeat: no-repeat;
+      background-image: url('#{$img-url}#{$spritename}#{$spriteEndingRetina}')
+    }
+  }
+}
+
+
+// Mixin: Sprite
+// -------------
+// Include the targeted Sprite from a Spritemap
+//
+// @param $name [string] : Name of the Sprite
+// @param $retina [boolean] : With set on 'true' the retina fallback will be included
+// @param $dimensions [string] : 'both' = height & width | 'width' = width | 'height' = height
+// @param $offset-x [number] : Offset the Background Position on the x axis
+// @param $offset-y [number] : Offset the Background Position on the y axis
+// @param $display [block] : The display mode
+@mixin sprite($name, $retina: false, $dimensions: both, $offset-x: 0, $offset-y: 0, $display: inline) {
+
+  @if map-has-key($map-sprites,$name) {
+    $sp-width : map-get( map-get( $map-sprites, $name ), width);
+    $sp-height: map-get( map-get( $map-sprites, $name ), height);
+    $sp-pos-x : map-get( map-get( $map-sprites, $name ), positionX);
+    $sp-pos-y : map-get( map-get( $map-sprites, $name ), positionY);
+
+    // Connect the Class with the Sprite Container
+    @extend %sprite-container;
+
+    // Set the Background Position
+    background-position: ($sp-pos-x + $offset-x) ($sp-pos-y + $offset-y);
+
+    // Overwrite the Dimensions off the Container with the Dimensions off the Image
+    @include _getImageDimensions($sp-width, $sp-height, $dimensions);
+
+    // Set the Display Style
+    @if $display == inline {
+      display: inline-block;
+    } @else {
+      display: block;
+    }
+
+  } @else {
+    @debug 'The Sprite "#{$name}" is not available in your Sprite Map! Please add the Sprite.';
+  }
+
+  // Write a Retina Fallback in the CSS file - Backgroundsize oriented to the the Size off the non retina Image
+  @if $retina != false {
+    @if map-has-key($map-sprites-retina,$name) {
+      $sp-r-pos-x      : map-get(map-get($map-sprites-retina,$name),positionX);
+      $sp-r-pos-y      : map-get(map-get($map-sprites-retina,$name),positionY);
+      $sp-r-file-width : map-get(map-get($map-sprites-retina,$name),mapWidth);
+      $sp-r-file-height: map-get(map-get($map-sprites-retina,$name),mapHeight);
+      @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+        @extend %sprite-container-retina;
+        background-position: ($sp-r-pos-x + ($offset-x * 2)) ($sp-r-pos-y + ($offset-y * 2));
+        background-size: ($sp-r-file-width / 2) ($sp-r-file-height / 2);
+      }
+    } @else {
+      @debug 'The Retina Sprite "#{$name}" is not available in your Sprite Map! Please add the Sprite to your retina Sprites.';
+    }
+  }
+}
+
+// Activate the Sprite Container
+@include sprite-generator($spritename: $image-sprite-name);

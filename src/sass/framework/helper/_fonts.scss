@@ -1,0 +1,91 @@
+// ============================================================
+//          Font Helper
+// ------------------------------------------------------------
+
+/**
+ * Function for including Font Families from the Fontstack list.
+ * It is also possible to prepand own Fonts to the Stack
+ *
+ * @param  {*}    $family - Font-Family from the Stack
+ * @param  {list} $append - The extra Fontfaces that prepanded to the stack
+ *
+ * @throw 'Not Availalbe' when the Font is not in hte stack
+ */
+@function ff($family, $append...) {
+  @if map-has-key($fontstack-map, $family) {
+    @if length($append) > 0 {
+      @return append($append, map-get($fontstack-map, $family), comma);
+    } @else {
+      @return map-get($fontstack-map, $family);
+    }
+
+  } @else {
+    @warn 'Not available';
+  }
+}
+
+
+/**
+ * Include Font-Familys based on the FontStack
+ *
+ * @param {string} $family - Font-Family from the Stack
+ * @param {list}   $append - The extra Fontfaces that prepanded to the stack
+ */
+@mixin font-family($family, $append...) {
+  font-family: ff($family, $append);
+}
+
+/**
+ * Generate the Font-Face
+ *
+ * @param {string}  $filename            - The Filename of the Fontname
+ * @param {string}  $fontname            - The Desired Fontname
+ * @param {string}  $fontweight (normal) - Fontweight
+ * @param {string}  $fontstyle (normal)  - Fontstyle
+ * @param {bool}    $svgoption (true)    - Activate the addition route to the SVG Font
+ */
+@mixin fontface($filename, $fontname: $filename, $fontweight: normal, $fontstyle: normal, $svgoption: true) {
+  // Standardfont
+  @font-face {
+    font-family: $fontname;
+    src: url('#{$font-url}#{$filename}.eot');
+    src: url('#{$font-url}#{$filename}.eot?#iefix') format('eot'),
+         url('#{$font-url}#{$filename}.woff') format('woff'),
+         url('#{$font-url}#{$filename}.ttf') format('truetype'),
+         url('#{$font-url}#{$filename}.svg##{$filename}') format('svg');
+    font-weight : $fontweight;
+    font-style  : $fontstyle; }
+
+  @if $svgoption {
+    // Hard route to SVG Fonts for sharper Results on webkit browsers
+    @include jacket(modern) {
+      @media screen and (-webkit-min-device-pixel-ratio: 0) {
+        @font-face {
+          font-family: $fontname;
+          src: url('#{$font-url}#{$filename}.svg') format('svg');
+          font-weight : $fontweight;
+          font-style  : $fontstyle;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Include all Font Faces from the Font Face Map
+ * Will be activated with Internal Functions
+ *
+ * @access private
+ */
+@mixin fontface-generator() {
+  @each $name, $entry in $fontmap {
+    $n: if(map-get($entry,filename) == false, $name, map-get($entry,filename));
+    @include fontface(
+        $fontname: $name,
+        $filename: $n,
+        $fontweight: map-get($entry,weight),
+        $fontstyle: map-get($entry,style),
+        $svgoption: map-get($entry,svgoption)
+        );
+  }
+}

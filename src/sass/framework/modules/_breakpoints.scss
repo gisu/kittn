@@ -1,0 +1,211 @@
+// ============================================================
+//          Breakpoint Helper
+// ------------------------------------------------------------
+
+// Function: bp
+// Pick the Values from the Breakpoint Map
+//
+// ------
+// @variable:
+//    $target [list]
+//      -> The required Breaksize from the map
+//    $entrys [map]
+//      -> Connection to the Breakpoint Map
+// ------
+// @usage:
+//     .container {
+//       @media screen and (min-width: bp(2)) {
+//         content: 'Break two';
+//       }
+//     }
+// @result:
+//    @media screen and (min-width: 480px) {
+//      .container {
+//        content: 'Break two';
+//      }
+//    }
+@function bp($target, $entrys: $breakpoints) {
+
+  // Remove Units from Target
+  $target: strip-units($target);
+
+  // Pick the Values
+  @if map-has-key($entrys,$target) {
+    @return map-get(map-get($entrys,$target),size);
+  } @else {
+    @warn 'The Breakpoint "#{$target}" are not available in the Breakpoint Map! Please add it or use a existing breakpoint.';
+  }
+}
+
+// Mixin: break
+// Pick the Value from the Breakpoint List and generate a mediaquery
+//
+// ------
+// @variable:
+//    $target [list]
+//      -> The required Breaksize from the map. One or two Values posible
+//    $mode [values]
+//      -> The Media Querie Mode
+//      -> values: between | max | min | auto (default - setup with mobile-first:true/false)
+//    $list [map]
+//      -> Connection to the Breakpoint Map
+// ------
+// @usage:
+//     .container {
+//       @include break(2) {
+//         content: 'Break two';
+//       }
+//     }
+// @result:
+//    @media screen and (min-width: 480px) {
+//      .container {
+//        content: 'Break two';
+//      }
+//    }
+@mixin break($target, $mode: auto, $list: $breakpoints) {
+
+  @if $mode == between {
+
+    // Check the Length
+    @if length($target) == 2 {
+      // Get the Targets
+      $target-1: strip-units(nth($target,1));
+      $target-2: strip-units(nth($target,2));
+
+      // Get the Sizes
+      $size-1: unit-check(bp($target-1,$list));
+      $size-2: unit-check(bp($target-2,$list));
+
+      // Associate the highest size with Max, and the lowest size with min
+      $size-min: if($size-1 < $size-2, $size-1, $size-2);
+      $size-max: if($size-2 > $size-1, $size-2, $size-1);
+
+      // Modify Size for mobile-first
+      $size-min: if($mobile-first, $size-min, $size-min + 1);
+      $size-max: if($mobile-first, $size-max + 1, $size-max);
+
+      // Insert the Media Query
+      @media screen and (min-width: $size-min) and (max-width: $size-max) {
+        @content;
+      }
+    } @else {
+      @warn 'Not enough target Values for a Breakpoint in mode "between"';
+    }
+
+
+  } @else {
+    // Reduce Target to one when needed
+    @if length($target) > 1 {
+      $target: nth($target,1);
+    }
+
+    // Remove Units from $target
+    $target: strip-units($target);
+
+    // Get Size from the Map
+    $size: unit-check(bp($target,$list));
+
+    @if $mode == auto {
+      @if $mobile-first {
+        $size: $size;
+        @media screen and (min-width: $size) {
+          @content;
+        }
+      } @else {
+        $size: $size + 1;
+        @media screen and (max-width: $size) {
+          @content;
+        }
+      }
+    } @else {
+      // Setup for different Modes
+      @if $mode == max {
+        $size: if($mobile-first == true, $size + 1, $size);
+      } @else {
+        $size: if($mobile-first == true, $size, $size + 1);
+      }
+
+      // Insert the Media Query
+      @media screen and (#{if($mode == max, max, min)}-width: $size) {
+        @content;
+      }
+    }
+  }
+}
+
+// Mixin for using Element Queries
+//
+// @link https://github.com/snugug/eq.js
+//
+// @param {list}  $states - The Different Querie Types
+//
+// @example
+//    .test {
+//      @include eq('small', 'medium', 'large') {
+//        color: red;
+//      }
+//      @include eq('small') {
+//        p {
+//          @include fontcalc(300);
+//        }
+//      }
+//    }
+//
+//    <!-- The HTML -->
+//    <div data-eq-pts="small: 480, medium: 700, large: 800" class="test">
+//      <p>Test Block</p>
+//    </div>
+@mixin eq($states...) {
+  @if (length($states) == 0) {
+    @warn 'You need to include a state!';
+  }
+  @else {
+    $extend: unique-id();
+    @at-root {
+      %#{$extend} {
+        @content;
+      }
+    }
+    @each $state in $states {
+      &[data-eq-state="#{$state}"] {
+        @extend %#{$extend};
+      }
+    }
+  }
+}
+
+// Mixin: visibility
+// Generate Visibility Classes from the Breakpoint Map
+//
+@mixin visibility {
+  @each $name, $entry in $breakpoints {
+    @if map-get($entry,view) == true {
+
+      .hidden-to__#{$name} {
+        display: none;
+        @include break($name, $mode: max) {
+          display: inherit;
+        }
+      }
+
+      .hidden-from__#{$name} {
+        @include break($name, $mode: min) {
+          display: none;
+        }
+      }
+
+      .visible-to__#{$name} {
+        @include break($name, $mode: max) {
+          display: none;
+        }
+      }
+
+      .visible-from__#{$name} {
+        display: none;
+        @include break($name, $mode: min) {
+          display: inherit;
+        }
+      }
+    }
+  }
+}

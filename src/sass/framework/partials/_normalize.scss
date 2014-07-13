@@ -1,0 +1,639 @@
+// ============================================================
+//            FILE : normalize.sass
+// ----------------------------------------------------------*/
+
+// Activate the Font Generator
+@include fontface-generator();
+
+// Global Activation
+* {
+  @if $activate-antialias == true {
+    @include antialias;
+  }
+
+  @if $activate-box-sizing == true {
+    &, &:before, &:after {
+      box-sizing: border-box;
+    }
+  }
+}
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+dl, dd, ol, ul {
+  margin-top: 0
+}
+
+@if $activate-viewport-fix {
+  @-ms-viewport { width: device-width; }
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  background: transparent;
+
+  @if $body-typo-based == rem {
+    @if $responsive-fonts != false {
+      @include jacket(modern) {
+        @include responsive-fontsize($responsive-fonts);
+      }
+
+      @include jacket(old) {
+        font-size: $body-font-scale + 0%;
+      }
+
+    } @else {
+      font-size: $body-font-scale + 0%;
+    }
+
+  } @else {
+    font-size: $body-font-scale + 0%;
+  }
+}
+
+body {
+  margin: 0;
+  position: relative;
+  color: $tc-text;
+  @include fontsize($body-font-size);
+  @include lineheight($body-line-height);
+
+  @if $activate-hyphens == true {
+    @include word-wrap;
+  }
+
+  @if $c-body {
+    background-color: $c-body; }
+
+  @if map-get($font-style-text, weight) {
+    font-weight: map-get($font-style-text, weight); }
+}
+
+@if $activate-hyphens == true {
+  abbr, acronym, blockquote, code, dir, kbd,
+  listing, plaintext, q, samp, tt, var, xmp {
+    hyphens: none;
+  }
+}
+
+article, aside, details, figcaption, figure, footer,
+header, hgroup, main, nav, section, summary {
+  display: block;
+}
+
+audio, canvas, video {
+  display: inline-block;
+}
+
+body, button, input, select, textarea {
+  font-family: map-get($font-style-text, font);
+}
+
+audio:not([controls])  {
+  display: none;
+  height: 0;
+}
+
+label, input, textarea, select, option, button,
+input[type="button"],input[type="reset"],input[type="submit"] {
+  cursor: pointer;
+}
+
+[hidden],template {
+  display: none;
+}
+
+
+// ---- Headings ----
+%heading {
+  text-rendering: optimizeLegibility;
+
+  @if map-get($heading-glob,lineheight) != false {
+    @if map-get($heading-glob,lineheight) == d {
+      line-height: 1;
+    } @else {
+      @include lineheight(map-get($heading-glob,lineheight));
+    }
+  }
+
+  @if map-get($heading-glob,marginbottom) != false {
+    @include marginbottom(map-get($heading-glob,marginbottom));
+  }
+
+  @if map-get($heading-glob,fontweight) != false {
+    font-weight: map-get($heading-glob,fontweight);
+  }
+
+  @if $font-heading-family != false OR $tc-heading != false {
+    @if $font-heading-family != false {
+      font-family: $font-heading-family;
+    }
+
+    @if $tc-heading != false {
+      color: $tc-heading;
+    }
+  }
+}
+
+@if $generateFonts == true {
+  // Generate Fontsizes
+  @include typogenerator;
+}
+
+// Header Stack
+.headerStack {
+  @if map-get($heading-glob,marginbottom) != false {
+    @include marginbottom(map-get($heading-glob,marginbottom));
+  }
+
+  > * {
+    margin-bottom: 0
+  }
+
+  @if map-get($typo-margin,top) > 0 {
+
+    p + & {
+      @include margintop(map-get($typo-margin,top));
+    }
+  }
+}
+
+/*
+  Brand
+  ===========
+
+  Neutralize the Heading Format and pre Style the inner Link
+
+    <h1 class="brand">
+      <a href="#" title="..."></a>
+    </h1>
+  */
+.brand {
+  font-size: inherit !important;
+  line-height: 1 !important;
+  margin-bottom: 0 !important;
+
+  > a {
+    display: block;
+    text-decoration: none !important;
+
+    &:hover {
+      text-decoration: none !important;
+    }
+  }
+}
+
+/*
+  Brand_logo
+  ===========
+
+  Neutralize the Heading Format, pre style the inner link with remove of any Text. Needed for Including Logo images
+
+    <h1 class="brand--logo">
+      <a href="#" title="..."></a>
+    </h1>
+  */
+.brand--logo {
+  @extend .brand;
+
+  > a {
+    @include cleartext;
+  }
+}
+
+// ---- Paragraph ----
+p {
+  font-size: 1rem;
+  @include marginbottom(map-get($typo-margin,bottom));
+
+  @if map-get($typo-margin,top) > 0 {
+    + h1, + h2, + h3, + h4, + h5, + h6 {
+      @include margintop(map-get($typo-margin,bottom) * 1.8);
+    }
+  }
+}
+
+// ---- Links ----
+a {
+  outline: 0;
+  line-height: inherit;
+  background: transparent;
+  color: map-get($tc-link,normal);
+
+  @if map-get($tc-decoration,normal) == true {
+    text-decoration: underline;
+  }
+
+  @else {
+    text-decoration: none;
+  }
+
+  &:hover,
+  &.link-hover {
+    color: map-get($tc-link,hover);
+
+    @if map-get($tc-decoration,hover) == true {
+      text-decoration: underline;
+    }
+
+    @else {
+      text-decoration: none;
+    }
+  }
+
+  &:active,
+  &.link-active {
+    color: map-get($tc-link,active);
+  }
+
+  &:hover,
+  &:active,
+  &:focus {
+    outline: 0;
+  }
+}
+
+abbr {
+  font-variant: small-caps;
+  text-transform: lowercase;
+
+  &[title] {
+    border-bottom: 1px dotted;
+
+    &:hover {
+      cursor: help;
+    }
+  }
+}
+
+strong {
+  @if map-get($font-style-bold,weight) {
+    font-weight: map-get($font-style-bold,weight);
+  }
+
+  @if map-get($font-style-bold,font) {
+    font-family: map-get($font-style-bold,font);
+  }
+}
+
+em, dfn {
+  @if map-get($font-style-italic,style) {
+    font-style: map-get($font-style-italic,style);
+  }
+
+  @if map-get($font-style-italic,font) != false {
+    font-family: map-get($font-style-italic,font);
+  }
+}
+
+mark, .hightlight, ::selection {
+  background: map-get($tc-highlight,background);
+  color: map-get($tc-highlight,text);
+}
+
+.lined {
+  border-bottom: 1px solid #797979;
+}
+
+ul,dl {
+  list-style-type: map-get($font-list-style,style);
+  padding-left: map-get($font-list-style,left) + 0px;
+  @include marginbottom(map-get($typo-margin,bottom));
+
+  nav > & {
+    list-style-type: none;
+    margin-bottom: 0;
+    padding-left: 0;
+  }
+}
+
+ol {
+  padding-left: map-get($font-list-style,left) + 2px;
+  @include marginbottom(map-get($typo-margin,bottom));
+}
+
+li, dt, dd {
+  @if map-get($font-list-style,fontsize) != false {
+    @include fontsize(map-get($font-list-style,fontsize));
+  }
+
+  @if map-get($font-list-style,lineheight) != false {
+    @include lineheight(map-get($font-list-style,lineheight));
+  }
+}
+
+li {
+  > ul,  > ol {
+    margin-bottom: 0;
+  }
+}
+
+dt, dd {
+  > dl {
+    margin-bottom: 0;
+  }
+}
+
+//
+//   HR
+//   ===========
+
+//   Basestyled HR
+
+//     <hr/>
+hr {
+  height: $hr-style + 0px;
+  border-left: 0;
+  border-bottom: 0;
+  border-right: 0;
+  border-top: ($hr-style + 0px) $hr-style-color;
+  position: relative;
+  @include marginbottom(map-get($typo-margin,bottom));
+
+  @if map-get($typo-margin,top) > 0 {
+    @include margintop(map-get($typo-margin,bottom));
+  }
+}
+
+code, kbd, pre, samp {
+  @if map-get($font-code-style, fontsize) != false{
+    @include fontsize(map-get($font-code-style, fontsize));
+  }
+
+  @if map-get($font-code-style, lineheight) != false {
+    @include lineheight(map-get($font-code-style, lineheight));
+  }
+
+  @if map-get($font-style-code, fontweight) != false {
+    font-weight: map-get($font-style-code, fontweight);
+  }
+
+  @if map-get($font-style-code, fontfamily) != false {
+    font-family: map-get($font-style-code, fontfamily);
+
+  } @else {
+    font-family: monospace, serif;
+  }
+}
+
+pre {
+  white-space: pre;
+  @include marginbottom(map-get($typo-margin,bottom));
+
+  > code {
+    word-wrap: normal;
+    white-space: pre-wrap;
+  }
+}
+
+code {
+  white-space: pre;
+}
+
+q {
+  quotes: "\201C" "\201D" "\2018" "\2019";
+
+  &:before, &:after {
+    content: '';
+    content: none;
+  }
+}
+
+small {
+  font-size: 80%;
+}
+
+sub, sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sup {
+  top: -0.5em;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+i {
+  font-style: normal;
+  display: inline-block;
+}
+
+img {
+  border: 0;
+  max-width: 100%;
+  height: auto;
+
+  &[width],
+  &[height] {
+    max-width: none;
+  }
+}
+
+figure {
+  margin: 0;
+
+  > img {
+    display: block;
+    max-width: none;
+    width: 100%;
+  }
+}
+
+#map_canvas,
+.map_canvas {
+  img, embed, object {
+    max-width: none !important;
+  }
+}
+
+video {
+  width: 100% !important;
+  height: auto !important;
+}
+
+.video-box {
+  position: relative;
+  padding-bottom: 54%;
+  padding-top: 15px;
+  height: 0;
+  overflow: hidden;
+  margin-bottom: 20px;
+
+  > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%
+  }
+}
+
+svg:not(:root) {
+  overflow: hidden;
+}
+
+blockquote {
+  margin-left: 0;
+  margin-right: 0;
+  @include marginbottom(map-get($typo-margin,bottom));
+
+  & p {
+    @if map-get($font-blockquote-style,fontsize) != false {
+      @include fontsize(map-get($font-blockquote-style,fontsize));
+    }
+
+    @if map-get($font-blockquote-style,lineheight) != false {
+      @include lineheight(map-get($font-blockquote-style,lineheight));
+    }
+  }
+
+  cite {
+    font-style: normal;
+
+    @if map-get($font-cite-style,fontsize) != false {
+      @include fontsize(map-get($font-cite-style,fontsize));
+    }
+
+    @if map-get($font-cite-style,lineheight) != false {
+      @include lineheight(map-get($font-cite-style,lineheight));
+    }
+
+    &:before {
+      content : '\2014 \0020';
+    }
+  }
+
+  // The Last off all inner Elements get not bottom spacing
+  *:last-child {
+    margin-bottom: 0;
+  }
+}
+
+blockquote, q, cite {
+  @if map-get($font-style-quote, fontfamily) != false {
+    font-family: map-get($font-style-quote, fontfamily);
+  }
+
+  @if map-get($font-style-quote, fontweight) != false {
+    font-weight: map-get($font-style-quote, fontweight);
+  }
+
+  @if map-get($font-style-quote, fontstyle) != false {
+    font-style: map-get($font-style-quote, fontstyle);
+  }
+
+  @if $tc-blockquote != false {
+    color: $tc-blockquote;
+  }
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+}
+
+legend {
+  border: 0;
+  padding: 0;
+  white-space: normal;
+}
+
+optgroup {
+  font-weight: bold;
+}
+
+button, input, select, textarea {
+  font-size: 100%;
+  margin: 0;
+  vertical-align: middle;
+}
+
+button, input {
+  line-height: normal;
+}
+
+button, select {
+  text-transform: none;
+}
+
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  background: transparent;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  outline: none;
+  padding: 0;
+  width: auto;
+  cursor: pointer;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+button[disabled],
+input[disabled] {
+  cursor: default;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+  padding: 0;
+}
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  height: auto;
+}
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+button:focus {
+  outline: none;
+}
+
+textarea {
+  overflow: auto;
+  vertical-align: top;
+  resize: vertical;
+}
+
+// ---- Tables ----
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+}
+
+// Include Color and Visibility Generators
+@if $generate-colors != false {
+  @include colorgenerator($stylecolors);
+}
+
+// Include the visibility Classes only on modern browsers
+@include jacket(modern) {
+  @include visibility;
+}

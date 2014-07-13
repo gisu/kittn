@@ -1,0 +1,17 @@
+include ../components/_component-loader
+
+doctype html
+html
+  include ../templatepart/_styleguide-page-header
+  block site-head
+  body
+    .guide-wrapper
+      header.guide-header
+        h1 #{siteTitle} - Styleguide
+        h2 Element Collage & Styleguide
+      main.guide-main
+        .guide-main__content
+          block site-body
+
+    //- Include the Script Footer
+    include ../templatepart/_styleguide-page-scripts

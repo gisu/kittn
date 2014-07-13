@@ -1,0 +1,68 @@
+@mixin iconfont($iconFontName) {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: inline-block;
+  font-family: $iconFontName;
+  font-style: normal;
+  font-weight: normal !important;
+  speak: none;
+  text-decoration: inherit;
+  line-height: 1;
+}
+
+@mixin icon-font-generator($iconFontName) {
+  [class^="#{$icon-class-prefix}#{$mark-bem-element}"],
+  [class*=" #{$icon-class-prefix}#{$mark-bem-element}"],
+  [data-icon] {
+    &:before {
+      @include iconfont($iconFontName);
+    }
+  }
+  [data-icon]:before {
+    content: attr(data-icon); }
+}
+
+// Generate the Baseclasses for the Icons
+@include icon-font-generator($icon-font-name);
+
+
+// Get the Icon from the Map
+@function icon($name) {
+  @if map-has-key($icons,$name) {
+    @return map-get($icons,$name);
+  } @else {
+    @warn 'The Icon "#{$name}" is not available!';
+  }
+}
+
+
+// Include the Icon as Content Element
+@mixin icon($name, $options: ()) {
+
+  // Default Setup
+  $options: comp-extend((
+    extend: false,
+    font: false
+  ),$options);
+
+  @if map-get($options, extend) != false or map-get($options, font) != false {
+    @if map-get($options, extend) != false {
+      @extend #{map-get($options, extend)};
+    }
+    @if map-get($options, font) != false {
+      @include iconfont(map-get($options, font))
+    }
+  }
+  content: icon($name);
+}
+
+@mixin ext-icon($name) {
+  @extend .#{$icon-class-prefix}#{$mark-bem-element}#{$name};
+}
+
+
+@each $name, $icon in $icons {
+  .#{$icon-class-prefix}#{$mark-bem-element}#{$name}:before {
+    content: $icon;
+  }
+}

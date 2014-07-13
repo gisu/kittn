@@ -1,0 +1,14 @@
+head
+  meta(charset='utf-8')
+  title= 'Styleguide : ' + siteTitle
+  meta(name='viewport', content='width=device-width,initial-scale=1')
+  meta(http-equiv='X-UA-Compatible', content='IE=edge')
+  <!--[if lte IE 8]>
+  link(rel='stylesheet', href='../assets/css/style-ie8.css')
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  link(rel='stylesheet', href='../assets/css/style.css')
+  <!--<![endif]-->
+  //- Load styleguide main Styles
+  link(rel='stylesheet', href='guide.css')
+  script(src='../js/modernizr.js')

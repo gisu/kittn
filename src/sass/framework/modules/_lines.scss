@@ -1,0 +1,288 @@
+// ============================================================
+//          Lines Generation
+// ------------------------------------------------------------
+
+/**
+ * REM Calculator
+ *
+ * @param  {number}   $px   - The Size in PX
+ * @param  {number}   $base - The Base for the calculation
+ *
+ * @return {number} Return the size in em
+ */
+@function rem($px, $base: 16 / 100 * $body-font-scale) {
+  @if unitless($px) {
+    @return #{$px / $base}rem;
+  } @else {
+    $pxpx: strip-units($px);
+    @return #{$pxpx / $base}rem;
+  }
+}
+
+// PRIVAT Mixin: _remsize
+// Recalculate the heightvalues to rem
+//
+// @mixin     _remsize
+// @param     $arg {value} The Argument
+// @param     $size {value} The size
+// @usage:    +_remsize($arg,$size)
+@mixin _remsize($arg, $lines, $iecheck: true) {
+  @if $body-typo-based == px {
+    #{$arg}: $lines * $body-line-height + 0px;
+  }
+
+  @if $body-typo-based == rem {
+    @if $comp-ie8 == true {
+      #{$arg}: $lines * $body-line-height + 0px;
+    } @else {
+      #{$arg}: rem($size);
+    }
+  }
+}
+
+// PRIVAT Mixin: _pxsize
+// Recalculate the heightvalues to px
+//
+// @mixin     _pxsize
+// @param     $arg {value} The Argument
+// @param     $size {value} The size
+// @usage:    +_pxsize($arg,$size)
+@mixin _pxsize($arg, $size, $iecheck: true) {
+  @if unitless($size) {
+    @if $body-typo-based == px {
+      #{$arg}: $size + 0px;
+    }
+
+    @if $body-typo-based == rem {
+      @if $comp-ie8 == true {
+        #{$arg}: $size + 0px;
+      } @else {
+        #{$arg}: rem($size);
+      }
+    }
+  } @else {
+    #{$arg}: $size;
+  }
+}
+
+// Mixin: rem
+// Recalculate the heightvalues
+//
+// @mixin     rem
+// @param     $arg {value} The Argument
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    @include rem($arg,$size,$baseline)
+//*;*
+@mixin rem($arg, $size, $baseline: $activate-baseline, $iecheck: true) {
+  @if unitless($size) {
+    $size: strip-units($size);
+  }
+
+  @if $baseline == true {
+    $lines: ceil($size / $body-line-height);
+    @include _remsize($arg, $lines, $iecheck);
+  } @else {
+    @include _pxsize($arg, $size, $iecheck);
+  }
+}
+
+// Mixin: lineheight
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     lineheight
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +lineheight($size,$baseline)
+@mixin lineheight($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(line-height, $size, $baseline, $iecheck);
+}
+
+
+// Mixin: marginbottom
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     marginbottom
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +marginbottom($size,$baseline)
+@mixin marginbottom($size, $baseline: $activate-baseline,$iecheck: true){
+  @include rem(margin-bottom, $size, $baseline, $iecheck);
+}
+
+// Mixin: margintop
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     margintop
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +margintop($size,$baseline)
+@mixin margintop($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(margin-top,$size, $baseline, $iecheck);
+}
+
+// Mixin: marginleft
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     marginleft
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +marginleft($size,$baseline)
+@mixin marginleft($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(margin-left,$size, $baseline, $iecheck);
+}
+
+// Mixin: marginright
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     marginright
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +marginright($size,$baseline)
+@mixin marginright($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(margin-right,$size, $baseline, $iecheck);
+}
+
+// Mixin: paddingtop
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     paddingtop
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +paddingtop($size,$baseline)
+@mixin paddingtop($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(padding-top, $size, $baseline, $iecheck);
+}
+
+// Mixin: paddingbottom
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     paddingbottom
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +paddingbottom($size,$baseline)
+@mixin paddingbottom($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(padding-bottom, $size, $baseline, $iecheck);
+}
+
+// Mixin: paddingleft
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     paddingleft
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +paddingleft($size,$baseline)
+@mixin paddingleft($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(padding-left, $size, $baseline, $iecheck);
+}
+
+// Mixin: paddingright
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     paddingright
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +paddingright($size,$baseline)
+@mixin paddingright($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(padding-right, $size, $baseline, $iecheck);
+}
+
+
+// Mixin: height
+// Recalculate the Lineheight from PX to REM, provides a px Fallback
+//
+// @mixin     height
+// @param     $size {value} The size
+// @param     $baseline {boolean} When 'true', the Value follow the Baselinerule
+// @usage:    +height($size,$baseline)
+@mixin height($size, $baseline: $activate-baseline,$iecheck: true) {
+  @include rem(height, $size, $baseline, $iecheck);
+}
+
+// Mixin: fontsize
+// Recaluclate the Font Size in PX to REM with Fallback
+//
+// @mixin     fontsize
+// @param     $size {value} Font Size
+// @usage:    @include fontsize($size)
+@mixin fontsize($size) {
+  @include _pxsize(font-size, $size);
+}
+
+// Mixin: fontcalc
+// Calculate Fontsize and Lineheight
+//
+// @mixin     fontcalc
+// @param     $fontsize {value} Font Size
+// @param     $lineheight {value} Lineheight for the Font - can be false than used the factor [:default = false]
+// @param     $factor {value} The Calculationfactor [:default = 1.2]
+// @usage:    @include fontcalc($fontsize, $lineheight, $factor)
+@mixin fontcalc($fontsize, $lineheight: false, $factor: 1.2) {
+  @include fontsize($fontsize);
+
+  @if $lineheight == false {
+    @include lineheight($fontsize * $factor);
+  } @else {
+    @include lineheight($lineheight);
+  }
+}
+
+// Mixin: baseheight
+// Generate the Baseline Height
+//
+// @mixin     baseheight
+// @param     $lines {value} The targeted baselineheight
+// @usage:    @include baseheight($lines)
+@mixin baseheight($lines) {
+  @include _remsize(height, $lines);
+}
+
+// Mixin: baselineheight
+// Generate the Baseline lineheight
+//
+// @mixin     baselineheight
+// @param     $lines {value} The targeted baselineheight
+// @usage:    @include baselineheight($lines)
+@mixin baselineheight($lines) {
+  @include _remsize(line-height, $lines);
+}
+
+// Mixin: basemargintop
+// Generate the Baseline lineheight
+//
+// @mixin     basemargintop
+// @param     $lines {value} The targeted basemargintop
+// @usage:    @include basemargintop($lines)
+@mixin basemargintop($lines) {
+  @include _remsize(margin-top, $lines);
+}
+
+// Mixin: basemarginbottom
+// Generate the Baseline lineheight
+//
+// @mixin     basemarginbottom
+// @param     $lines {value} The targeted basemarginbottom
+// @usage:    @include basemarginbottom($lines)
+@mixin basemarginbottom($lines) {
+  @include _remsize(margin-bottom, $lines);
+}
+
+// Mixin: basepaddingbottom
+// Generate the Baseline lineheight
+//
+// @mixin     basepaddingbottom
+// @param     $lines {value} The targeted basepaddingbottom
+// @usage:    @include basepaddingbottom($lines)
+@mixin basepaddingbottom($lines) {
+  @include _remsize(padding-bottom, $lines);
+}
+
+// Mixin: basepaddingtop
+// Generate the Baseline lineheight
+//
+// @mixin     basepaddingtop
+// @param     $lines {value} The targeted basepaddingtop
+// @usage:    @include basepaddingtop($lines)
+@mixin basepaddingtop($lines) {
+  @include _remsize(padding-top, $lines);
+}

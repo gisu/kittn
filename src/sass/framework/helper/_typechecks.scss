@@ -1,0 +1,53 @@
+@function is-true($value) {
+  @return if($value == null, false, $value and $value != null and $value != "" and $value != ());
+}
+
+// Checks if item is map
+//--------------------------------------------------------------------------------
+// @param $n [map] : value
+// -------------------------------------------------------------------------------
+// @return [bool]
+
+@function is-map($n) {
+  @return type-of($n) == "map";
+}
+
+// Checks if item is list
+//--------------------------------------------------------------------------------
+// @param $n [list] : value
+// -------------------------------------------------------------------------------
+// @return [bool]
+
+@function is-list($n) {
+  @return type-of($n) == "list";
+}
+
+// Checks if item is number
+//--------------------------------------------------------------------------------
+// @param $n [number] : value
+// -------------------------------------------------------------------------------
+// @return [bool]
+
+@function is-number($n) {
+  @return type-of($n) == "number";
+}
+
+// Checks if item is string
+//--------------------------------------------------------------------------------
+// @param $n [string] : value
+// -------------------------------------------------------------------------------
+// @return [bool]
+
+@function is-string($n) {
+  @return type-of($n) == "string";
+}
+
+// Checks if item is not string
+//--------------------------------------------------------------------------------
+// @param $n [string] : value
+// -------------------------------------------------------------------------------
+// @return [bool]
+
+@function is-not-string($n) {
+  @return type-of($n) != "string";
+}

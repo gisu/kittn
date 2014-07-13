@@ -1,0 +1,177 @@
+// ===================================================
+// Various Helper
+// ===================================================
+
+// Strip Units
+@function strip-units($number) {
+  @if type-of($number) != number {
+    @warn "#{$number} is not a number for `strip-unit`.";
+    @return false;
+  } @else {
+    @if unitless($number) {
+      @return $number;
+    } @else {
+      @return $number / ($number * 0 + 1);
+    }
+  }
+}
+
+// Unit Checker
+@function unit-check($value) {
+  @if unitless($value) {
+    @if $default-unit == rem {
+      @return $value + 0rem;
+    } @else if $default-unit == em {
+      @return $value + 0em;
+    } @else {
+      @return $value + 0px;
+    }
+  } @else {
+    @return $value;
+  }
+}
+
+// Remove Duplicates from a List
+// ------
+// @usage:
+//    $list: a, b, a, c, b, a, d, e;
+//    $remove-duplicates: remove-duplicates($list);
+// ------
+// @return:
+//    a, b, c, d, e
+@function remove-duplicates($list, $recursive: false) {
+  $result: ();
+
+  @each $item in $list {
+    @if not index($result, $item) {
+      @if length($item) > 1 and $recursive {
+        $result: append($result, remove-duplicates($item, $recursive));
+      }
+      @else {
+        $result: append($result, $item);
+      }
+    }
+  }
+
+  @return $result;
+}
+
+// Build the Sum of all vars in a list
+// ------
+// @usage:
+//    $list: 1 2 3 4px;
+//    $sum: sum($list);       // -> 6
+//    $sum: sum($list, true); // -> 10
+@function sum($list, $force: false) {
+  $result: 0;
+
+  @each $item in $list {
+    @if type-of($item) == number {
+      @if $force and unit($item) {
+        $item: $item / ($item * 0 + 1);
+      }
+      @if unitless($item) {
+        $result: $result + $item;
+      }
+    }
+  }
+
+  @return $result;
+}
+
+
+
+// Purge false variables from a list
+// ------
+// @usage:
+//    $list: a, b, null, c, false, '', d;
+//    $purge: purge($list);
+// ------
+// @return
+//    a, b, c, d
+@function purge($list) {
+  $result: ();
+
+  @each $item in $list {
+    @if $item != null
+    and $item != false
+    and $item != "" {
+      $result: append($result, $item);
+    }
+  }
+
+  @return $result;
+}
+
+/**
+ * Calling a given function to each member of a list
+ *
+ * @param {list}    $list     - List to walk through
+ * @param {string}  $function - Function to apply to all members
+ * @param {argList} $args     - Extra arguments to pass to the function
+ *
+ * @returns List              - updated list
+ */
+@function walk($list, $function, $args...) {
+  @if not function-exists($function) {
+    @warn "There is no `#{$function}` function.";
+    @return false;
+  }
+
+  @for $i from 1 through length($list) {
+    $list: set-nth($list, $i, call($function, nth($list, $i), $args...));
+  }
+
+  @return $list;
+}
+
+/**
+ * Clamp a Number between a min and max values,
+ * Perfect for percentage
+ *
+ * @param   {Number} $value - The Value that need to be clamped
+ * @param   {Number} $min   - The posible minimal value
+ * @param   {Number} $max   - The possible max Value
+ *
+ * @returns {Number}        - Clamped Value
+ */
+@function clamp($value, $min, $max) {
+  @return if($value > $max, $max, if($value < $min, $min, $value));
+}
+
+// Component Extend
+// http://hugogiraudel.com/2014/05/05/bringing-configuration-objects-to-sass/
+@function comp-extend($obj, $ext-obj) {
+  @return map-merge($obj, $ext-obj);
+}
+
+// Function: cp
+// Pick the Color Values from the Color Map
+//
+// @function   cp
+// @param      $target {string} The desired color
+// @param      $map {string} The Color Map
+// @return     {string} Color Value
+// @usage:     @include cp($target);
+@function cp($target, $map: $stylecolors) {
+  @if map-has-key($map,$target) {
+    @return map-get(map-get($map,$target),color);
+  } @else {
+    @warn "Color is not available";
+  }
+}
+
+@function s($lines,$hard: false, $size: $spacing) {
+  @if type-of($lines) == 'number' {
+    @if $hard != false {
+      @return strip-units($lines) * $size !important;
+    } @else {
+      @return strip-units($lines) * $size;
+    }
+  }
+}
+@function spacer($lines,$hard: false, $size: $spacing) {
+  @if type-of($lines) == 'number' {
+    @return strip-units($lines) * $size + 0px if($hard,!important,null);
+  }
+}

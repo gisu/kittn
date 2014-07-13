@@ -1,0 +1,18 @@
+//- Color Box Mixin
+mixin guide-color-box(name, description, value, brightstyle)
+  if brightstyle
+    div(class='guide-main__color-box--bright', style="background-color: #{value}")
+      h5 #{name}
+      p #{description}
+      p #{value}
+  else
+    div(class='guide-main__color-box', style="background-color: #{value}")
+      h5 #{name}
+      p #{description}
+      p #{value}
+
+h3.guide-main__content__header Colors
+.guide-main__content__box
+  .guide-main__color-list
+    //- INCLUDE COLORS HERE
+    //- mixin guide-color-box('THE CLASSNAME','DESCRIPTION', 'COLORVALUE', true)

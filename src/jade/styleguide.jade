@@ -1,0 +1,40 @@
+//- Extend Base Layout
+extend templates/_styleguide-layout
+
+
+//- Extend the Head
+block append site-head
+
+//- Extend Body
+block site-body
+  .guide-main__content__section
+    //- Include Overview
+    include styleguide/_overview
+
+    //- Include Color Guide
+    include styleguide/_colors
+
+    //- Include Icons
+    include styleguide/_icons
+
+    //- Include
+    include styleguide/_typo
+
+    //- Include
+    include styleguide/_grid
+
+    //- Include
+    include styleguide/_media
+
+    //- Include
+    include styleguide/_buttons
+
+    //- Include
+    include styleguide/_elements
+
+    //- Include
+
+//- Extend Footer
+block append site-footer
+//- Insert your Footer Content
+

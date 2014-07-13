@@ -1,0 +1,471 @@
+// ============================================================
+//          Base Setup
+// ------------------------------------------------------------
+
+// Route to the Font Directory
+$font-url: '../fonts/';
+
+// Route to the base Image Directory
+$img-url: '../img/';
+
+// Route to the Single Images Directory
+$single-url: '../img/single/';
+
+// Route to the Texture Image Directory
+$texture-url: '../img/textures/';
+
+// Route to the SVG Images (with Fallbacks)
+$svg-url: '../img/svg/';
+
+// Route to the SVG Images (without Fallbacks)
+$svgonly-url: '../img/svg/';
+
+// Markup Sign for BEM Elements
+$mark-bem-element: '__';
+
+// Markup Sign for BEM Modifiers
+$mark-bem-modifier: '--';
+
+// ---- Global Spacing Unit ----
+$spacing: 20;
+
+// CSS Debug Mode - display css error
+$debug-mode: false;
+
+// Use the new Box Model box-sizing: border-box.
+// [boolean]
+$activate-box-sizing: true;
+
+// Use the Baseline for height calculation
+// [boolean]
+$activate-baseline: false;
+
+// Activate the Browser Antialias for Fonts
+// [boolean]
+$activate-antialias: true;
+
+// Activate the Hyphen - automated Wordbreak won't work correctly on chrome
+// [boolean]
+$activate-hyphens: false;
+
+// Activate Viewport Fix - when active make sure in the App.js is also activated
+// [boolean]
+$activate-viewport-fix: false;
+
+// Activate some Fallbacks for IE8
+// [boolean]
+$comp-ie8: false;
+
+// When the responsive behavior is oriented to mobile first - set it on true
+// [boolean]
+$mobile-first: true;
+
+// Setup the default unit for values that unitless
+// [string]
+$default-unit: px;
+
+// Name of the Sprite file
+// [string/boolean]
+$image-sprite-name: false;
+
+// Include the retina Sprite
+// [boolean]
+$image-sprite-retina: true;
+
+// The Fontname for the Iconfont
+// [string/boolean]
+$icon-font-name: false;
+
+// Prefix for icon classes
+$icon-class-prefix: 'f-icon';
+
+// List of Breakpoints for the Layout. First Value inside () is the target scope
+// size....: [value] Breakpoint Value
+// view....: [boolean] On 'true' the breakpoint will used for the visibility/hidden class
+$breakpoints: (
+  1: (
+    size: 320px,
+    view: true,
+    layout: true,
+    fontsize: false
+  ),
+  2: (
+    size: 480px,
+    view: true,
+    layout: false,
+    fontsize: false
+  ),
+  3: (
+    size: 560px,
+    view: false,
+    layout: true,
+    fontsize: false
+  ),
+  4: (
+    size: 768px,
+    view: false,
+    layout: true,
+    fontsize: false
+  ),
+  5: (
+    size: 960px,
+    view: false,
+    layout: true,
+    fontsize: false
+  ),
+  6: (
+    size: 1180px,
+    view: false,
+    layout: true,
+    fontsize: false
+  ),
+  7: (
+    size: 1480px,
+    view: false,
+    layout: false,
+    fontsize: false
+  )
+);
+
+// Set the Font Size Value - REM With PX Fallback. Only Active without IE8 Compatibility
+// [string] (px | rem)
+$body-typo-based: rem;
+
+// Set the percentage Font Scaling
+// [number] (unitless value)
+$body-font-scale: 85;
+
+// Set the Base fontsize
+// [number] (unitless value)
+$body-font-size: 16;
+
+// Set the Base Lineheight - needed for Baseline
+// [number] (unitless value)
+$body-line-height: 21;
+
+// Setup responsive Fonts. To activate enter a value between 0 and 100. Is the Base Font Size
+// [bool|number]
+$responsive-fonts: false;
+
+// The Default Margin for Typographic Elements (set on '0' when not needed)
+// [list:arg1] [value] {margin-top} (unitless value)
+// [list:arg2] [value] {margin-bottom} (unitless value)
+$typo-margin: (
+  top: s(1.25),
+  bottom: s(1)
+);
+
+// Global Heading Stylings
+// [list:arg1] [value/boolean] {line-height} 'false' or 'd' (for line-height:1) or a unitless number
+// [list:arg2] [number/boolean] {margin-bottom} 'false' or 'number'
+// [list:arg3] [value/boolean] {font-weight} 'false' or 'number'
+$heading-glob: (
+  lineheight: false,
+  marginbottom: 0,
+  fontweight: false
+);
+
+// Map off all included Fontfaces
+// filename.......: Filename, when 'false' the Fontname will be used
+// weight.........: The associated Fontweight
+// style..........: The associated Font Style
+// svgoption......: [bool] Activate the addition route to the SVG Font
+$fontmap: (
+  // fontname: (
+  //   filename: false,
+  //   weight: normal,
+  //   style: normal,
+  //   svgoption: true
+  // )
+);
+// Font Style Data Array for several Fontstyles - generate the Class
+// font-size.......: unitless value (will be automat)
+// line-height.....: n = off,
+//                   d = line-height: 1
+//                   c = sass calculated,
+//                   number = lineheight
+// margin-bottom...: n = off
+//                   or Number
+// font-weight.....: n = off
+//                   or Number
+// tag.............: [boolean] On 'true' it generates also tags, with 'false' only classes
+// extend..........: [string/boolean] When you want to Extend the Style you can enter here the Extend Classname like '%myclass'
+$fontstyles: (
+  h1: (
+    font-size: 36,
+    line-height: 40,
+    margin-bottom: 10,
+    font-weight: n,
+    tag: true,
+    extend: '%heading'
+  ),
+  h2: (
+    font-size: 32,
+    line-height: c,
+    margin-bottom: 10,
+    font-weight: n,
+    tag: true,
+    extend: '%heading'
+  ),
+  h3: (
+    font-size: 29,
+    line-height: c,
+    margin-bottom: 10,
+    font-weight: n,
+    tag: true,
+    extend: '%heading'
+  ),
+  h4: (
+    font-size: 25,
+    line-height: c,
+    margin-bottom: 10,
+    font-weight: n,
+    tag: true,
+    extend: '%heading'
+  ),
+  h5: (
+    font-size: 22,
+    line-height: c,
+    margin-bottom: 10,
+    font-weight: n,
+    tag: true,
+    extend: '%heading'
+  ),
+  h6: (
+    font-size: 19,
+    line-height: c,
+    margin-bottom: 10,
+    font-weight: n,
+    tag: true,
+    extend: '%heading'
+  )
+);
+
+// Generate the Fontstyles from the list
+// [boolean]
+$generateFonts: true;
+
+// Optional Style for List Elements
+// [list:arg1] [value/boolean] {font-size} Can be 'false'
+// [list:arg2] [value/boolean] {line-height} Can be 'false'
+// [list:arg3] [value] {margin-left}
+// [list:arg3] [string] {list-style} (disc/square/circle)
+$font-list-style: (
+  fontsize: false,
+  lineheight: false,
+  left: s(1),
+  style: disc
+);
+
+// Optional Style for a blockquote
+// [list:arg1] [value/boolean] {font-size} Can be 'false'
+// [list:arg2] [value/boolean] {line-height} Can be 'false'
+$font-blockquote-style: (
+  fontsize: $body-font-size + 2,
+  lineheight: $body-line-height + 6
+);
+
+// Optional Style for cites
+// [list:arg1] [value/boolean] {font-size} Can be 'false'
+// [list:arg2] [value/boolean] {line-height} Can be 'false'
+$font-cite-style: (
+  fontsize: $body-font-size - 1,
+  lineheight: $body-line-height + 0
+);
+
+// Style the HR
+// [value] Height
+$hr-style: 1;
+
+// Styling Code Elements
+// [list:arg1] [value/boolean] {font-size} Can be 'false'
+// [list:arg2] [value/boolean] {line-height} Can be 'false'
+$font-code-style: (
+  fontsize: false,
+  lineheight: false
+);
+
+// ---- General Colors ----
+// Color Definition Map. This is a collection from all used Colors. Use only use HEX Colors, when you enter a Opacity Value (between 0 to 1), Sass convert it to RGBA with a Fallback for old Browsers.
+// [map]
+// color........: [string] Don't use css color names like 'black'
+// opactiy......: [boolean/number] Opacity Value
+// type.........: [string] color-type ==  bt: background and textcolor,
+//                                         t: textcolor,
+//                                         b: background-color
+$stylecolors: (
+  primary: (
+    color: #f29300,
+    opacity: false,
+    type: bt
+  ),
+  black: (
+    color: #3c3c3c,
+    opacity: false,
+    type: bt
+  ),
+  gray: (
+    color: #636363,
+    opacity: false,
+    type: bt
+  ),
+  white: (
+    color: #fff,
+    opacity: false,
+    type: bt
+  ),
+  body: (
+    color: #f8f8f8,
+    opacity: false,
+    type: b
+  ),
+  alert: (
+    color: #ef462a,
+    opacity: false,
+    type: b
+  ),
+  success: (
+    color: #38cc3b,
+    opacity: false,
+    type: b
+  ),
+  warning: (
+    color: #f5a11c,
+    opacity: false,
+    type: b
+  ),
+  hightlight: (
+    color: #f8e64b,
+    opacity: false,
+    type: b
+  )
+);
+
+// Generate the Color Classes from the Color Array
+// [boolean]
+$generate-colors: true;
+
+// Setup the type : class or silent
+// [value]
+$gen-color-type: silent;
+
+// Base Body Background Color (use the color function cp())
+// [value]
+$c-body: cp(body);
+
+// Normal Text Color (used for p, body, lists) (use the color function cp())
+// [value]
+$tc-text: cp(black);
+
+// Text Color for Headings. With 'false' the Basetextcolor is used
+// [value/boolean]
+$tc-heading: cp(gray);
+
+// Text Color for Quotes. With 'false' the Basetextcolor is used
+// [value/boolean]
+$tc-blockquote: cp(black);
+
+// Style the Highlight.
+// [list:arg1] [value] {background-color}
+// [list:arg2] [value] {color}
+$tc-highlight: (
+  background: lighten(cp(primary),25),
+  text: darken(cp(primary),10)
+);
+
+// Color the Link States
+// [list:arg1] [value] {text-color}
+// [list:arg2] [value] {hover-color}
+// [list:arg3] [value] {active-color}
+$tc-link: (
+  normal: cp(primary),
+  hover: darken(cp(primary),15),
+  active: darken(cp(primary),25)
+);
+
+// Style the Link Decoration
+// [list:arg1] [boolean] Text Decoration for 'normal' state
+// [list:arg1] [boolean] Text Decoration for 'hover' state
+$tc-decoration: (
+  normal: false,
+  hover: true
+);
+
+// Font Family and Font Weight for base Texts
+// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()'
+// [list:arg2] [value/boolean] {font-weight} Can be 'false'
+$font-style-text: (
+  font: ff('helvetica'),
+  weight: false
+);
+
+// Font Family and Font Weight for Bold Text
+// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
+// [list:arg2] [value/boolean] {font-weight} Can be 'false'
+$font-style-bold: (
+  font: false,
+  weight: bold
+);
+
+// Font Family and Font Weight for Italic Text
+// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
+// [list:arg2] [value/boolean] {font-weight} Can be 'false'
+$font-style-italic: (
+  font: false,
+  style: italic
+);
+
+// Font Family for Headings, can be 'false'
+// [value/boolean] Can be 'false'
+$font-heading-family: ff('helvetica');
+
+// Font Family and Font Weight for Quotes
+// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
+// [list:arg2] [value/boolean] {font-weight} Can be 'false'
+// [list:arg3] [value/boolean] {font-style} Can be 'false'
+$font-style-quote: (
+  fontfamily: ff('helvetica'),
+  fontweight: false,
+  fontstyle: italic
+);
+
+// Font Family and Font Weight for Code Elements
+// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
+// [list:arg2] [value/boolean] {font-weight} Can be 'false'
+$font-style-code: (
+  fontfamily: ff("monospace"),
+  fontweight: normal
+);
+
+// Styling the HR (Border Style)
+// [list:arg1] [string] Line Style
+// [list:arg1] [value] Line Color
+$hr-style-color: dashed #eee;
+
+// Background Color for Tables
+// [value]
+$table-background: transparent;
+
+// Background Color for accented tablerows
+// [value]
+$table-bg-zebra: #f7f7f7;
+
+// Background Color for Hovered Rows
+// [value/boolean] 'false' will not include the hover class definition
+$table-bg-hover: #f7f7f7;
+
+// Table Margin Bottom
+// [value]
+$table-margin: 20px;
+
+// Inner Padding for Table Cells
+// [value]
+$table-cell-padding: 8px;
+
+// Border Color for Tables
+// [value/boolean] 'false' will not include the hover class definition
+$table-border-color: #eee;
+
+// Trigger Size for responsive Tables
+// [value]
+$table-trigger-size: 400px;

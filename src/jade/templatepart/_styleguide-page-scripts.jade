@@ -1,0 +1,14 @@
+script(src='../js/scripts.js')
+script(src='../js/conditionizr.js')
+script(src='../js/app.js')
+script(src='prism.js')
+<!--[if lte IE 9]>
+script(src='../js/selectivizr.js')
+<![endif]-->
+script.
+  $(document).ready(function() {
+    $('.guide-main__content__box').hide();
+    $('.guide-main__content__header').click(function() {
+      $(this).next().slideToggle();
+    });
+  });
