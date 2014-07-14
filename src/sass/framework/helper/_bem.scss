@@ -1,3 +1,6 @@
+// ===================================================
+// BEM Helper
+// ===================================================
 
 /**
  * Build a BEM Element
@@ -16,14 +19,18 @@
  * Build a BEM Modifier, with extend functionality
  *
  * @param {*}     $name - The selector name
- * @param {bool}  $extend (false) - Parent Selector Name
+ * @param {bool}  $extend (false) - If the Modifier need to be
+ *                                  extended with parent
  */
 @mixin modifier($name, $extend: false) {
+  // Internal Extend Var
+  $e: &;
+
   @at-root {
     &#{$mark-bem-modifier}#{$name} {
       // Extend with the Parent Element
       @if $extend != false {
-        @extend #{$extend};
+        @extend #{$e};
       }
 
       @content;
@@ -37,17 +44,20 @@
  * @param {string}  $name - The selector name
  *
  * @example
- * @include chainroot('text') {
- *  content: hello;
+ * .test {
+ *   @include chainroot {
+ *    content: hello;
+ *   }
  * }
  *
  */
-@mixin chainroot($name) {
+@mixin chainroot {
   // Define the Parent Class - for Nested Chains
-  $chain-parent: $name !global;
+  $r: &;
+  $root: str-slice('#{$r}',2,str-length('#{$r}'));
 
   @at-root {
-    [class^="#{$name}"] {
+    &, [class^="#{$root}"] {
       @content;
     }
   }
@@ -57,22 +67,22 @@
  * Chain the Modifiers
  *
  * @param {string}   $name - The selector name, only the name
- * @param {string}   $parent ($chain-parent) - Selector of the parent Element
  *
  * @example
- *  @include chain(bright, 'test') {
- *    color: #fff;
- *  }
- *  @include chainroot('just-a-test') {
- *    font-size: 20px;
- *    line-height: 24px;
- *
- *    @include chain('wider') {
- *      width: 300px;
+ *  .test {
+ *    @include chainroot {
+ *      font-size: 20px;
+ *      line-height: 24px;
+ *      @include chain('wider') {
+ *        width: 300px;
+ *      }
  *    }
  *  }
  */
-@mixin chain($name, $parent: $chain-parent) {
+@mixin chain($name) {
+  $p: &;
+  $parent: str-slice('#{$p}',2,str-length('#{$p}'));
+
   @at-root {
     [class^="#{$parent}"][class*="#{$mark-bem-modifier}#{$name}"] {
       @content;

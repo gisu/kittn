@@ -1,53 +1,90 @@
+// ===================================================
+// Type Checks
+// ===================================================
+
+/**
+ * Checks if a Value is included
+ *
+ * @param {*}  $value - Included value to check
+ *
+ * @returns Value when is true
+ */
 @function is-true($value) {
   @return if($value == null, false, $value and $value != null and $value != "" and $value != ());
 }
 
-// Checks if item is map
-//--------------------------------------------------------------------------------
-// @param $n [map] : value
-// -------------------------------------------------------------------------------
-// @return [bool]
-
-@function is-map($n) {
-  @return type-of($n) == "map";
+/**
+ * Checks if Value is a map
+ *
+ * @param {*}  $value - Included value to check
+ *
+ * @returns Bool
+ */
+@function is-map($value) {
+  @return type-of($value) == "map";
 }
 
-// Checks if item is list
-//--------------------------------------------------------------------------------
-// @param $n [list] : value
-// -------------------------------------------------------------------------------
-// @return [bool]
-
-@function is-list($n) {
-  @return type-of($n) == "list";
+/**
+ * Checks if Value is a list
+ *
+ * @param {*}  $value - Included value to check
+ *
+ * @returns Bool
+ */
+@function is-list($value) {
+  @return type-of($value) == "list";
 }
 
-// Checks if item is number
-//--------------------------------------------------------------------------------
-// @param $n [number] : value
-// -------------------------------------------------------------------------------
-// @return [bool]
-
-@function is-number($n) {
-  @return type-of($n) == "number";
+/**
+ * Checks if Value is a number
+ *
+ * @param {*}  $value - Included value to check
+ *
+ * @returns Bool
+ */
+@function is-number($value) {
+  @return type-of($value) == "number";
 }
 
-// Checks if item is string
-//--------------------------------------------------------------------------------
-// @param $n [string] : value
-// -------------------------------------------------------------------------------
-// @return [bool]
-
-@function is-string($n) {
-  @return type-of($n) == "string";
+/**
+ * Checks if Value is a string
+ *
+ * @param {*}  $value - Included value to check
+ *
+ * @returns Bool
+ */
+@function is-string($value) {
+  @return type-of($value) == "string";
 }
 
-// Checks if item is not string
-//--------------------------------------------------------------------------------
-// @param $n [string] : value
-// -------------------------------------------------------------------------------
-// @return [bool]
+/**
+ * Checks if Value is not a string
+ *
+ * @param {*}  $value - Included value to check
+ *
+ * @returns Bool
+ */
+@function is-not-string($value) {
+  @return type-of($value) != "string";
+}
 
-@function is-not-string($n) {
-  @return type-of($n) != "string";
+/**
+ * Check if the Selector is nested
+ *
+ * @returns Bool
+ */
+@function is-nested() {
+  $p: &;
+  $list: ();
+
+  @each $par in $p {
+    $list: append($par, $list, comma);
+  }
+
+  // Check the length from the selector list
+  @if length($list) > 2 {
+    @return true;
+  } @else {
+    @return false;
+  }
 }

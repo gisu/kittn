@@ -294,47 +294,47 @@ $font-code-style: (
 //                                         t: textcolor,
 //                                         b: background-color
 $stylecolors: (
-  primary: (
+  'primary': (
     color: #f29300,
     opacity: false,
     type: bt
   ),
-  black: (
+  'black': (
     color: #3c3c3c,
     opacity: false,
     type: bt
   ),
-  gray: (
+  'gray': (
     color: #636363,
     opacity: false,
     type: bt
   ),
-  white: (
+  'white': (
     color: #fff,
     opacity: false,
     type: bt
   ),
-  body: (
+  'body': (
     color: #f8f8f8,
     opacity: false,
     type: b
   ),
-  alert: (
+  'alert': (
     color: #ef462a,
     opacity: false,
     type: b
   ),
-  success: (
+  'success': (
     color: #38cc3b,
     opacity: false,
     type: b
   ),
-  warning: (
+  'warning': (
     color: #f5a11c,
     opacity: false,
     type: b
   ),
-  hightlight: (
+  'hightlight': (
     color: #f8e64b,
     opacity: false,
     type: b
@@ -351,26 +351,26 @@ $gen-color-type: silent;
 
 // Base Body Background Color (use the color function cp())
 // [value]
-$c-body: cp(body);
+$c-body: cp('body');
 
 // Normal Text Color (used for p, body, lists) (use the color function cp())
 // [value]
-$tc-text: cp(black);
+$tc-text: cp('black');
 
 // Text Color for Headings. With 'false' the Basetextcolor is used
 // [value/boolean]
-$tc-heading: cp(gray);
+$tc-heading: cp('gray');
 
 // Text Color for Quotes. With 'false' the Basetextcolor is used
 // [value/boolean]
-$tc-blockquote: cp(black);
+$tc-blockquote: cp('black');
 
 // Style the Highlight.
 // [list:arg1] [value] {background-color}
 // [list:arg2] [value] {color}
 $tc-highlight: (
-  background: lighten(cp(primary),25),
-  text: darken(cp(primary),10)
+  background: lighten(cp('primary'),25),
+  text: darken(cp('primary'),10)
 );
 
 // Color the Link States
@@ -378,9 +378,9 @@ $tc-highlight: (
 // [list:arg2] [value] {hover-color}
 // [list:arg3] [value] {active-color}
 $tc-link: (
-  normal: cp(primary),
-  hover: darken(cp(primary),15),
-  active: darken(cp(primary),25)
+  normal: cp('primary'),
+  hover: darken(cp('primary'),15),
+  active: darken(cp('primary'),25)
 );
 
 // Style the Link Decoration

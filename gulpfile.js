@@ -113,10 +113,10 @@ gulp.task('rubysass', function () {
     gulp.src(sassSrc)
     .pipe(plumber())
     .pipe(rubysass({
-      loadPath  : sassLoadPath,
-      sourcemap : false,
-      style     : 'nested',
-      precision : 6
+      sourcemap    : false,
+      sourcemapPath: '../sass',
+      style        : 'nested',
+      precision    : 6
     }))
     .on("error", notify.onError(function (error) {
       return "SASS Compile Error: " + error.message;

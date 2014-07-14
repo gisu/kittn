@@ -2,31 +2,123 @@
 // Color Helper
 // ===================================================
 
-// Mixin: _color
-// Private Mixin to get Color Values from the Color Map
-//
-// ------
-// @variable:
-//    $target [list]
-//      -> The required Value from the map
-//    $attrib [value]
-//      -> Required Attribute
-//    $entrys [map]
-//      -> Connection to the Color Map
-@mixin _color($target, $attrib: color, $map: $stylecolors ) {
+/**
+ * Tint up the Color - normally mix with white
+ *
+ * @param  {Color}  $color             - The Color value
+ * @param  {number} $amount            - The Mix Value
+ * @param  {color}  $tint-color (#fff) - Color for Tint
+ *
+ * @returns Color
+ */
+@function tint($color, $amount, $tint-color: #fff) {
+  @return mix($tint-color, $color, clamp(strip-units($amount), 0, 100));
+}
+
+/**
+ * Shade down the Color - normally mix with black
+ *
+ * @param  {Color}  $color              - The Color value
+ * @param  {number} $amount             - The Mix Value
+ * @param  {color}  $shade-color (#000) - Color for Tint
+ *
+ * @returns Color
+ */
+@function shade($color, $amount, $shade-color: #000) {
+  @return mix($shade-color, $color, clamp(strip-units($amount), 0, 100));
+}
+
+/**
+ * Calculate the Luma Value from a Color
+ *
+ * @param  {color} $color - Color Value
+ *
+ * @returns Number
+ */
+@function luma($color) {
+  @return (red($color) * .299) + (green($color) * .587) + (blue($color) * .114);
+}
+
+/**
+ * Check if Color1 is greater than Color2, return true
+ *
+ * @param  {color} $color1 - Color Value
+ * @param  {color} $color2 - Color Value
+ *
+ * @returns Bool
+ */
+@function luma-gte($color1, $color2) {
+  @if luma($color1) >= luma($color2) {
+    @return true;
+  }
+  @else {
+    @return false;
+  }
+}
+
+/**
+ * Check if Color1 is smaller than Color2, return true
+ *
+ * @param  {color} $color1 - Color Value
+ * @param  {color} $color2 - Color Value
+ *
+ * @returns Bool
+ */
+@function luma-lte($color1, $color2) {
+  @if luma($color1) <= luma($color2) {
+    @return true;
+  }
+  @else {
+    @return false;
+  }
+}
+
+/**
+ * Calculate the Luma Difference between Color1 and Color2
+ *
+ * @param  {color} $color1 - Color Value
+ * @param  {color} $color2 - Color Value
+ *
+ * @returns Number
+ */
+@function luma_diff($color1, $color2) {
+  @return luma($color1) - luma($color2);
+}
+
+/**
+ * Mixin to get Color Values from the Color Map
+ *
+ * @access private
+ *
+ * @param {*}    $target            - Color Key from Map
+ * @param {*}    $attrib (color)    - The Color Attribute
+ * @param {bool} $imp (false)       - For !important setting
+ * @param {map}  $map (stylecolors) - Color Map
+ */
+@mixin _color($target, $attrib: color, $imp: false, $map: $stylecolors) {
+
+  // Check if '$target' is in the Map
   @if map-has-key($map,$target) {
+    // Put the Data in a own map
     $colors : map-get($map,$target);
 
+    // Check if the Color have an opacity value
+    // Generate RGBA Colors with an IE8 Fallback (hex)
     @if map-get($colors,opacity) != false {
+
+      // Generate the IE8 Fallback Colors
       @include jacket(old) {
-        #{$attrib}: map-get($colors,color);
-      }
-      @include jacket(modern) {
-        #{$attrib}: rgba(map-get($colors,color),map-get($colors,opacity));
+        #{$attrib}: map-get($colors,color) if($imp, !important, '');
       }
 
+      // Generate RGBA Colors
+      @include jacket(modern) {
+        #{$attrib}: rgba(map-get($colors,color),map-get($colors,opacity)) if($imp, !important, '');
+      }
+
+    // Otherwise use Hex Colors
     } @else {
-      #{$attrib}: map-get($colors,color);
+      #{$attrib}: map-get($colors,color) if($imp, !important, '');
     }
 
   } @else {
@@ -34,69 +126,46 @@
   }
 }
 
-// Get the Color from the Map and generate color values
-
-// Mixin: get-c
-// Pick the Color from the map and include it as text color
-//
-// ------
-// @variable:
-//    $target [list]
-//      -> he required Value from the map
-// ------
-// @usage:
-//     .block {
-//       @include get-c(primary);
-//     }
-// @result:
-//    .block {
-//      color: #6ad2ef;
-//    }
-@mixin get-c($target) {
-  @include _color($target, $attrib: color);
-}
-// ALIAS LONGER
-@mixin color($target, $hard: false) {
+/**
+ * Use the desired Color Value from the Map an build a Color Value
+ *
+ * @alias color
+ *
+ * @type {*}    $target - The Color Key
+ * @type {bool} $hard   - For !important setting
+ */
+@mixin get_c($target, $hard: false) {
   @include _color($target, $attrib: color, $imp: $hard);
 }
 
-
-// Mixin: get-bgc
-// Pick the Color from the map and include it as background-color
-//
-// ------
-// @variable:
-//    $target [list]
-//      -> he required Value from the map
-// ------
-// @usage:
-//     .block {
-//       @include get-bgc(primary);
-//     }
-// @result:
-//    .block {
-//      background-color: #6ad2ef;
-//    }
-// Get the Color from the Map and generate background-color values
-@mixin get-bgc($target) {
-  @include _color($target, $attrib: background-color);
+// alias
+@mixin color($target, $hard: false) {
+  @include get-c($target, $hard);
 }
 
-// ALIAS LONGER
-@mixin background-color($target, $hard: false) {
+/**
+ * Use the desired Color Value from the Map an build a Background-Color Value
+ *
+ * @alias color
+ *
+ * @type {*}    $target - The Color Key
+ * @type {bool} $hard   - For !important setting
+ */
+@mixin get_bc($target, $hard: false) {
   @include _color($target, $attrib: background-color, $imp: $hard);
 }
 
-// Mixin: colorgenerator
-// Generate Color Classes based on your Color Map
-//
-// ------
-// @variable:
-//    $colors [map]
-//      -> Connection to the Color Map
-// ------
-// @usage:
-//    @include colorgenerator();
+// Alias
+@mixin background-color($target, $hard: false) {
+  @include get-bc($target, $hard);
+}
+
+/**
+ * Generate Color Classes (or Silent) with all Colors from
+ * the Color Map.
+ *
+ * @type {map}  $colors - The Desired Map
+ */
 @mixin colorgenerator($colors: $stylecolors) {
   @each $value, $entry in $colors {
 
@@ -111,49 +180,78 @@
 
     // Set Class for Text Color
     @if map-get($entry,type) == t {
-      #{$prefix}tc-#{$value} {
+      #{$prefix}tc#{$mark-bem-modifier}#{$value} {
         @include _color($value,color);
       }
     }
 
     // Set Class for Background-Color
     @if map-get($entry,type) == b {
-      #{$prefix}bc-#{$value} {
+      #{$prefix}bc#{$mark-bem-modifier}#{$value} {
         @include _color($value,background-color);
       }
     }
 
     // Set two Classes for Text & Background-Color
     @if map-get($entry,type) == bt {
-      #{$prefix}tc-#{$value} {
+      #{$prefix}tc#{$mark-bem-modifier}#{$value} {
         @include _color($value,color);
       }
-      #{$prefix}bc-#{$value} {
+      #{$prefix}bc#{$mark-bem-modifier}#{$value} {
         @include _color($value,background-color);
       }
     }
   }
 }
 
+/**
+ * Extend the Element with existing Color Classes
+ *
+ * @param {*}  $name - Color Key
+ */
+@mixin ext-c($name) {
 
-@mixin ext-tc($name) {
-  $prefix: '';
+  // Check if the Colors are generated
+  // Otherwise switch to a normal color include
+  @if $generate-colors {
+    $prefix: '';
 
-    @if $gen-color-type == class {
-      $prefix: '.';
-    } @else {
-      $prefix: '%';
-    }
+      @if $gen-color-type == class {
+        $prefix: '.';
+      } @else {
+        $prefix: '%';
+      }
 
-  @extend #{$prefix}tc#{$mark-bem-modifier}#{$name};
+    @extend #{$prefix}tc#{$mark-bem-modifier}#{$name};
+
+  } @else {
+    @include get-c($name);
+    @warn 'There no Colors available for @extend!';
+  }
 }
-@mixin ext-bc($name) {
-  $prefix: '';
 
-    @if $gen-color-type == class {
-      $prefix: '.';
-    } @else {
-      $prefix: '%';
-    }
-  @extend #{$prefix}bc#{$mark-bem-modifier}#{$name};
+/**
+ * Extend the Element with existing Background-Color Classes
+ *
+ * @param {*}  $name - Color Key
+ */
+@mixin ext-bc($name) {
+
+  // Check if the Colors are generated
+  // Otherwise switch to a normal color include
+  @if $generate-colors {
+    $prefix: '';
+
+      @if $gen-color-type == class {
+        $prefix: '.';
+      } @else {
+        $prefix: '%';
+      }
+    @extend #{$prefix}bc#{$mark-bem-modifier}#{$name};
+
+  } @else {
+    // Use the real Color Value
+    @include get-bc($name);
+    @warn 'There no Colors available for @extend!';
+  }
 }

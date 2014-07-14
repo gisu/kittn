@@ -3,6 +3,14 @@
 
 @charset "UTF-8";
 
+// Setup Maps
+@import "maps/fontstacks";
+@import "maps/imagemap";
+@import "maps/sprite";
+@import "maps/sprite-retina";
+@import "maps/iconfontlist";
+@import "maps/zmap";
+
 // --- Import External Libs
 @import "jacket";
 @import "SassyLists";
@@ -12,17 +20,10 @@
 @import "framework/helper/fonts";
 @import "framework/helper/helper";
 @import "framework/helper/bem";
+@import "framework/helper/typechecks";
 
 // ---- Import the Setup ----
 @import "setup";
-
-// Image & Icon Maps
-@import "maps/fontstacks";
-@import "maps/imagemap";
-@import "maps/sprite";
-@import "maps/sprite-retina";
-@import "maps/iconfontlist";
-@import "maps/zmap";
 
 // Globals
 @import "framework/helper/debug";
