@@ -68,7 +68,7 @@
 @mixin grid-container($container) {
 
   // Default Container Setup
-  $container: comp-extend((
+  $container: map-merge((
     width: 320 1180,
     position: center,
     gutter: 0,
@@ -184,7 +184,7 @@
 @mixin grid-row($row) {
 
   // Default Row Setup
-  $row: comp-extend((
+  $row: map-merge((
     spacing: 10,
     layout: block,
     classname: row,
@@ -267,7 +267,7 @@
 @mixin grid-colum($colums) {
 
   // Default Setup for Columns
-  $colums: comp-extend((
+  $colums: map-merge((
     spacing: 10,
     layout: block,
     extras: false,
@@ -393,7 +393,7 @@
 @mixin grid-size($grid) {
 
   // Setup Default Vars
-  $grid: comp-extend((
+  $grid: map-merge((
     size: 1,
     max: 12,
     flex: false
@@ -437,7 +437,7 @@
 @mixin pixel-grid($grid) {
 
   // Default Setup
-  $grid: comp-extend((
+  $grid: map-merge((
     size: 1,
     max: 12,
     margin: 10,
@@ -492,7 +492,7 @@
 @mixin grid-generator($generator) {
 
   // Setup Default Vars
-  $generator: comp-extend((
+  $generator: map-merge((
     colums: 12,
     select: false,
     name: false,
@@ -600,7 +600,7 @@
 @mixin grid-devide($devide) {
 
   // Setup Default Vars
-  $devide: comp-extend((
+  $devide: map-merge((
     colums: 12,
     name: '.width',
     devide: 2
@@ -661,7 +661,7 @@
 @mixin grid-offset($offset) {
 
   // Setup Default Vars
-  $offset: comp-extend((
+  $offset: map-merge((
     size: 1,
     max: 12,
     direction: left
@@ -701,7 +701,7 @@
 @mixin grid-offset-generator($offset) {
 
   // Setup Default Vars
-  $offset: comp-extend((
+  $offset: map-merge((
     max: 12,
     name: '.offset'
   ),$offset);
@@ -770,7 +770,7 @@
 @mixin grid-pushpull($pushpull) {
 
   // Setup Default Vars
-  $pushpull: comp-extend((
+  $pushpull: map-merge((
     size: 1,
     max: 12,
     direction: push,
@@ -818,7 +818,7 @@
 //    }
 @mixin grid-pushpull-generator($pushpull) {
 
-  $pushpull: comp-extend((
+  $pushpull: map-merge((
     max: 12,
     name: '.move',
     extend: false
@@ -889,7 +889,7 @@
 @mixin grid-normalizer($normalize) {
 
   // Setup Default Vars
-  $normalize: comp-extend((
+  $normalize: map-merge((
     name: false,
     option: blockgrid,
     important: false

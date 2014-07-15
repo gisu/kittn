@@ -1,7 +1,7 @@
 @mixin triangle($values: ()) {
 
   // Default Container Setup
-  $values: comp-extend((
+  $values: map-merge((
     color: #fff,
     width: 15px,
     height: 15px,

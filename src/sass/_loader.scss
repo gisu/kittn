@@ -17,10 +17,10 @@
 @import "SassySort";
 
 // --- Import Internal Libs
+@import "framework/helper/typechecks";
 @import "framework/helper/fonts";
 @import "framework/helper/helper";
 @import "framework/helper/bem";
-@import "framework/helper/typechecks";
 
 // ---- Import the Setup ----
 @import "setup";

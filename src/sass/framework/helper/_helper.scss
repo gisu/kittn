@@ -2,21 +2,38 @@
 // Various Helper
 // ===================================================
 
-// Strip Units
+/**
+ * Strip Units from Values
+ *
+ * @param {Number} $number - Value
+ *
+ * @returns {Number}       - Unitless Value
+ */
 @function strip-units($number) {
-  @if type-of($number) != number {
+  // If the Value is not a Number Break the Function
+  @if type-of($number) != 'number' {
     @warn "#{$number} is not a number for strip-unit.";
     @return false;
+
   } @else {
+    // If the Value is unitless
     @if unitless($number) {
       @return $number;
+
+    // Otherwise Remove the Units
     } @else {
       @return $number / ($number * 0 + 1);
     }
   }
 }
 
-// Unit Checker
+/**
+ * Add the Default Unit on unitless Values
+ *
+ * @param {Number} $value  - Value
+ *
+ * @returns {Number}
+ */
 @function unit-check($value) {
   @if unitless($value) {
     @if $default-unit == rem {
@@ -31,21 +48,18 @@
   }
 }
 
-
-// Mixin: calc
-// Shorthand for the CSS3 Calc function
-//
-// @mixin     calc
-// @param     $property {string} The Property that calculated
-// @param     $expression {string} The Formula
-// @usage     +calc($property,$expression)
-// @eg        +calc(width, '100% / 2 - 2 * 3 px')
-// @mixin calc($property, $expression) {
-//   #{$property}: -moz-calc(#{$expression});
-//   #{$property}: -o-calc(#{$expression});
-//   #{$property}: -webkit-calc(#{$expression});
-//   #{$property}: calc(#{$expression});
-// }
+/**
+ * Shorthand for the CSS3 Calc function
+ *
+ * @param  {string}   $property   - Property that calculated
+ * @param  {string}   $expression - Formula
+ */
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -o-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}
 
 /**
  * Clamp a Number between a min and max values,
@@ -61,20 +75,14 @@
   @return if($value > $max, $max, if($value < $min, $min, $value));
 }
 
-// Component Extend
-// http://hugogiraudel.com/2014/05/05/bringing-configuration-objects-to-sass/
-@function comp-extend($obj, $ext-obj) {
-  @return map-merge($obj, $ext-obj);
-}
-
-// Function: cp
-// Pick the Color Values from the Color Map
-//
-// @function   cp
-// @param      $target {string} The desired color
-// @param      $map {string} The Color Map
-// @return     {string} Color Value
-// @usage:     @include cp($target);
+/**
+ * Pick the Color Values from the Color Map
+ *
+ * @param  {string}    $target - Desired color
+ * @param  {string}    $map    - Color Map
+ *
+ * @returns {Color}
+ */
 @function cp($target, $map: $stylecolors) {
   @if map-has-key($map,$target) {
     @return map-get(map-get($map,$target),color);
@@ -83,17 +91,25 @@
   }
 }
 
-@function s($lines,$hard: false, $size: $spacing) {
-  @if type-of($lines) == 'number' {
-    @if $hard != false {
-      @return strip-units($lines) * $size !important;
-    } @else {
-      @return strip-units($lines) * $size;
-    }
+/**
+ * Multiply the Spacing Value to generate Spacings
+ *
+ * @alias s()
+ *
+ * @param   {Number} $lines - Multiplicator for Spacing
+ * @param   {Bool}   $hard (false) - For including an !important
+ * @param   {Number} $size ($spacing) - Connection to the Base Spacing
+ *
+ * @returns {Value}
+ */
+@function spacer($lines, $hard: false, $size: $spacing) {
+  @if is-number($lines) {
+    $u: unit-check(0);
+    @return strip-units($lines) * if(unitless($size), $size + $u, $size) if($hard,!important,null);
   }
 }
-@function spacer($lines,$hard: false, $size: $spacing) {
-  @if type-of($lines) == 'number' {
-    @return strip-units($lines) * $size + 0px if($hard,!important,null);
-  }
+
+// alias
+@function s($lines, $hard: false, $size: $spacing) {
+  @return spacer($lines, $hard, $spacing);
 }

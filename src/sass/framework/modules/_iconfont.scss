@@ -40,7 +40,7 @@
 @mixin icon($name, $options: ()) {
 
   // Default Setup
-  $options: comp-extend((
+  $options: map-merge((
     extend: false,
     font: false
   ),$options);
