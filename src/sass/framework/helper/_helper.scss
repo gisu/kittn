@@ -5,7 +5,7 @@
 // Strip Units
 @function strip-units($number) {
   @if type-of($number) != number {
-    @warn "#{$number} is not a number for `strip-unit`.";
+    @warn "#{$number} is not a number for strip-unit.";
     @return false;
   } @else {
     @if unitless($number) {

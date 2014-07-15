@@ -5,38 +5,19 @@
 // Activate the Font Generator
 @include fontface-generator();
 
-// Global Activation
-* {
-  @if $activate-antialias == true {
-    @include antialias;
-  }
-
-  @if $activate-box-sizing == true {
-    &, &:before, &:after {
-      box-sizing: border-box;
-    }
-  }
-}
-
-h1, h2, h3, h4, h5, h6,
-p, blockquote, pre,
-dl, dd, ol, ul {
-  margin-top: 0
-}
 
 @if $activate-viewport-fix {
   @-ms-viewport { width: device-width; }
-}
-
-html,
-body {
-  min-height: 100%;
 }
 
 html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   background: transparent;
+
+  @if $activate-box-sizing == true {
+    box-sizing: border-box;
+  }
 
   @if $body-typo-based == rem {
     @if $responsive-fonts != false {
@@ -55,6 +36,24 @@ html {
   } @else {
     font-size: $body-font-scale + 0%;
   }
+}
+
+// Global Activation
+* {
+  @if $activate-antialias == true {
+    @include antialias;
+  }
+
+  @if $activate-box-sizing == true {
+    &, &:before, &:after {
+      box-sizing: inherit;
+    }
+  }
+}
+
+html,
+body {
+  min-height: 100%;
 }
 
 body {
@@ -81,6 +80,13 @@ body {
     hyphens: none;
   }
 }
+
+h1, h2, h3, h4, h5, h6,
+p, blockquote, pre,
+dl, dd, ol, ul {
+  margin-top: 0
+}
+
 
 article, aside, details, figcaption, figure, footer,
 header, hgroup, main, nav, section, summary {
