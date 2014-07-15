@@ -2,29 +2,16 @@
 //          Positioning Mixins
 // ------------------------------------------------------------
 
-// Private Mixin: _set-position
-// Set the Position for the Position Mixins
-//
-// ------
-// @variable:
-//    $position [list]
-//      -> The Position Values
-//      -> one value = top
-//      -> two values = top left
-//      -> four values = top right bottom left
-//      -> For Zero Position (0) set the value to 'z'.
-// ------
-// @usage:
-//    .container {
-//      @include _set-position(10 20em 30 30rem);
-//    }
-// @result:
-//    .container {
-//      top: 10px;
-//      right: 20em;
-//      bottom: 30px;
-//      left: 30rem;
-//    }
+/**
+ * Set the Position for the Position Mixins
+ *
+ * @access private
+ *
+ * @param {list} $position - Position Values. one value = top,
+ *                           two values = top left,
+ *                           four values = top right bottom left
+ *                           For Zero Position (0) set the value to 'z'
+ */
 @mixin _set-position($position) {
 
   // Setup internal vars
@@ -40,9 +27,11 @@
     @if $count == 1 {
       $targets: top;
     }
+
     @if $count == 2 {
       $targets: top left;
     }
+
     @if $count == 4 {
       $targets: top right bottom left;
     }
@@ -64,81 +53,40 @@
   }
 }
 
-// Mixin: relative
-// Mixin for relativ positioning
-//
-// ------
-// @variable:
-//    $pos [list]
-//      -> The Position Values
-//      -> one value = top
-//      -> two values = top left
-//      -> four values = top right bottom left
-//      -> For Zero Position (0) set the value to 'z'.
-// ------
-// @usage:
-//    .container {
-//      @include relative(15 30);
-//    }
-// @result:
-//    .container {
-//      position: relative;
-//      top: 10px;
-//      left: 30px;
-//    }
+/**
+ * Shorthand for Relative positioning
+ *
+ * @param {list} $position - Position Values. one value = top,
+ *                           two values = top left,
+ *                           four values = top right bottom left
+ *                           For Zero Position (0) set the value to 'z'
+ */
 @mixin relative($pos: 0) {
   position: relative;
   @include _set-position($pos);
 }
 
-// Mixin: absolute
-// Mixin for absolute positioning
-//
-// ------
-// @variable:
-//    $pos [list]
-//      -> The Position Values
-//      -> one value = top
-//      -> two values = top left
-//      -> four values = top right bottom left
-//      -> For Zero Position (0) set the value to 'z'.
-// ------
-// @usage:
-//    .container {
-//      @include absolute(5rem);
-//    }
-// @result:
-//    .container {
-//      position: absolute;
-//      top: 5rem;
-//    }
+/**
+ * Shorthand for Absolute positioning
+ *
+ * @param {list} $position - Position Values. one value = top,
+ *                           two values = top left,
+ *                           four values = top right bottom left
+ *                           For Zero Position (0) set the value to 'z'
+ */
 @mixin absolute($pos: 0) {
   position: absolute;
   @include _set-position($pos);
 }
 
-// Mixin: fixed
-// Mixin for fixed positioning
-//
-// ------
-// @variable:
-//    $pos [list]
-//      -> The Position Values
-//      -> one value = top
-//      -> two values = top left
-//      -> four values = top right bottom left
-//      -> For Zero Position (0) set the value to 'z'.
-// ------
-// @usage:
-//    .container {
-//      @include fixed(0 0 4em z);
-//    }
-// @result:
-//    .container {
-//      position: fixed;
-//      bottom: 4em;
-//      left: 0;
-//    }
+/**
+ * Shorthand for Fixed positioning
+ *
+ * @param {list} $position - Position Values. one value = top,
+ *                           two values = top left,
+ *                           four values = top right bottom left
+ *                           For Zero Position (0) set the value to 'z'
+ */
 @mixin fixed($pos: 0) {
   position: fixed;
   @include _set-position($pos);
@@ -160,6 +108,11 @@
 //      top: inherit;
 //      bottom: inherit;
 //    }
+
+/**
+ * Shorthand for Static positioning
+ * reset all position values
+ */
 @mixin static {
   position: static;
   left: inherit;
@@ -168,49 +121,172 @@
   bottom: inherit;
 }
 
-// Mixin: bar-top
-// Define a Top Bar at the Top of the Viewport
-//
-// @mixin     bar-top
-// @param     $z-index {value} The Z-Index
-// @param     $variant {value} f for position:fixed, a for position:absolute
-// @usage:    +bar-top($z-index, $variant)
-//          ...
-@mixin bar-top($z-index: 9999,$variant: f) {
+/**
+ * Setup a Bar Element
+ *
+ * @param {*}      $variant  - 'f' for fixed, 'a' for absolute
+ * @param {*}      $position - 't' Top, 'b' Bottom, 'l' Left, 'r' Right
+ * @param {value}  $z-index (9999)  - The Z-Index
+ */
+@mixin bar($variant, $position, $z: 9999) {
+
+  // Set the position variant
   @if $variant == f {
-    @include fixed(z z);
+    position: fixed;
   } @else {
-    @include absolute(z z);
+    position: absolute;
   }
-  width: 100%;
-  z-index: $z-index;
+
+  // Set the z-index
+  z-index: $z;
+
+  // Set Position and Dimension
+  @if $position == l {
+    left: 0;
+    top: 0;
+    height: 100%;
+
+  } @else if $position == r {
+    right: 0;
+    top: 0;
+    height: 100%;
+
+  } @else if $position == b {
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+  } @else {
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
 }
 
-// Mixin: bar-bottom
-// Define a Bottom Bar at the Bottom of the Viewport
-//
-// @mixin     bar-bottom
-// @param     $z-index {value} The Z-Index
-// @param     $variant {value} f for position:fixed, a for position:absolute
-// @usage:    +bar-bottom($z-index, $variant)
-//          ...
-@mixin bar-bottom($z-index: 999, $variant: f) {
-  @if $variant == f {
-    @include fixed(0 0 z z);
-  } @else {
-    @include absolute(0 0 z z);
-  }
-  width: 100%;
-  z-index: $z-index;
+/**
+ * Define a Top Bar at the Top of the Viewport
+ *
+ * @param {value}  $z       - The Z-Index
+ * @param {*}      $variant - 'f' for fixed, 'a' for absolute
+ */
+@mixin bar-top($z: 9999, $variant: f) {
+  @include bar($variant, t, 9999);
 }
 
-// Mixin: absolute-middle
-// Moving an absolute position element in the Center - optional in the Middle (with Height)
-//
-// @mixin     absolute-middle
-// @param     $element {list} Width and the Height of the Element (in PX).
-// @usage:    +absolute-middle($element: 100 200)
-//          ...
+/**
+ * Define a Bottom Bar at the Bottom of the Viewport
+ *
+ * @param {value}  $z       - The Z-Index
+ * @param {*}      $variant - 'f' for fixed, 'a' for absolute
+ */
+@mixin bar-bottom($z: 9999, $variant: f) {
+  @include bar($variant, b, 9999);
+}
+
+/**
+ * Transform named Positions to number
+ *
+ * @access private
+ *
+ * @param {*} $pos - Position Value
+ *                   [ left | center | right | top |
+ *                     middle | bottom | number | bool]
+ * @param {string} $axis - The Position Axis [vert | horz]
+ */
+@function position-translate($pos, $axis) {
+  @if is-number($pos) {
+    $result: clamp(strip-units($pos), 0, 100);
+
+  // When a Keywords are used
+  } @else {
+    @if $axis == vert {
+      @if $pos == top { $result: 0; }
+      @if $pos == middle { $result: 50; }
+      @if $pos == bottom { $result: 100; }
+    } @else {
+      @if $pos == left { $result: 0; }
+      @if $pos == center { $result: 50; }
+      @if $pos == right { $result: 100; }
+    }
+  }
+
+  @return $result;
+}
+
+/**
+ * Move the Pivot Point from a Element, based on 2D CSS Transform
+ *
+ * @param {*} $vert (middle) - Vertical Position from the Pivot Point
+ *                             [top | middle | bottom | number | bool]
+ * @param {*} $horz (false)  - Horizontal Position from the Pivot Point
+ *                             [left | center | right | number | bool]
+ */
+@mixin pivot($vert: middle, $horz: false) {
+  $v: null;
+  $h: null;
+
+  // If Vert is active
+  @if $vert {
+    $v: position-translate($vert, vert);
+  }
+
+  // If Horz is active
+  @if $horz {
+    $h: position-translate($horz, horz);
+  }
+
+  // Set the Pivot Point
+  @if $v and $h {
+    transform: translate((0 - $v + 0%), (0 - $h + 0%));
+
+  } @else {
+    @if $v {
+      transform: translate((0 - $v + 0%), 0);
+    }
+
+    @if $h {
+      transform: translate(0, (0 - $h + 0%));
+    }
+  }
+}
+
+/**
+ * Move an Element
+ *
+ * @param {Number} $vert - Vertical Position
+ * @param {Number} $horz - Horizontal Position
+ */
+@mixin slide($vert: 50, $horz: false) {
+
+  @if $vert or $horz {
+    position: absolute;
+  }
+
+  // If Vert is Active
+  @if $vert {
+    top: position-translate($vert, vert) + 0%;
+  }
+
+  // If Horz is active
+  @if $horz {
+    left: position-translate($horz, horz) + 0%;
+  }
+}
+
+/**
+ * Center a absolute positioned Element in the middle
+ */
+@mixin pivot-center {
+  @include slide(50,50);
+  @include pivot(50,50);
+}
+
+/**
+ * Moving an absolute position element in the Center -
+ * optional in the Middle (with Height)
+ *
+ * @param  {list}  $element  - Width and the Height of the Element
+ */
 @mixin absolute-middle($element: 0 0) {
   $width  : 0 !default;
   $height : 0 !default;
@@ -219,6 +295,7 @@
   @if length($element) == 2 {
     $width: if(unitless(nth($element,1)),nth($element,1) + 0px, nth($element,1));
     $height: if(unitless(nth($element,2)),nth($element,2) + 0px, nth($element,2));
+
   } @else {
     $width: if(unitless($element),$element + 0px, $element);
   }
@@ -228,21 +305,21 @@
   width: $width;
   position: absolute;
   left: 50%;
+
   @if length($element) == 2 {
     top: 50%;
     margin-top: 0 - ($height / 2);
   }
+
   margin-left: 0 - ($width / 2);
 }
 
-// Mixin: element-middle
-// Moving an Element in the Middle and Center
-//
-// @mixin     element-middle
-// @param     $container {list} The Width and the Height of the outer Container (in PX)
-// @param     $element {list} The Width and the Height of the positioned inner Element (in PX)
-// @usage:    +element-middle($container: 400 200,$element: 88 40)
-//          ...
+/**
+ * Moving an Element in the Middle and Center
+ *
+ * @param {list}  $container - The Width and the Height of the outer Container
+ * @param {list}  $element   - The Width and the Height of the positioned inner Element
+ */
 @mixin element-middle($container: 0, $element: 0) {
 
   $container-height : 0 !default;
@@ -280,55 +357,14 @@
   height: $element-height;
 }
 
-// Mixin: absolute-centering
-// Centering a element
-//
-// @mixin     centering
-// @param     $size {list} The Width and the Height of the outer Container (in %) [:default => false]
-// @param     $index {value} The Layerindex (in PX) [:default => false]
-// @param     $box {list} The min-widht, max-width, min-height, max-height of the Container (in PX) [:default => false]
-// @usage:    +centering($size, $index, $box)
-//          ...
-@mixin absolute-centering($size: false, $index: false, $box: false) {
-  margin: auto;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
-  @if $size != false {
-    @include size($size);
-  }
-
-  @if $index != false {
-    z-index: $index;
-  }
-
-  @if $box != false {
-    @if nth($box,1) > 0 {
-      min-width: nth($box,1) + 0px;
-    }
-    @if nth($box,2) > 0 {
-      max-width: nth($box,2) + 0px;
-    }
-    @if nth($box,3) > 0 {
-      min-height: nth($box,3) + 0px;
-    }
-    @if nth($box,4) > 0 {
-      max-height: nth($box,4) + 0px;
-    }
-  }
-}
-
-
-// A function helper to avoid having to type `map-get($z-layers, ...)`
-// ---
-// @param [string] $component ('default'): the layer to use
-// @param [number] $offset (null): The offset, will be calculated from the z-index
-// ---
-// @return [literal] | [null]
-
+/**
+ * Get the Named Z-Index from the z-map
+ *
+ * @param   {*}   $layer - The layer to use
+ * @param   {map} $z-layers ($z-map) - Connection through Z-Map
+ *
+ * @returns Number
+ */
 @function z($layer, $z-layers: $z-map) {
   @if not map-has-key($z-layers, $layer) {
     @warn "No z-index found in $z-layers map for `#{$layer}`. Operation aborted.";
@@ -338,25 +374,13 @@
   }
 }
 
-// Mixin: z
-// Get the associated Z-Index from the Map
-//
-// @variable:
-//    $name [string]
-//      -> The Name from the ZIndex 'element'
-//    $type [string]
-//      -> The Element Type (default: default)
-//    $z [map]
-//      -> The associated data-map (default: $z-map)
-// ------
-// @usage:
-//     .block {
-//        @include z(modals);
-//     }
-// @result:
-//    .block {
-//      z-index: 40;
-//    }
+/**
+ * Get the associated Z-Index from the Map,
+ * build the Z-Index
+ *
+ * @param  {*}       $layer - The layer to use
+ * @param  {number}  $offset - Add or substract an offset
+ */
 @mixin z($layer, $offset: 0) {
 
   // Setup Var
@@ -373,15 +397,14 @@
   z-index: z($layer) + $o;
 }
 
-// Mixin: shift
-// Gives a Layer a new Z-Index
-//
-// @mixin     shift
-// @param     $index {number} The Z_index
-// @param     $offset {number} The Offset
-// @param     $position {string} The Positioning [:values => false, r(relative), a (absolute), f (fixed)]
-// @usage:    +shift($index,$position)
 //          ...
+/**
+ * Gives a Layer a new Z-Index
+ *
+ * @param  {number}   $index    - Z-index
+ * @param  {number}   $offset   - Offset
+ * @param  {string}   $position - Position. Values: 'bool', 'r' relative, 'a' absolute, 'f' fixed
+ */
 @mixin shift($index, $offset: 0, $position: false) {
 
   // If 'position' is false no position value will be added
@@ -405,14 +428,12 @@
   }
 }
 
-// Mixin: offset
-// Brings a absolute or relative element up and set the margin-bottom
-//
-// @mixin     offset
-// @param     $offset {list} The Offset Value - only one value [vertical] two values [vertical / horizontal]
-// @param     $position {string} The Positioning [:values => false, r(relative), a (absolute)]
-// @usage:    +offset($offset,$position)
-//          ...
+/**
+ * Brings a absolute or relative element up and set the margin-bottom
+ *
+ * @param  {list}    $offset   - The Offset Value. One Value = vert, two values = vert & horz
+ * @param  {string}  $position - Positioning. Values: 'bool', 'r' relative, 'a' absolute
+ */
 @mixin offset($offset, $position: false) {
   @if $position != false {
     @if $position == r {
@@ -451,13 +472,12 @@
   }
 }
 
-// Mixin: overlap
-// Overlapps a Element over the Side Padding
-//
-// @mixin     overlap
-// @param     $size {list} The Sidevalues, one value can be used for two sides, two values first for left second for right
-// @usage:    +overlap($size)
-//          ...
+/**
+ * Overlapps a Element over the Side Padding
+ *
+ * @param  {list}  $size - The Sidevalues, one value can be used for two sides,
+ *                         two values first for left second for right
+ */
 @mixin overlap($size) {
   @if length($size) == 1 {
     margin-left: 0 - $size + 0px;
@@ -467,46 +487,5 @@
   @if length($size) == 2 {
     margin-left: 0 - nth($size,1) + 0px;
     margin-right: 0 - nth($size,2) + 0px;
-  }
-}
-
-
-// Mixin: Absolute Cover
-// Cover inner Elements on the full space from the outer container
-//
-// ------
-// @variable:
-//    $horz [bool]
-//      -> Horizontal Option (default: true)
-//    $vert [bool]
-//      -> Vertical Option (default: true)
-// ------
-// @usage:
-//    .container {
-//      @include absolute-cover($horz: false, $vert: true);
-//    }
-// @result:
-//    .container {
-//      position: absolute;
-//      left: 0;
-//      width: 100%;
-//    }
-@mixin absolute-cover($horz: true, $vert: true) {
-  position: absolute;
-
-  @if $horz and $vert {
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  } @else {
-    @if $horz {
-      top: 0;
-      height: 100%;
-    }
-    @if $vert {
-      left: 0;
-      width: 100%;
-    }
   }
 }

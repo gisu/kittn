@@ -20,11 +20,11 @@
   }
 
   // Clean up Duplicates
-  $list: remove-duplicates($list);
+  $list: sl-remove-duplicates($list);
 
   // Sort the List
   @if $mobile-first != true {
-    $list: reverse($list);
+    $list: sl-reverse($list);
   }
 
   // content: $list;
@@ -33,7 +33,7 @@
 
   // Build the Stepped Width
   @for $i from 2 through length($list) {
-    @media screen and (if($mobile-first,min-width,max-width): nth($list,$i)) {
+    @media screen and (if($mobile-first, min-width, max-width): nth($list,$i)) {
       width: nth($list,$i);
     }
   }
@@ -85,10 +85,10 @@
 
   } @else if map-get($container, position) == right {
     // right positioned
+    float: right;
     @if map-get($container, gutter) > 0 {
       margin-right: unit-check(map-get($container, gutter));
     }
-    float: right;
 
   } @else {
     // centered
@@ -101,6 +101,7 @@
     // Include the Size of the Container
     @if length(map-get($container,width)) > 2 {
       @warn 'To many Values for "width". Reduce to max two Values.';
+
     } @else if length(map-get($container, width)) == 2 {
       $width-val-1: unit-check(nth(map-get($container, width),1));
       $width-val-2: unit-check(nth(map-get($container, width),2));
@@ -129,13 +130,16 @@
       // When the Base the base width are two values, overwrite this with ie8
       @if length(map-get($container,width)) > 1 {
         width: 100%;
+
         @if map-get($container, static-ie) > 0 {
           min-width: unit-check(map-get($container, static-ie));
           max-width: unit-check(map-get($container, static-ie));
+
         } @else {
           // When the Size is to low (zero), Sass use the biggest width for establish the Static width
           min-width: if($width-val-1 < $width-val-2, $width-val-2, $width-val-1);
           max-width: if($width-val-1 < $width-val-2, $width-val-2, $width-val-1);
+
         }
       } @else {
         width: unit-check(map-get($container, static-ie));
@@ -203,6 +207,7 @@
       }
     } @else if map-get($row, align) == center {
       text-align: center;
+
     } @else if map-get($row, align) == right {
       text-align: right;
     }
@@ -284,21 +289,21 @@
   @if map-get($colums,extras) != false {
     min-height: 1px;
 
-    &--collapse {
+    &#{$mark-bem-modifier}collapse {
       padding-left: 0;
       padding-right: 0;
     }
 
     @if map-get($colums,layout) == block {
-      &--left {
+      &#{$mark-bem-modifier}left {
         float: left !important;
       }
 
-      &--right {
+      &#{$mark-bem-modifier}right {
         float: right !important;
       }
 
-      &--center {
+      &#{$mark-bem-modifier}center {
         float: none !important;
         margin-left: auto;
         margin-right: auto;
@@ -500,7 +505,7 @@
     @for $i from 1 through strip-units(map-get($generator,colums)) {
       // Use outer Classes or free defined selectors
       @if map-get($generator,name) == false {
-        &__#{$i} {
+        &#{$mark-bem-modifier}#{$i} {
           @include grid-size((
             size: $i,
             max: strip-units(map-get($generator,colums))
@@ -512,7 +517,7 @@
           }
         }
       } @else {
-        #{map-get($generator,name)}__#{$i} {
+        #{map-get($generator,name)}#{$mark-bem-modifier}#{$i} {
           @include grid-size((
             size: $i,
             max: strip-units(map-get($generator,colums))
@@ -529,10 +534,11 @@
   } @else {
     // Generate a List with preselected colum size classes
     // Clean Up the List
-    $clean-list: remove-duplicates(sort(map-get($generator,select)));
+    $clean-list: sl-remove-duplicates(sl-sort(map-get($generator,select)));
 
     // The duration of the Loop
     $loop-length: length($clean-list);
+
     // Connect the Classes
     // Build a individual Loop
     @for $i from 1 through $loop-length {
@@ -541,7 +547,7 @@
 
         // Use outer Classes or free defined selectors
         @if map-get($generator,name) == false {
-          &__#{nth($clean-list, $i)} {
+          &#{$mark-bem-modifier}#{nth($clean-list, $i)} {
             @include grid-size((
               size: nth($clean-list, $i),
               max: strip-units(map-get($generator,colums))
@@ -553,7 +559,7 @@
             }
           }
         } @else {
-          #{map-get($generator,name)}__#{nth($clean-list, $i)} {
+          #{map-get($generator,name)}#{$mark-bem-modifier}#{nth($clean-list, $i)} {
             @include grid-size((
               size: nth($clean-list, $i),
               max: strip-units(map-get($generator,colums))
@@ -612,14 +618,14 @@
       @for $i1 from 1 through map-get($devide,devide) {
         // Use outer Classes or free defined selectors
         @if map-get($devide,name) == false {
-          #{map-get($devide,name)}__#{$i + ($count * ($i1 - 1))} {
+          #{map-get($devide,name)}#{$mark-bem-modifier}#{$i + ($count * ($i1 - 1))} {
             @include grid-size((
               size: $i,
               max: $count,
             ));
           }
         } @else {
-          &__#{$i + ($count * ($i1 - 1))} {
+          &#{$mark-bem-modifier}#{$i + ($count * ($i1 - 1))} {
             @include grid-size((
               size: $i,
               max: $count,
@@ -707,13 +713,13 @@
   @for $i from 1 through ($m - 1) {
     // When 'name' is false use the Parent Class
     @if map-get($offset, name) == false {
-      &-left__#{$i} {
+      &-left#{$mark-bem-modifier}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m
         ));
       }
-      &-right__#{$i} {
+      &-right#{$mark-bem-modifier}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m,
@@ -721,13 +727,13 @@
         ));
       }
     } @else {
-      #{map-get($offset,name)}-left__#{$i} {
+      #{map-get($offset,name)}-left#{$mark-bem-modifier}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m
         ));
       }
-      #{map-get($offset,name)}-right__#{$i} {
+      #{map-get($offset,name)}-right#{$mark-bem-modifier}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m,
@@ -825,14 +831,14 @@
   @for $i from 1 through ($m - 1) {
     // When 'name' is false use the Parent Class
     @if map-get($pushpull, name) == false {
-      &-push__#{$i} {
+      &-push#{$mark-bem-modifier}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
           extend: map-get($pushpull,extend)
         ));
       }
-      &-pull__#{$i} {
+      &-pull#{$mark-bem-modifier}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
@@ -841,14 +847,14 @@
         ));
       }
     } @else {
-      #{map-get($pushpull,name)}-push__#{$i} {
+      #{map-get($pushpull,name)}-push#{$mark-bem-modifier}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
           extend: map-get($pushpull,extend)
         ));
       }
-      #{map-get($pushpull,name)}-pull__#{$i} {
+      #{map-get($pushpull,name)}-pull#{$mark-bem-modifier}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
@@ -902,22 +908,22 @@
   @if map-get($normalize,name) != false {
 
     @if map-get($normalize,option) == pushpull {
-      [class^="#{map-get($normalize,name)}-push__"],
-      [class*=" #{map-get($normalize,name)}-push__"] {
+      [class^="#{map-get($normalize,name)}-push#{$mark-bem-modifier}"],
+      [class*=" #{map-get($normalize,name)}-push#{$mark-bem-modifier}"] {
         left: 0 $i;
       }
-      [class^="#{map-get($normalize,name)}-pull__"],
-      [class*=" #{map-get($normalize,name)}-pull__"] {
+      [class^="#{map-get($normalize,name)}-pull#{$mark-bem-modifier}"],
+      [class*=" #{map-get($normalize,name)}-pull#{$mark-bem-modifier}"] {
         right: 0 $i;
       }
     } @else if map-get($normalize,option) == offset {
-      [class^="#{map-get($normalize,name)}-right__"],
-      [class*=" #{map-get($normalize,name)}-right__"] {
+      [class^="#{map-get($normalize,name)}-right#{$mark-bem-modifier}"],
+      [class*=" #{map-get($normalize,name)}-right#{$mark-bem-modifier}"] {
         margin-right: 0 $i;
       }
 
-      [class^="#{map-get($normalize,name)}-left__"],
-      [class*=" #{map-get($normalize,name)}-left__"] {
+      [class^="#{map-get($normalize,name)}-left#{$mark-bem-modifier}"],
+      [class*=" #{map-get($normalize,name)}-left#{$mark-bem-modifier}"] {
         margin-left: 0 $i;
       }
     } @else if map-get($normalize,option) == inlinetable {

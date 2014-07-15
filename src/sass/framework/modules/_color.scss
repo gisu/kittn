@@ -81,7 +81,7 @@
  *
  * @returns Number
  */
-@function luma_diff($color1, $color2) {
+@function luma-diff($color1, $color2) {
   @return luma($color1) - luma($color2);
 }
 
@@ -179,8 +179,8 @@
     }
 
     // Set Class for Text Color
-    @if map-get($entry,type) == t {
-      #{$prefix}tc#{$mark-bem-modifier}#{$value} {
+    @if map-get($entry,type) == c {
+      #{$prefix}c#{$mark-bem-modifier}#{$value} {
         @include _color($value,color);
       }
     }
@@ -193,8 +193,8 @@
     }
 
     // Set two Classes for Text & Background-Color
-    @if map-get($entry,type) == bt {
-      #{$prefix}tc#{$mark-bem-modifier}#{$value} {
+    @if map-get($entry,type) == bc {
+      #{$prefix}c#{$mark-bem-modifier}#{$value} {
         @include _color($value,color);
       }
       #{$prefix}bc#{$mark-bem-modifier}#{$value} {

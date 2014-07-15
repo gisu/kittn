@@ -290,29 +290,29 @@ $font-code-style: (
 // [map]
 // color........: [string] Don't use css color names like 'black'
 // opactiy......: [boolean/number] Opacity Value
-// type.........: [string] color-type ==  bt: background and textcolor,
-//                                         t: textcolor,
+// type.........: [string] color-type ==  bc: background and textcolor,
+//                                         c: textcolor,
 //                                         b: background-color
 $stylecolors: (
   'primary': (
     color: #f29300,
     opacity: false,
-    type: bt
+    type: bc
   ),
   'black': (
     color: #3c3c3c,
     opacity: false,
-    type: bt
+    type: bc
   ),
   'gray': (
     color: #636363,
     opacity: false,
-    type: bt
+    type: bc
   ),
   'white': (
     color: #fff,
     opacity: false,
-    type: bt
+    type: bc
   ),
   'body': (
     color: #f8f8f8,

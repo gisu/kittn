@@ -181,26 +181,26 @@
   @each $name, $entry in $breakpoints {
     @if map-get($entry,view) == true {
 
-      .hidden-to__#{$name} {
+      .hidden-to#{$mark-bem-modifier}#{$name} {
         display: none;
         @include break($name, $mode: max) {
           display: inherit;
         }
       }
 
-      .hidden-from__#{$name} {
+      .hidden-from#{$mark-bem-modifier}#{$name} {
         @include break($name, $mode: min) {
           display: none;
         }
       }
 
-      .visible-to__#{$name} {
+      .visible-to#{$mark-bem-modifier}#{$name} {
         @include break($name, $mode: max) {
           display: none;
         }
       }
 
-      .visible-from__#{$name} {
+      .visible-from#{$mark-bem-modifier}#{$name} {
         display: none;
         @include break($name, $mode: min) {
           display: inherit;

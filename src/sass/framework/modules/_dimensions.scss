@@ -2,202 +2,112 @@
 //          Dimensions
 // ------------------------------------------------------------
 
-// Mixin: size
-// Shorthand for insert Dimensions. Default in PX, opt in Percent
-// Entering only one Value the Dimension Squared, with two Values
-// the width and height are written.
-//
-// @mixin     size
-// @param     $size {number} Width and or Height
-// @usage     @include size($size, $value);
-// @eg        @include size(200 100);
-@mixin size($size) {
+/**
+ * For include Element Dimensions in Width, Height and Lineheight.
+ * When '$size' have only one Value will height and width the same (square)
+ *
+ *
+ * @param {List} $size - Width and or Height
+ * @param {Bool} $lineheight (false) - On 'true' lineheight will be set to the
+ *                                     same $size, otherwise use a Number
+ */
+@mixin size($size, $lineheight: false) {
   @if length($size) <= 2 {
     @if length($size) == 2 {
       width: if(unitless(nth($size,1)),nth($size,1) + 0px, nth($size,1));
       height: if(unitless(nth($size,2)),nth($size,2) + 0px, nth($size,2));
+
+      @if $lineheight {
+        @if is-number($lineheight) {
+          line-height: if(unitless($lineheight), $lineheight + 0px, $lineheight);
+
+        } @else {
+          line-height: if(unitless(nth($size,2)),nth($size,2) + 0px, nth($size,2));
+        }
+      }
     }
 
     @if length($size) == 1 {
       width: if(unitless($size),$size + 0px, $size);
       height: if(unitless($size),$size + 0px, $size);
+
+      @if $lineheight {
+        @if is-number($lineheight) {
+          line-height: if(unitless($lineheight), $lineheight + 0px, $lineheight);
+
+        } @else {
+          line-height: if(unitless($size),$size + 0px, $size);
+        }
+      }
     }
+
   } @else {
     @warn 'Too many Size Values. Maximum two values';
   }
 }
 
-// Mixin: align-height
-// Shorthand to Align Height with Lineheight
-//
-// @mixin     align-height
-// @param     $height {value} Heightsize
-// @param     $factor {number} Multiplicator for Lineheight (default: 1)
-// @usage     +align-height($height,$factor)
-// @eg        +align-height(20px)
-@mixin align-height($height,$factor: 1) {
-  $line-height: $height * $factor;
-  $height: $height;
-
-  @if unitless($height) {
-    $height: $height + 0px;
-    $line-height: $line-height + 0px;
-  }
-
-  height: $height;
-  line-height: $line-height;
+/**
+ * Mixin to Insert Height and Lineheight on a Simple Way
+ *
+ * @param {Number}  $height - Heightvalue
+ * @param {Number}  $factor - The multiply factor
+ */
+@mixin align-height($height, $factor: 1) {
+  height: if(unitless($height), $height + 1px, $height);
+  line-height: if(unitless($height), $height + 1px, $height) * strip-units($factor);
 }
 
-// Mixin: central
-// Center and Middle a Element in a box
-// Entering only one Value the Dimension Squared, with two Values
-// the width and height are written.
-//
-// @mixin     central
-// @param     $size {number} Width and or Height
-// @usage     +central($size)
-// @eg        +central(200 100)
-@mixin central($size) {
-  @if length($size) == 2 {
-    $width: nth($size,1);
-    $height: nth($size,2);
-
-    @include size($width $height);
-
-    @if unitless($height) {
-      $height: $height + 0px;
-    }
-
-    line-height: $height;
-    text-align: center;
-  }
-  @if length($size) == 1 {
-    $width: $size;
-    $height: $size;
-
-    @include size($size);
-
-    @if unitless($height) {
-      $height: $height + 0px;
-    }
-
-    line-height: $height;
-    text-align: center;
-  }
-}
-
-// Mixin: central-transfowm
-// Center and Middle a Element absolute with transform trick
-//
-// @mixin     central-transform
-// @param     $vert {bool} Vertical Option (:default = true)
-// @param     $horz {bool} Horizontal Option (:default = true)
-// ----
-// @usage:
-//    .box {
-//      @include central-transform();
-//    }
-//
-// @result:
-//    .box {
-//      position: absolute;
-//      top: 50%;
-//      left: 50%;
-//      -webkit-transform: translate(-50%, -50%);
-//      -ms-transform: translate(-50%, -50%);
-//      transform: translate(-50%, -50%);
-//    }
-// **
-@mixin central-transform($vert: true, $horz: true) {
-  position: absolute;
-
-  @if $vert and $horz {
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  } @else {
-    @if $vert {
-      top: 50%;
-      transform: translate(-50%, 0);
-    }
-    @if $horz {
-      left: 50%;
-      transform: translate(0, -50%);
-    }
-  }
-}
-
-// Mixin: align-fontsize
-// Shorthand to Align Fontsize with Lineheight
-//
-// @mixin     align-fontsize
-// @param     $size {value} Fontsize
-// @param     $factor {number} Multiplicator for Lineheight (default: 1)
-// @usage     +align-fontsize($size,$factor)
-// @eg        +align-fontsize(14px)
+/**
+ * Mixin to Insert Height and Lineheight on a Simple Way
+ *
+ * @param {Number}  $size - Fontsize
+ * @param {Number}  $factor - The multiply factor
+ */
 @mixin align-fontsize($size,$factor: 1) {
-  $line-height: $size * $factor;
-  $size: $size;
-
-  @if unitless($size) {
-    $size: $size + 0px;
-    $line-height: $line-height + 0px;
-  }
-
-  font-size   : $size;
-  line-height : $line-height;
+  font-size: if(unitless($size), $size + 1px, $size);
+  line-height: if(unitless($size), $size + 1px, $size) * strip-units($factor);
 }
 
-// Mixin: calc
-// Shorthand for the CSS3 Calc function
-//
-// @mixin     calc
-// @param     $property {string} The Property that calculated
-// @param     $expression {string} The Formula
-// @usage     +calc($property,$expression)
-// @eg        +calc(width, '100% / 2 - 2 * 3 px')
-// @mixin calc($property, $expression) {
-//   #{$property}: -moz-calc(#{$expression});
-//   #{$property}: -o-calc(#{$expression});
-//   #{$property}: -webkit-calc(#{$expression});
-//   #{$property}: calc(#{$expression});
-// }
-
-// Mixin: circle
-// Shorthand for a perfect circle
-//
-// @mixin     circle
-// @param     $size {value} The Size of the Circle
-// @usage     +circle($size)
-@mixin circle($size) {
-  @if unitless($size) {
-    $size: $size + 0px;
-  }
-  border-radius: $size * 2;
+/**
+ * Center and Middle a Element in a box
+ *
+ * @param {number}  $size - Width and or Height
+ */
+@mixin center($size) {
+  @include size($size, $size);
+  text-align: center;
 }
 
-// Mixin: circle-align
-// Shorthand for a perfect circle that align elements in the middle
-//
-// @mixin     circle-align
-// @param     $size {value} The Size of the Circle
-// @usage     +circle-align($size)
-@mixin circle-align($size) {
+/**
+ * Build a perfect Circle
+ *
+ * @param {value}  $size - The Size of the Circle
+ */
+@mixin perfect-circle($size) {
   @include central($size);
-  @include circle($size);
-
+  border-radius: if(unitless($size), $size + 0px, $size);
 }
 
-// Mixin: ratio
-// A Floating Grid System
-//
-// @mixin     ratio
-// @param     $ratio {list} The Ratio between width and height [:default = false]
-// @param     $selector {string} Target selector [:default = false]
-// @usage:    +ratio($ratio: 1 1, $selector: false)
-//          ...
-@mixin ratio($ratio: 1 1, $selector: false) {
+/**
+ * A Floating Grid System
+ *
+ * @param {list}    $ratio (1)        - The Ratio between width and height
+ * @param {string}  $selector (false) - Target selector
+ */
+@mixin ratio($ratio: 1, $selector: false) {
+
   $sel: null;
+  $rat1: null;
+  $rat2: null;
+
+  @if length($ratio) == 2 {
+    $rat1: strip-units(nth($ratio,1));
+    $rat2: strip-units(nth($ratio,2));
+
+  } @else {
+    $rat1: strip-units($ratio);
+    $rat2: strip-units($ratio);
+  }
 
   overflow: hidden;
   position: relative;
@@ -206,7 +116,7 @@
     content: '';
     display: block;
     height: 0;
-    padding-top: (nth($ratio,2) / nth($ratio,1)) * 100%;
+    padding-top: ($rat2 / $rat1) * 100%;
   }
 
   @if $selector != false {
@@ -225,7 +135,12 @@
   }
 }
 
-@mixin ratio-break($selector: false) {
+/**
+ * Remove Ratio Values
+ *
+ * @param {string}  $selector (false) - Target selector
+ */
+@mixin unratio($selector: false) {
   $sel: null;
 
   &:before {
@@ -249,12 +164,22 @@
   }
 }
 
-// Mixin: middle
-// Middle the inner Element
-//
-// @mixin     middle
-// @usage:    +middle
-@mixin middle {
+/**
+ * Span a Element in the Height and Width
+ * absolute positioned
+ */
+@mixin tighten-up {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+/**
+ * Put Text Elements in the Middle
+ */
+@mixin text-middle {
   &:before {
     content: '';
     display: inline-block;
@@ -267,13 +192,3 @@
     vertical-align: middle;
   }
 }
-
-// @mixin middle {
-//   &:before {
-//     content: '';
-//     display: inline-block;
-//     vertical-align: middle;
-//     height: 100%;
-//     width: .1px;
-//   }
-// }
