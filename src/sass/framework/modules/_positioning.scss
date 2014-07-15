@@ -397,7 +397,6 @@
   z-index: z($layer) + $o;
 }
 
-//          ...
 /**
  * Gives a Layer a new Z-Index
  *
@@ -429,50 +428,6 @@
 }
 
 /**
- * Brings a absolute or relative element up and set the margin-bottom
- *
- * @param  {list}    $offset   - The Offset Value. One Value = vert, two values = vert & horz
- * @param  {string}  $position - Positioning. Values: 'bool', 'r' relative, 'a' absolute
- */
-@mixin offset($offset, $position: false) {
-  @if $position != false {
-    @if $position == r {
-      position: relative;
-    }
-    @if $position == a {
-      position: absolute;
-    }
-  }
-
-  @if length($offset) == 2 {
-    top: nth($offset,1) + 0px;
-    left: nth($offset,2) + 0px;
-
-    @if nth($offset,1) < 0 {
-      margin-bottom: nth($offset,1) + 0px;
-    } @else {
-      margin-bottom: nth($offset,1) + 0px;
-    }
-
-    @if nth($offset,2) < 0 {
-      margin-right: nth($offset,2) + 0px;
-    } @else {
-      margin-right: nth($offset,2) + 0px;
-    }
-  }
-
-  @if length($offset) == 1 {
-    top: $offset + 0px;
-
-    @if $offset < 0 {
-      margin-bottom: $offset + 0px;
-    } @else {
-      margin-bottom: $offset + 0px;
-    }
-  }
-}
-
-/**
  * Overlapps a Element over the Side Padding
  *
  * @param  {list}  $size - The Sidevalues, one value can be used for two sides,
@@ -480,12 +435,12 @@
  */
 @mixin overlap($size) {
   @if length($size) == 1 {
-    margin-left: 0 - $size + 0px;
-    margin-right: 0 - $size + 0px;
+    margin-left: 0 - if(unitless($size), $size + 0px, $size);
+    margin-right: 0 - if(unitless($size), $size + 0px, $size);
   }
 
   @if length($size) == 2 {
-    margin-left: 0 - nth($size,1) + 0px;
-    margin-right: 0 - nth($size,2) + 0px;
+    margin-left: 0 - if(unitless(nth($size,1)), nth($size,1) + 0px, nth($size,1));
+    margin-right: 0 - if(unitless(nth($size,2)), nth($size,2) + 0px, nth($size,2));
   }
 }
