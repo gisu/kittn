@@ -8,7 +8,7 @@
  * @param  {number}   $px   - The Size in PX
  * @param  {number}   $base - The Base for the calculation
  *
- * @return {number} Return the size in em
+ * @return {number}   Return the size in rem
  */
 @function rem($px, $base: 16 / 100 * $body-font-scale) {
   @if unitless($px) {
@@ -23,9 +23,10 @@
 // Recalculate the heightvalues to rem
 //
 // @mixin     _remsize
-// @param     $arg {value} The Argument
-// @param     $size {value} The size
+// @param   {*}  $arg  The Argument
+// @param   {*}  $size  The size
 // @usage:    +_remsize($arg,$size)
+
 @mixin _remsize($arg, $lines, $iecheck: true) {
   @if $body-typo-based == px {
     #{$arg}: $lines * $body-line-height + 0px;
@@ -33,9 +34,14 @@
 
   @if $body-typo-based == rem {
     @if $comp-ie8 == true {
-      #{$arg}: $lines * $body-line-height + 0px;
+      @include jacket(modern) {
+        #{$arg}: rem($lines * $body-line-height);
+      }
+      @include jacket(old) {
+        #{$arg}: $lines * $body-line-height + 0px;
+      }
     } @else {
-      #{$arg}: rem($size);
+      #{$arg}: rem($lines * $body-line-height);
     }
   }
 }
@@ -55,7 +61,13 @@
 
     @if $body-typo-based == rem {
       @if $comp-ie8 == true {
-        #{$arg}: $size + 0px;
+        @include jacket(modern) {
+          #{$arg}: rem($size);
+        }
+        @include jacket(old) {
+          #{$arg}: $size + 0px;
+        }
+
       } @else {
         #{$arg}: rem($size);
       }
