@@ -20,7 +20,7 @@ Than install the Dependencies
 
 Install SASS
 ```shell
-gem install sass
+gem install sass --pre
 ```
 
 Install Jade
