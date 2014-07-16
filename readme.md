@@ -4,7 +4,9 @@
 
 ## Introduction
 
-Kittn is not a pure CSS Framework, it is rather a collection of several components that will help the developers to work on the frontend.
+Why you name it 'Kittn'? Simple, the most People loves Kitten, and its time to bring more cuteness in tech industry :D
+
+Kittn is a Toolkit, a collection of several components that will help the developers to work on the frontend. The most based on my own Experience.
 
 The CSS does not offer Part prefabricated elements, like Bootstrap, it gives the developer rather the mixins in hand, to generate elements.
 
