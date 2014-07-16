@@ -2,28 +2,14 @@
 //          Breakpoint Helper
 // ------------------------------------------------------------
 
-// Function: bp
-// Pick the Values from the Breakpoint Map
-//
-// ------
-// @variable:
-//    $target [list]
-//      -> The required Breaksize from the map
-//    $entrys [map]
-//      -> Connection to the Breakpoint Map
-// ------
-// @usage:
-//     .container {
-//       @media screen and (min-width: bp(2)) {
-//         content: 'Break two';
-//       }
-//     }
-// @result:
-//    @media screen and (min-width: 480px) {
-//      .container {
-//        content: 'Break two';
-//      }
-//    }
+/**
+ * Pick the Values from the Breakpoint Map
+ *
+ * @param   {*}   $target - The required Breakpoint
+ * @param   {map} $entrys ($breakpoints) - Connection to the Breakpoint Map
+ *
+ * @returns {Number}
+ */
 @function bp($target, $entrys: $breakpoints) {
 
   // Remove Units from Target
@@ -37,31 +23,14 @@
   }
 }
 
-// Mixin: break
-// Pick the Value from the Breakpoint List and generate a mediaquery
-//
-// ------
-// @variable:
-//    $target [list]
-//      -> The required Breaksize from the map. One or two Values posible
-//    $mode [values]
-//      -> The Media Querie Mode
-//      -> values: between | max | min | auto (default - setup with mobile-first:true/false)
-//    $list [map]
-//      -> Connection to the Breakpoint Map
-// ------
-// @usage:
-//     .container {
-//       @include break(2) {
-//         content: 'Break two';
-//       }
-//     }
-// @result:
-//    @media screen and (min-width: 480px) {
-//      .container {
-//        content: 'Break two';
-//      }
-//    }
+/**
+ * [$mode description]
+ *
+ * @param   {*}   $target - The required Breakpoint
+ * @param   {*}   $mode - The Media Querie Mode
+ *                        values: between | max | min | auto (default - setup with mobile-first:true/false)
+ * @param   {map} $list ($breakpoints) - Connection to the Breakpoint Map
+ */
 @mixin break($target, $mode: auto, $list: $breakpoints) {
 
   @if $mode == between {
@@ -133,28 +102,30 @@
   }
 }
 
-// Mixin for using Element Queries
-//
-// @link https://github.com/snugug/eq.js
-//
-// @param {list}  $states - The Different Querie Types
-//
-// @example
-//    .test {
-//      @include eq('small', 'medium', 'large') {
-//        color: red;
-//      }
-//      @include eq('small') {
-//        p {
-//          @include fontcalc(300);
-//        }
-//      }
-//    }
-//
-//    <!-- The HTML -->
-//    <div data-eq-pts="small: 480, medium: 700, large: 800" class="test">
-//      <p>Test Block</p>
-//    </div>
+/**
+ * Mixin for using Element Queries
+ *
+ * @link https://github.com/snugug/eq.js
+ *
+ * @param {list}  $states - The Different Querie Types
+ *
+ * @example
+ *    .test {
+ *      @include eq('small', 'medium', 'large') {
+ *        color: red;
+ *      }
+ *      @include eq('small') {
+ *        p {
+ *          @include fontcalc(300);
+ *        }
+ *      }
+ *    }
+ *
+ *    <!-- The HTML -->
+ *    <div data-eq-pts="small: 480, medium: 700, large: 800" class="test">
+ *      <p>Test Block</p>
+ *    </div>
+ */
 @mixin eq($states...) {
   @if (length($states) == 0) {
     @warn 'You need to include a state!';
@@ -174,9 +145,11 @@
   }
 }
 
-// Mixin: visibility
-// Generate Visibility Classes from the Breakpoint Map
-//
+/**
+ * Generate Visibility Classes
+ *
+ * @access private
+ */
 @mixin visibility {
   @each $name, $entry in $breakpoints {
     @if map-get($entry,view) == true {
