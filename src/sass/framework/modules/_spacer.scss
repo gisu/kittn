@@ -2,28 +2,38 @@
 //          Spacer
 // -----------------------------------------------------------
 
-// Mixin: _margin-padding
-// Private Mixin for build easy margin and paddings
-//
-// ------
-// @variable:
-//    $options [data-map]
-//    - value [bool|list]
-//      => It generate all four sides, with different length of values.
-//      => Per Default uses 'px', but other units can be also used
-//    - type [value]
-//      => Margin or Padding Type
-//      => values: margin | padding (default)
-//    - important [bool]
-//      => When the Values need hard overwritten.
-//      => Otherwise set it to 'false', the parent Classname will be used as base name
-// ------
-// @usage:
-//    .box {
-//      @include _margin-padding((
-//        value: 10 20em
-//      ));
-//    }
+// Spacer Option Map
+$spacer-options: (
+  w: width,
+  h: height,
+  lh: line-height,
+  pt: padding-top,
+  pb: padding-bottom,
+  pl: padding-left,
+  pr: padding-right,
+  mt: margin-top,
+  mb: margin-bottom,
+  ml: margin-left,
+  mr: margin-right
+) !global;
+
+/**
+ * Private Mixin for build easy margin and paddings
+ *
+ * @access private
+ *
+ * @param {map}  $options - Settings
+ *                          :value {Bool|List} (false) - It generate all four sides, with different length of values.
+ *                          :type {*} (padding) - Margin or Padding Type
+ *                          :important {Bool} (false) - When the Values need hard overwritten. Otherwise set it to 'false', the parent Classname will be used as base name
+ *
+ * @example
+ *   .box {
+ *     @include _margin-padding((
+ *       value: 10 20em
+ *     ));
+ *   }
+ */
 @mixin _margin-padding($options) {
   // Setup Default var
   $options: map-merge((
@@ -40,21 +50,28 @@
 
   // Check type
   @if map-get($options,type) == padding OR map-get($options,type) == margin {
+
     // Check if Value is filled
     @if map-get($options, value) != false {
+
       // Check Length
       @if length(map-get($options, value)) > 4 {
         @warn 'Too many Values, please reduce to max 4.';
+
       } @else {
+
         $l: length($v);
 
-        // Set the Trigger List
+        // Set the Sides
         @if $l == 4 {
           $cl: 1 2 3 4;
+
         } @else if $l == 3 {
           $cl: 1 2 1 2;
+
         } @else if $l == 2 {
           $cl: 1 2 1 2;
+
         } @else {
           $cl: 1 1 1 1;
         }
@@ -69,34 +86,24 @@
     } @else {
       @warn 'Please insert a value for margin or padding.';
     }
+
   } @else {
     @warn 'Type "#{map-get($options,type)}" is not possible. Use "padding" or "margin".';
   }
 }
 
-// Mixin: padding
-// Generate Paddings for all four sides off a box.
-//
-// ------
-// @variable:
-//    $value [list]
-//      -> It generate all four sides, with different length of values.
-//      -> Per Default uses 'px', but other units can be also used
-//    $important [bool]
-//      -> When the Values need hard overwritten.
-//      -> Otherwise set it to 'false', the parent Classname will be used as base name
-// ------
-// @usage:
-//    .box {
-//      @include padding(10 30 4rem 5%);
-//    }
-// @result:
-//    .box {
-//      padding-top: 10px;
-//      padding-right: 30px;
-//      padding-bottom: 4rem;
-//      padding-left: 5%;
-//    }
+/**
+ * Generate Paddings for all four sides off a box.
+ *
+ * @param {map}  $options - Settings
+ *                          :value {Bool|List} (false) - It generate all four sides, with different length of values.
+ *                          :important {Bool} (false) - When the Values need hard overwritten. Otherwise set it to 'false', the parent Classname will be used as base name
+ *
+ * @example
+ *   .box {
+ *     @include padding(10 30 4rem 5%);
+ *   }
+ */
 @mixin padding($value: null, $important: false) {
   @include _margin-padding((
     value: $value,
@@ -105,29 +112,18 @@
   ));
 }
 
-// Mixin: margin
-// Generate Margins for all four sides off a box.
-//
-// ------
-// @variable:
-//    $value [list]
-//      -> It generate all four sides, with different length of values.
-//      -> Per Default uses 'px', but other units can be also used
-//    $important [bool]
-//      -> When the Values need hard overwritten.
-//      -> Otherwise set it to 'false', the parent Classname will be used as base name
-// ------
-// @usage:
-//    .box {
-//      @include margin(10);
-//    }
-// @result:
-//    .box {
-//      margin-top: 10px;
-//      margin-right: 10px;
-//      margin-bottom: 10px;
-//      margin-left: 10px;
-//    }
+/**
+ * Generate Margins for all four sides off a box.
+ *
+ * @param {map}  $options - Settings
+ *                          :value {Bool|List} (false) - It generate all four sides, with different length of values.
+ *                          :important {Bool} (false) - When the Values need hard overwritten. Otherwise set it to 'false', the parent Classname will be used as base name
+ *
+ * @example
+ *   .box {
+ *     @include margin(10 30 4rem 5%);
+ *   }
+ */
 @mixin margin($value: null, $important: false) {
   @include _margin-padding((
     value: $value,
@@ -136,106 +132,61 @@
   ));
 }
 
-// Mixin: spacer
-// Generate Spacing with stepped units
-//
-// ------
-// @variable:
-//    $lines [number]
-//      -> The Steps for the Calculation
-//    $options [value]
-//      -> The Spacing Type
-//      -> values: w = width, h = height, lh = line-height, pt = padding-top
-//                 pb = padding-bottom, pl = padding-left, pr = padding-right
-//                 mt = margin-top, mb = margin-bottom, ml = margin-left
-//                 mr = margin-right
-//    $size [number]
-//      -> The Basesize (default : $spacing)
-//    $important [bool]
-//      -> Overwrite Values with !important
-// ------
-// @usage:
-//    .box {
-//      @include spacer(4, pl);
-//    }
-// @result:
-//    .box {
-//      padding-left: 80px;
-//    }
-@mixin spacer($lines: 1, $option: null, $size: $spacing, $important: false) {
+/**
+ * Generate Spacing based on the Global Spacing
+ *
+ * @param {List}    $options           - Spacing Type
+ *                                       values: w = width, h = height, lh = line-height, pt = padding-top
+ *                                       pb = padding-bottom, pl = padding-left, pr = padding-right
+ *                                       mt = margin-top, mb = margin-bottom, ml = margin-left
+ *                                       mr = margin-right
+ * @param {Number}  $lines (1)         - Spacing Multiplicator
+ * @param {Bool}    $important (false) - Overwrite Values with !important
+ * @param {Number}  $size ($spacing)   - Global Size Value
+ */
+@mixin spacer($options, $lines: 1, $important: false, $size: $spacing) {
 
-  // Option Setup
-  $spacer-options: (
-    w: width,
-    h: height,
-    lh: line-height,
-    pt: padding-top,
-    pb: padding-bottom,
-    pl: padding-left,
-    pr: padding-right,
-    mt: margin-top,
-    mb: margin-bottom,
-    ml: margin-left,
-    mr: margin-right
-  );
+  // Remove Duplicates
+  $o: sl-remove-duplicates($options);
 
-  @if map-has-key($spacer-options,$option) {
-    #{map-get($spacer-options,$option)}: strip-units($lines) * if(unitless($size), $size + 0px, $size) if($important == true, !important, null);
-  } @else {
-    @warn 'The Option "#{$option}" is not available.';
+  @for $i from 1 through length($o) {
+
+    // Move the Pointer to the List Entry
+    $option: nth($o, $i);
+
+    // Check if the Key is Available in the List
+    @if map-has-key($spacer-options,$option) {
+      #{map-get($spacer-options,$option)}: strip-units($lines) * if(unitless($size), $size + 0px, $size) if($important == true, !important, null);
+    } @else {
+      @warn 'The Option "#{$option}" is not available.';
+    }
   }
 }
 
-// Mixin: spacer-reset
-// Generate the Grid Height
-//
-// @mixin     spacer-reset
-// @param     $option [value] The Attribute - h (height), lh (lineheight), pt (padding-top), pb (padding-bottom), pl (padding-left), pr (padding-right), mt (margin-top), mb (margin-bottom), ml (margin-left), mr (margin-right)
-// @param     $hard [boolean] Overwrite Values with !important
-// @usage:    +spacer-reset($option: mb, $name: none, $hard: false)
+/**
+ * Reset Spacing
+ *
+ * @param {List}    $options           - Spacing Type
+ *                                       values: w = width, h = height, lh = line-height, pt = padding-top
+ *                                       pb = padding-bottom, pl = padding-left, pr = padding-right
+ *                                       mt = margin-top, mb = margin-bottom, ml = margin-left
+ *                                       mr = margin-right
+ * @param {Bool}    $important (false) - Overwrite Values with !important
+ */
+@mixin spacer-reset($options, $important: false) {
+  // Remove Duplicates
+  $o: sl-remove-duplicates($options);
 
-// Mixin: spacer-reset
-// Reset the Spacer generated sizes
-//
-// ------
-// @variable:
-//    $options [value]
-//      -> The Spacing Type
-//      -> values: w = width, h = height, lh = line-height, pt = padding-top
-//                 pb = padding-bottom, pl = padding-left, pr = padding-right
-//                 mt = margin-top, mb = margin-bottom, ml = margin-left
-//                 mr = margin-right
-//    $important [bool]
-//      -> Overwrite Values with !important
-// ------
-// @usage:
-//    .box {
-//      @include spacer-reset(pl);
-//    }
-// @result:
-//    .box {
-//      padding-left: inherit;
-//    }
-@mixin spacer-reset($option: null, $important: false) {
+  @for $i from 1 through length($o) {
 
-  // Option Setup
-  $spacer-options: (
-    w: width,
-    h: height,
-    lh: line-height,
-    pt: padding-top,
-    pb: padding-bottom,
-    pl: padding-left,
-    pr: padding-right,
-    mt: margin-top,
-    mb: margin-bottom,
-    ml: margin-left,
-    mr: margin-right
-  );
+    // Move the Pointer to the List Entry
+    $option: nth($o, $i);
 
-  @if map-has-key($spacer-options,$option) {
-    #{map-get($spacer-options,$option)}: inherit if($important == true, !important, null);
-  } @else {
-    @warn 'The Option "#{$option}" is not available.';
+    // Check if the Key is Available in the List
+    @if map-has-key($spacer-options,$option) {
+      #{map-get($spacer-options,$option)}: inherit if($important == true, !important, null);
+    } @else {
+      @warn 'The Option "#{$option}" is not available.';
+    }
   }
 }
