@@ -1,14 +1,6 @@
-// ============================================================
-//            FILE : normalize.sass
-// ----------------------------------------------------------*/
-
-// Activate the Font Generator
-@include fontface-generator();
-
-
-@if $activate-viewport-fix {
-  @-ms-viewport { width: device-width; }
-}
+// ===================================================
+// Normalize
+// ===================================================
 
 html {
   -webkit-text-size-adjust: 100%;
@@ -72,6 +64,10 @@ body {
 
   @if map-get($font-style-text, weight) {
     font-weight: map-get($font-style-text, weight); }
+}
+
+@if $activate-viewport-fix {
+  @-ms-viewport { width: device-width; }
 }
 
 @if $activate-hyphens == true {
@@ -632,14 +628,4 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 100%;
-}
-
-// Include Color and Visibility Generators
-@if $generate-colors != false {
-  @include colorgenerator($stylecolors);
-}
-
-// Include the visibility Classes only on modern browsers
-@include jacket(modern) {
-  @include visibility;
 }

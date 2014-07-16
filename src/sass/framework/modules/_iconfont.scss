@@ -2,6 +2,29 @@
 // Iconfont Helper
 // ===================================================
 
+/**
+ * Get the Icon from the Map
+ *
+ * @param   {*} $name - Key to the Map Entry
+ *
+ * @returns {*}
+ */
+@function icon($name) {
+  @if map-has-key($icons,$name) {
+    @return map-get($icons,$name);
+  } @else {
+    @warn 'The Icon "#{$name}" is not available!';
+  }
+}
+
+
+/**
+ * Build the Base Attributes for all Font Icons
+ *
+ * @access private
+ *
+ * @param  {*}  $iconFontName - Name off the Icon Font
+ */
 @mixin iconfont($iconFontName) {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -14,6 +37,11 @@
   line-height: 1;
 }
 
+/**
+ * Build the Base Icon Font Behavior
+ *
+ * @param  {*}  $iconFontName - Name off the Icon Font
+ */
 @mixin icon-font-generator($iconFontName) {
   [class^="#{$icon-class-prefix}#{$mark-bem-element}"],
   [class*=" #{$icon-class-prefix}#{$mark-bem-element}"],
@@ -26,21 +54,30 @@
     content: attr(data-icon); }
 }
 
-// Generate the Baseclasses for the Icons
-@include icon-font-generator($icon-font-name);
-
-
-// Get the Icon from the Map
-@function icon($name) {
-  @if map-has-key($icons,$name) {
-    @return map-get($icons,$name);
-  } @else {
-    @warn 'The Icon "#{$name}" is not available!';
+/**
+ * Generate the Icon Classes
+ *
+ * @param {map}  $icons - Icon Font Map
+ */
+@mixin icon-generator($icons: $icons) {
+  @each $name, $icon in $icons {
+    .#{$icon-class-prefix}#{$mark-bem-element}#{$name}:before {
+      content: $icon;
+    }
   }
 }
 
-
-// Include the Icon as Content Element
+/**
+ * Insert the Icon Value as Content
+ *
+ * @param  {*}   $name    - Key to the Map Entry
+ * @param  {map} $options - Setup
+ *                          :extend (false)
+ *                           - When the Icon need Extend with a Class
+ *                          :font (false)
+ *                           - When the Icon need the Iconfont Attributes
+ *                             Needed when sitting in a Media Query
+ */
 @mixin icon($name, $options: ()) {
 
   // Default Setup
@@ -60,13 +97,12 @@
   content: icon($name);
 }
 
+
+/**
+ * Extend a Class with a Icon Font Class
+ *
+ * @param {*} $name - Name off the Icon (from the Map)
+ */
 @mixin ext-icon($name) {
   @extend .#{$icon-class-prefix}#{$mark-bem-element}#{$name};
-}
-
-
-@each $name, $icon in $icons {
-  .#{$icon-class-prefix}#{$mark-bem-element}#{$name}:before {
-    content: $icon;
-  }
 }

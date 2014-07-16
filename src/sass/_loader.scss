@@ -41,7 +41,9 @@
 @import "framework/modules/triangle";
 
 // Layout [ESSENTIAL]
+@import "framework/partials/pre-generators";
 @import "framework/partials/normalize";
+@import "framework/partials/post-generators";
 // @import "framework/partials/tables";
 
 // Vendor Styling

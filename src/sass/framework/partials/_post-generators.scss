@@ -1,0 +1,24 @@
+// ===================================================
+// Post Generators
+// ===================================================
+
+// Include Color and Visibility Generators
+@if $generate-colors != false {
+  @include colorgenerator($stylecolors);
+}
+
+// Include the visibility Classes only on modern browsers
+@include jacket(modern) {
+  @include visibility;
+}
+
+// Generate the Baseclasses for the Icons
+@if $icon-font-name {
+  @include icon-font-generator($icon-font-name);
+  @include icon-generator($icons);
+}
+
+// Activate the Sprite Container
+@if $image-sprite-name {
+  @include sprite-generator($spritename: $image-sprite-name);
+}
