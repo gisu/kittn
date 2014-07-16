@@ -2,11 +2,9 @@
 // Shorthands
 // ===================================================
 
-// Mixin: clearfix
-// Micro Clearfix without IE7 the fix is smarter
-//
-// @mixin     clearfix
-// @usage:    +clearfix
+/**
+ * Micro Clearfix without IE7 the fix is smarter
+ */
 @mixin clearfix {
   &:after {
     content : '';
@@ -15,24 +13,18 @@
   }
 }
 
-// ---- Block Centering ----
-
-// Mixin: center
-// Shorthand for centering Elements (automatic switched to display: block)
-//
-// @mixin     center
-// @usage:    +center
+/**
+ * Shorthand for centering Elements
+ */
 @mixin center {
   display: block;
   margin-left: auto;
   margin-right: auto;
 }
 
-// Mixin: word-wrap
-// Compatible Mixin for Word-Wrap
-//
-// @mixin     word-wrap
-// @usage:    +word-wrap
+/**
+ * Compatible Mixin for Word-Wrap
+ */
 @mixin word-wrap {
   -ms-word-break: break-all;
   word-break: break-all;
@@ -40,11 +32,9 @@
   hyphens: auto;
 }
 
-// Mixin: text-truncate
-// Mixin for truncating Text
-//
-// @mixin     text-truncate
-// @usage:    +text-truncate
+/**
+ * Mixin for truncating Text
+ */
 @mixin text-truncate {
   max-width: 100%;
   overflow: hidden !important;
@@ -53,23 +43,17 @@
   word-wrap: normal !important ;
 }
 
-// Mixin: vertical-center
-// Vertical Center Elements with IE7 Fallback
-//
-// @mixin     vertical-center
-// @usage:    +vertical-center
+/**
+ * Vertical Center Elements
+ */
 @mixin vertical-center {
   display: table-cell;
   vertical-align: middle;
 }
 
-// ---- Clear Text ----
-
-// Mixin: cleartext
-// New Method for Text Replacement
-//
-// @mixin     cleartext
-// @usage:    +cleartext
+/**
+ * Method for Text Replacement
+ */
 @mixin cleartext {
   background-color: transparent;
   border: 0;
@@ -78,11 +62,9 @@
   text-shadow: none;
 }
 
-// Mixin: cleartext-complex
-// Text Replacement Method from HTML5 Boilerplate
-//
-// @mixin     cleartext-complex
-// @usage:    +cleartext-complex
+/**
+ * Text Replacement Method from HTML5 Boilerplate
+ */
 @mixin cleartext-complex {
   background-color: transparent;
   border: 0;
@@ -95,45 +77,33 @@
   }
 }
 
-// Mixin: cleartext-simpler
-// Text Replacement without 'overflow:hidden'
-//
-// @mixin     cleartext-simpler
-// @usage:    +cleartext-simpler
+/**
+ * Text Replacement without 'overflow:hidden'
+ */
 @mixin cleartext-simpler {
   text-indent: 100%;
   white-space: nowrap;
   overflow: hidden;
 }
 
-// ---- CSS Bug Helper ----
-
-// Mixin: decollapse
-// Helper to prevent collapsing Margins
-//
-// @mixin     decollapse
-// @usage:    +decollapse
+/**
+ * Helper to prevent collapsing Margins
+ */
 @mixin decollapse {
   padding-top: 1px;
   margin-top: 1px;
 }
 
-// ---- Other ----
-
-// Mixin: performance
-// Activate the Hardware Acceleration on Webkit Browsers
-//
-// @mixin     performance
-// @usage:    +performance
+/**
+ * Activate the Hardware Acceleration on Webkit Browsers
+ */
 @mixin performance {
   transform: translate3d(0,0,0);
 }
 
-// Mixin: antialias
-// Activate Antialias on Webkit Browsers
-//
-// @mixin     antialias
-// @usage:    +antialias
+/**
+ * Activate Antialias on Webkit Browsers
+ */
 @mixin antialias {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

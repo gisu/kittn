@@ -2,13 +2,12 @@
 // Modernizr
 // ===================================================
 
-// Mixin: modernizr
-// Generate a chained class list off modernizr classes
-//
-// @mixin     modernizr
-// @param     $features {list} The checked features
-// @param     $supports {boolean} Internal yep nope routing
-// @usage:    +modernizr($features, $supports)
+/**
+ * Generate a chained class list off modernizr classes
+ *
+ * @param  {List}  $features - The checked features
+ * @param  {Bool}  $supports - Internal yep nope routing
+ */
 @mixin modernizr($features, $supports) {
   $internal-check: true;
   $prefix: if($supports, '', 'no-');
@@ -20,7 +19,8 @@
 
     @if type-of($feature) != string {
       $internal-check: false;
-      @warn '`#{$feature}` is not a string for `modernizr`';
+      @warn '"#{$feature}" is not a string for "modernizr"';
+
     } @else {
       $placeholder: $placeholder + '-' + $feature;
       $new-selector: #{'.' + $prefix + $feature};
@@ -39,24 +39,22 @@
   }
 }
 
-// Mixin: yep
-// Route the Yep Styling
-//
-// @mixin     yep
-// @param     $features {list} The checked features
-// @usage:    +yep($features)
+/**
+ * Route the Yep Styling
+ *
+ * @param  {list}  $features - The checked features
+ */
 @mixin yep($features...) {
   @include modernizr($features, $supports: true) {
     @content;
   }
 }
 
-// Mixin: nope
-// Route the Nope Styling
-//
-// @mixin     nope
-// @param     $features {list} The checked features
-// @usage:    +nope($features)
+/**
+ * Route the Nope Styling
+ *
+ * @param  {list}  $features - The checked features
+ */
 @mixin nope($features...) {
   @include modernizr($features, $supports: false) {
     @content;
