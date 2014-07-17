@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/gisu/kittn.png?label=ready&title=Ready)](https://waffle.io/gisu/kittn)
 ![](https://cloud.githubusercontent.com/assets/442468/3564677/85e7f014-0a93-11e4-93b7-95137d7cf008.png)
 
 ----
