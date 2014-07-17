@@ -12,9 +12,8 @@
 @import "maps/zmap";
 
 // --- Import External Libs
-@import "jacket";
-@import "SassyLists";
-@import "SassySort";
+@import "framework/helper/jacket";
+@import "framework/helper/sassylists";
 
 // --- Import Internal Libs
 @import "framework/helper/typechecks";

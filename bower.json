@@ -11,8 +11,5 @@
     "eq.js": "~1.4.1"
   },
   "devDependencies": {
-    "jacket": "~1.1.1",
-    "SassyLists": "~2.2.3",
-    "SassySort": "*"
   }
 }

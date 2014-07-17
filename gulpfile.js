@@ -8,10 +8,7 @@ var sassLoadPath = ['src/sass/'];
 // Load Pathes
 var sassSrc = [
   'src/sass/**/*.scss',
-  'src/sass/**/*.sass',
-  'src/stash/bower/jacket/stylesheets/*.scss',
-  'src/stash/bower/SassyLists/stylesheets/**/*.scss',
-  'src/stash/bower/SassySort/stylesheets/**/*.scss'
+  'src/sass/**/*.sass'
 ];
 
 // Setup what for JS Files you want to only copy it into dist/,
