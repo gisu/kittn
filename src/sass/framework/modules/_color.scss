@@ -108,17 +108,17 @@
 
       // Generate the IE8 Fallback Colors
       @include jacket(old) {
-        #{$attrib}: map-get($colors,color) if($imp, !important, '');
+        #{$attrib}: map-get($colors,color) if($imp, !important, null);
       }
 
       // Generate RGBA Colors
       @include jacket(modern) {
-        #{$attrib}: rgba(map-get($colors,color),map-get($colors,opacity)) if($imp, !important, '');
+        #{$attrib}: rgba(map-get($colors,color),map-get($colors,opacity)) if($imp, !important, null);
       }
 
     // Otherwise use Hex Colors
     } @else {
-      #{$attrib}: map-get($colors,color) if($imp, !important, '');
+      #{$attrib}: map-get($colors,color) if($imp, !important, null);
     }
 
   } @else {
