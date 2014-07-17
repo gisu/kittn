@@ -7,36 +7,36 @@ html {
   -ms-text-size-adjust: 100%;
   background: transparent;
 
-  @if $activate-box-sizing == true {
+  @if $kittn-active-box-sizing == true {
     box-sizing: border-box;
   }
 
-  @if $body-typo-based == rem {
-    @if $responsive-fonts != false {
+  @if $kittn-typo-base-unit == rem {
+    @if $kittn-active-responsive-fonts != false {
       @include jacket(modern) {
-        @include responsive-fontsize($responsive-fonts);
+        @include responsive-fontsize($kittn-active-responsive-fonts);
       }
 
       @include jacket(old) {
-        font-size: $body-font-scale + 0%;
+        font-size: $kittn-typo-base-scale + 0%;
       }
 
     } @else {
-      font-size: $body-font-scale + 0%;
+      font-size: $kittn-typo-base-scale + 0%;
     }
 
   } @else {
-    font-size: $body-font-scale + 0%;
+    font-size: $kittn-typo-base-scale + 0%;
   }
 }
 
 // Global Activation
 * {
-  @if $activate-antialias == true {
+  @if $kittn-active-antialias == true {
     @include antialias;
   }
 
-  @if $activate-box-sizing == true {
+  @if $kittn-active-box-sizing == true {
     &, &:before, &:after {
       box-sizing: inherit;
     }
@@ -51,26 +51,26 @@ body {
 body {
   margin: 0;
   position: relative;
-  color: $tc-text;
-  @include fontsize($body-font-size);
-  @include lineheight($body-line-height);
+  color: $kittn-color-text;
+  @include fontsize($kittn-typo-base-size);
+  @include lineheight($kittn-typo-lineheight);
 
-  @if $activate-hyphens == true {
+  @if $kittn-active-hyphens == true {
     @include word-wrap;
   }
 
-  @if $c-body {
-    background-color: $c-body; }
+  @if $kittn-background-color-body {
+    background-color: $kittn-background-color-body; }
 
-  @if map-get($font-style-text, weight) {
-    font-weight: map-get($font-style-text, weight); }
+  @if map-get($kittn-font-basetypo, weight) {
+    font-weight: map-get($kittn-font-basetypo, weight); }
 }
 
-@if $activate-viewport-fix {
+@if $kittn-active-viewport-fix {
   @-ms-viewport { width: device-width; }
 }
 
-@if $activate-hyphens == true {
+@if $kittn-active-hyphens == true {
   abbr, acronym, blockquote, code, dir, kbd,
   listing, plaintext, q, samp, tt, var, xmp {
     hyphens: none;
@@ -94,10 +94,10 @@ audio, canvas, video {
 }
 
 body, button, input, select, textarea {
-  font-family: map-get($font-style-text, font);
+  font-family: map-get($kittn-font-basetypo, font);
 }
 
-audio:not([controls])  {
+audio:not([controls]) {
   display: none;
   height: 0;
 }
@@ -111,71 +111,60 @@ input[type="button"],input[type="reset"],input[type="submit"] {
   display: none;
 }
 
-
 // ---- Headings ----
 %heading {
   text-rendering: optimizeLegibility;
 
-  @if map-get($heading-glob,lineheight) != false {
-    @if map-get($heading-glob,lineheight) == d {
+  @if map-get($kittn-global-heading,lineheight) != false {
+    @if map-get($kittn-global-heading,lineheight) == d {
       line-height: 1;
     } @else {
-      @include lineheight(map-get($heading-glob,lineheight));
+      @include lineheight(map-get($kittn-global-heading,lineheight));
     }
   }
 
-  @if map-get($heading-glob,marginbottom) != false {
-    @include marginbottom(map-get($heading-glob,marginbottom));
+  @if map-get($kittn-global-heading,marginbottom) != false {
+    @include marginbottom(map-get($kittn-global-heading,marginbottom));
   }
 
-  @if map-get($heading-glob,fontweight) != false {
-    font-weight: map-get($heading-glob,fontweight);
+  @if map-get($kittn-global-heading,fontweight) != false {
+    font-weight: map-get($kittn-global-heading,fontweight);
   }
 
-  @if $font-heading-family != false OR $tc-heading != false {
-    @if $font-heading-family != false {
-      font-family: $font-heading-family;
+  @if $kittn-font-headingtypo != false OR $kittn-color-headline != false {
+    @if $kittn-font-headingtypo != false {
+      font-family: $kittn-font-headingtypo;
     }
 
-    @if $tc-heading != false {
-      color: $tc-heading;
+    @if $kittn-color-headline != false {
+      color: $kittn-color-headline;
     }
   }
 }
 
-@if $generateFonts == true {
+@if $kittn-generate-typostyles == true {
   // Generate Fontsizes
   @include typogenerator;
 }
 
 // Header Stack
 .headerStack {
-  @if map-get($heading-glob,marginbottom) != false {
-    @include marginbottom(map-get($heading-glob,marginbottom));
+  @if map-get($kittn-global-heading,marginbottom) != false {
+    @include marginbottom(map-get($kittn-global-heading,marginbottom));
   }
 
   > * {
     margin-bottom: 0
   }
 
-  @if map-get($typo-margin,top) > 0 {
+  @if map-get($kittn-typo-margin,top) > 0 {
 
     p + & {
-      @include margintop(map-get($typo-margin,top));
+      @include margintop(map-get($kittn-typo-margin,top));
     }
   }
 }
 
-/*
-  Brand
-  ===========
-
-  Neutralize the Heading Format and pre Style the inner Link
-
-    <h1 class="brand">
-      <a href="#" title="..."></a>
-    </h1>
-  */
 .brand {
   font-size: inherit !important;
   line-height: 1 !important;
@@ -191,16 +180,6 @@ input[type="button"],input[type="reset"],input[type="submit"] {
   }
 }
 
-/*
-  Brand_logo
-  ===========
-
-  Neutralize the Heading Format, pre style the inner link with remove of any Text. Needed for Including Logo images
-
-    <h1 class="brand--logo">
-      <a href="#" title="..."></a>
-    </h1>
-  */
 .brand--logo {
   @extend .brand;
 
@@ -212,11 +191,11 @@ input[type="button"],input[type="reset"],input[type="submit"] {
 // ---- Paragraph ----
 p {
   font-size: 1rem;
-  @include marginbottom(map-get($typo-margin,bottom));
+  @include marginbottom(map-get($kittn-typo-margin,bottom));
 
-  @if map-get($typo-margin,top) > 0 {
+  @if map-get($kittn-typo-margin,top) > 0 {
     + h1, + h2, + h3, + h4, + h5, + h6 {
-      @include margintop(map-get($typo-margin,bottom) * 1.8);
+      @include margintop(map-get($kittn-typo-margin,bottom) * 1.8);
     }
   }
 }
@@ -226,9 +205,9 @@ a {
   outline: 0;
   line-height: inherit;
   background: transparent;
-  color: map-get($tc-link,normal);
+  color: map-get($kittn-color-textlink,normal);
 
-  @if map-get($tc-decoration,normal) == true {
+  @if map-get($kittn-link-decoration,normal) == true {
     text-decoration: underline;
   }
 
@@ -238,9 +217,9 @@ a {
 
   &:hover,
   &.link-hover {
-    color: map-get($tc-link,hover);
+    color: map-get($kittn-color-textlink,hover);
 
-    @if map-get($tc-decoration,hover) == true {
+    @if map-get($kittn-link-decoration,hover) == true {
       text-decoration: underline;
     }
 
@@ -251,7 +230,7 @@ a {
 
   &:active,
   &.link-active {
-    color: map-get($tc-link,active);
+    color: map-get($kittn-color-textlink,active);
   }
 
   &:hover,
@@ -275,28 +254,28 @@ abbr {
 }
 
 strong {
-  @if map-get($font-style-bold,weight) {
-    font-weight: map-get($font-style-bold,weight);
+  @if map-get($kittn-font-boldtypo,weight) {
+    font-weight: map-get($kittn-font-boldtypo,weight);
   }
 
-  @if map-get($font-style-bold,font) {
-    font-family: map-get($font-style-bold,font);
+  @if map-get($kittn-font-boldtypo,font) {
+    font-family: map-get($kittn-font-boldtypo,font);
   }
 }
 
 em, dfn {
-  @if map-get($font-style-italic,style) {
-    font-style: map-get($font-style-italic,style);
+  @if map-get($kittn-font-italictypo,style) {
+    font-style: map-get($kittn-font-italictypo,style);
   }
 
-  @if map-get($font-style-italic,font) != false {
-    font-family: map-get($font-style-italic,font);
+  @if map-get($kittn-font-italictypo,font) != false {
+    font-family: map-get($kittn-font-italictypo,font);
   }
 }
 
 mark, .hightlight, ::selection {
-  background: map-get($tc-highlight,background);
-  color: map-get($tc-highlight,text);
+  background: map-get($kittn-color-highlight,background);
+  color: map-get($kittn-color-highlight,text);
 }
 
 .lined {
@@ -304,9 +283,9 @@ mark, .hightlight, ::selection {
 }
 
 ul,dl {
-  list-style-type: map-get($font-list-style,style);
-  padding-left: map-get($font-list-style,left) + 0px;
-  @include marginbottom(map-get($typo-margin,bottom));
+  list-style-type: map-get($kittn-typo-list-style,style);
+  padding-left: map-get($kittn-typo-list-style,left) + 0px;
+  @include marginbottom(map-get($kittn-typo-margin,bottom));
 
   nav > & {
     list-style-type: none;
@@ -316,17 +295,17 @@ ul,dl {
 }
 
 ol {
-  padding-left: map-get($font-list-style,left) + 2px;
-  @include marginbottom(map-get($typo-margin,bottom));
+  padding-left: map-get($kittn-typo-list-style,left) + 2px;
+  @include marginbottom(map-get($kittn-typo-margin,bottom));
 }
 
 li, dt, dd {
-  @if map-get($font-list-style,fontsize) != false {
-    @include fontsize(map-get($font-list-style,fontsize));
+  @if map-get($kittn-typo-list-style,fontsize) != false {
+    @include fontsize(map-get($kittn-typo-list-style,fontsize));
   }
 
-  @if map-get($font-list-style,lineheight) != false {
-    @include lineheight(map-get($font-list-style,lineheight));
+  @if map-get($kittn-typo-list-style,lineheight) != false {
+    @include lineheight(map-get($kittn-typo-list-style,lineheight));
   }
 }
 
@@ -342,42 +321,35 @@ dt, dd {
   }
 }
 
-//
-//   HR
-//   ===========
-
-//   Basestyled HR
-
-//     <hr/>
 hr {
-  height: $hr-style + 0px;
+  height: $kittn-hairline-style + 0px;
   border-left: 0;
   border-bottom: 0;
   border-right: 0;
-  border-top: ($hr-style + 0px) $hr-style-color;
+  border-top: ($kittn-hairline-style + 0px) $kittn-hairline-style-color;
   position: relative;
-  @include marginbottom(map-get($typo-margin,bottom));
+  @include marginbottom(map-get($kittn-typo-margin,bottom));
 
-  @if map-get($typo-margin,top) > 0 {
-    @include margintop(map-get($typo-margin,bottom));
+  @if map-get($kittn-typo-margin,top) > 0 {
+    @include margintop(map-get($kittn-typo-margin,bottom));
   }
 }
 
 code, kbd, pre, samp {
-  @if map-get($font-code-style, fontsize) != false{
-    @include fontsize(map-get($font-code-style, fontsize));
+  @if map-get($kittn-typo-code-style, fontsize) != false{
+    @include fontsize(map-get($kittn-typo-code-style, fontsize));
   }
 
-  @if map-get($font-code-style, lineheight) != false {
-    @include lineheight(map-get($font-code-style, lineheight));
+  @if map-get($kittn-typo-code-style, lineheight) != false {
+    @include lineheight(map-get($kittn-typo-code-style, lineheight));
   }
 
-  @if map-get($font-style-code, fontweight) != false {
-    font-weight: map-get($font-style-code, fontweight);
+  @if map-get($kittn-font-codetypo, fontweight) != false {
+    font-weight: map-get($kittn-font-codetypo, fontweight);
   }
 
-  @if map-get($font-style-code, fontfamily) != false {
-    font-family: map-get($font-style-code, fontfamily);
+  @if map-get($kittn-font-codetypo, fontfamily) != false {
+    font-family: map-get($kittn-font-codetypo, fontfamily);
 
   } @else {
     font-family: monospace, serif;
@@ -386,7 +358,7 @@ code, kbd, pre, samp {
 
 pre {
   white-space: pre;
-  @include marginbottom(map-get($typo-margin,bottom));
+  @include marginbottom(map-get($kittn-typo-margin,bottom));
 
   > code {
     word-wrap: normal;
@@ -488,27 +460,27 @@ svg:not(:root) {
 blockquote {
   margin-left: 0;
   margin-right: 0;
-  @include marginbottom(map-get($typo-margin,bottom));
+  @include marginbottom(map-get($kittn-typo-margin,bottom));
 
   & p {
-    @if map-get($font-blockquote-style,fontsize) != false {
-      @include fontsize(map-get($font-blockquote-style,fontsize));
+    @if map-get($kittn-typo-blockquote-style,fontsize) != false {
+      @include fontsize(map-get($kittn-typo-blockquote-style,fontsize));
     }
 
-    @if map-get($font-blockquote-style,lineheight) != false {
-      @include lineheight(map-get($font-blockquote-style,lineheight));
+    @if map-get($kittn-typo-blockquote-style,lineheight) != false {
+      @include lineheight(map-get($kittn-typo-blockquote-style,lineheight));
     }
   }
 
   cite {
     font-style: normal;
 
-    @if map-get($font-cite-style,fontsize) != false {
-      @include fontsize(map-get($font-cite-style,fontsize));
+    @if map-get($kittn-typo-cite-style,fontsize) != false {
+      @include fontsize(map-get($kittn-typo-cite-style,fontsize));
     }
 
-    @if map-get($font-cite-style,lineheight) != false {
-      @include lineheight(map-get($font-cite-style,lineheight));
+    @if map-get($kittn-typo-cite-style,lineheight) != false {
+      @include lineheight(map-get($kittn-typo-cite-style,lineheight));
     }
 
     &:before {
@@ -523,20 +495,20 @@ blockquote {
 }
 
 blockquote, q, cite {
-  @if map-get($font-style-quote, fontfamily) != false {
-    font-family: map-get($font-style-quote, fontfamily);
+  @if map-get($kittn-font-quotetypo, fontfamily) != false {
+    font-family: map-get($kittn-font-quotetypo, fontfamily);
   }
 
-  @if map-get($font-style-quote, fontweight) != false {
-    font-weight: map-get($font-style-quote, fontweight);
+  @if map-get($kittn-font-quotetypo, fontweight) != false {
+    font-weight: map-get($kittn-font-quotetypo, fontweight);
   }
 
-  @if map-get($font-style-quote, fontstyle) != false {
-    font-style: map-get($font-style-quote, fontstyle);
+  @if map-get($kittn-font-quotetypo, fontstyle) != false {
+    font-style: map-get($kittn-font-quotetypo, fontstyle);
   }
 
-  @if $tc-blockquote != false {
-    color: $tc-blockquote;
+  @if $kittn-color-blockquote != false {
+    color: $kittn-color-blockquote;
   }
 }
 

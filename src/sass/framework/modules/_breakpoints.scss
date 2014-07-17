@@ -6,11 +6,11 @@
  * Pick the Values from the Breakpoint Map
  *
  * @param   {*}   $target - The required Breakpoint
- * @param   {map} $entrys ($breakpoints) - Connection to the Breakpoint Map
+ * @param   {map} $entrys ($kittn-breakpoint-map) - Connection to the Breakpoint Map
  *
  * @returns {Number}
  */
-@function bp($target, $entrys: $breakpoints) {
+@function bp($target, $entrys: $kittn-breakpoint-map) {
 
   // Remove Units from Target
   $target: strip-units($target);
@@ -29,9 +29,9 @@
  * @param   {*}   $target - The required Breakpoint
  * @param   {*}   $mode - The Media Querie Mode
  *                        values: between | max | min | auto (default - setup with mobile-first:true/false)
- * @param   {map} $list ($breakpoints) - Connection to the Breakpoint Map
+ * @param   {map} $list ($kittn-breakpoint-map) - Connection to the Breakpoint Map
  */
-@mixin break($target, $mode: auto, $list: $breakpoints) {
+@mixin break($target, $mode: auto, $list: $kittn-breakpoint-map) {
 
   @if $mode == between {
 
@@ -50,8 +50,8 @@
       $size-max: if($size-2 > $size-1, $size-2, $size-1);
 
       // Modify Size for mobile-first
-      $size-min: if($mobile-first, $size-min, $size-min + 1);
-      $size-max: if($mobile-first, $size-max + 1, $size-max);
+      $size-min: if($kittn-mobile-first, $size-min, $size-min + 1);
+      $size-max: if($kittn-mobile-first, $size-max + 1, $size-max);
 
       // Insert the Media Query
       @media screen and (min-width: $size-min) and (max-width: $size-max) {
@@ -75,7 +75,7 @@
     $size: unit-check(bp($target,$list));
 
     @if $mode == auto {
-      @if $mobile-first {
+      @if $kittn-mobile-first {
         $size: $size;
         @media screen and (min-width: $size) {
           @content;
@@ -89,9 +89,9 @@
     } @else {
       // Setup for different Modes
       @if $mode == max {
-        $size: if($mobile-first == true, $size + 1, $size);
+        $size: if($kittn-mobile-first == true, $size + 1, $size);
       } @else {
-        $size: if($mobile-first == true, $size, $size + 1);
+        $size: if($kittn-mobile-first == true, $size, $size + 1);
       }
 
       // Insert the Media Query
@@ -151,29 +151,29 @@
  * @access private
  */
 @mixin visibility {
-  @each $name, $entry in $breakpoints {
+  @each $name, $entry in $kittn-breakpoint-map {
     @if map-get($entry,view) == true {
 
-      .hidden-to#{$mark-bem-modifier}#{$name} {
+      .hidden-to#{$kittn-bem-modifier-sign}#{$name} {
         display: none;
         @include break($name, $mode: max) {
           display: inherit;
         }
       }
 
-      .hidden-from#{$mark-bem-modifier}#{$name} {
+      .hidden-from#{$kittn-bem-modifier-sign}#{$name} {
         @include break($name, $mode: min) {
           display: none;
         }
       }
 
-      .visible-to#{$mark-bem-modifier}#{$name} {
+      .visible-to#{$kittn-bem-modifier-sign}#{$name} {
         @include break($name, $mode: max) {
           display: none;
         }
       }
 
-      .visible-from#{$mark-bem-modifier}#{$name} {
+      .visible-from#{$kittn-bem-modifier-sign}#{$name} {
         display: none;
         @include break($name, $mode: min) {
           display: inherit;

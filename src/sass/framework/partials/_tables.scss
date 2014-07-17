@@ -1,11 +1,11 @@
 // ============================================================
-//          Tables                                  
+//          Tables
 // ------------------------------------------------------------*/
 
 table {
   max-width: 100%;
-  @if $table-background != false {
-    background-color: $table-background;
+  @if $kittn-table-background != false {
+    background-color: $kittn-table-background;
   }
 }
 
@@ -15,28 +15,28 @@ th {
 
 .table {
   width: 100%;
-  @if $table-margin != false {
-    margin-bottom: $table-margin;
+  @if $kittn-table-margin != false {
+    margin-bottom: $kittn-table-margin;
   }
-  
+
   > thead, > tbody, > tfoot {
     > tr {
       > th, > td {
-        @if $table-cell-padding != false {
-          padding: $table-cell-padding;
+        @if $kittn-table-cell-padding != false {
+          padding: $kittn-table-cell-padding;
         }
-        @include lineheight($body-line-height);
+        @include lineheight($kittn-typo-lineheight);
         vertical-align: top;
-        @if $table-border-color != false {
-          border-top: 1px solid $table-border-color;
+        @if $kittn-table-border-color != false {
+          border-top: 1px solid $kittn-table-border-color;
         }
       }
     }
   }
   > thead > tr > th {
-    vertical-align: bottom; 
-    @if $table-border-color != false {
-      border-bottom: 2px solid $table-border-color;
+    vertical-align: bottom;
+    @if $kittn-table-border-color != false {
+      border-bottom: 2px solid $kittn-table-border-color;
     }
   }
   > caption + thead, > colgroup + thead, > thead:first-child {
@@ -46,54 +46,54 @@ th {
       }
     }
   }
-  @if $table-border-color != false {
+  @if $kittn-table-border-color != false {
     > tbody + tbody {
-      border-top: 2px solid $table-border-color;
+      border-top: 2px solid $kittn-table-border-color;
     }
   }
 }
 
 
 // ---- Bordered Tables ----
-@if $table-border-color != false {
+@if $kittn-table-border-color != false {
   .table-bordered {
-    border: 1px solid $table-border-color;
+    border: 1px solid $kittn-table-border-color;
     > thead, > tbody, > tfoot {
       > tr {
         > th, > td {
-          border: 1px solid $table-border-color;
+          border: 1px solid $kittn-table-border-color;
         }
       }
     }
     > thead > tr {
       > th, > td {
-        border-bottom-width: 2px; 
+        border-bottom-width: 2px;
       }
     }
   }
 }
 
-@if $table-bg-zebra != false {
+@if $kittn-table-background-zebra != false {
   .table-zebra {
     > tbody > tr:nth-child(odd) {
       > td, > th {
-        background-color: $table-bg-zebra;
+        background-color: $kittn-table-background-zebra;
       }
     }
   }
 }
 
-@if $table-bg-hover != false  {
+@if $kittn-table-background-hover != false  {
   .table-hover {
     > tbody, > tr:hover {
       > td, > th {
-        background-color: $table-bg-hover;
+        background-color: $kittn-table-background-hover;
       }
     }
   }
 }
 
-@if $comp-ie8 == false { 
+@if $kittn-ie8 == false {
   table col[class*='#{$table-colum-class}'] {
     position: static;
     float: none;
@@ -110,22 +110,22 @@ th {
   }
 }
 
-@media screen and (max-width: $table-trigger-size) {
+@media screen and (max-width: $kittn-table-trigger-size) {
   width: 100%;
-  @if $table-margin != false {
-    margin-bottom: $table-margin;
+  @if $kittn-table-margin != false {
+    margin-bottom: $kittn-table-margin;
   }
   overflow-y: hidden;
   overflow-x: scroll;
   -ms-overflow-style: -ms-autohiding-scrollbar;
   -webkit-overflow-scrolling: touch;
-  @if $table-border-color != false {
-    border: 1px solid $table-border-color;
+  @if $kittn-table-border-color != false {
+    border: 1px solid $kittn-table-border-color;
   }
-   
+
   > .table {
-    margin-bottom: 0; 
-    
+    margin-bottom: 0;
+
     > thead, > tbody, > tfoot {
       > tr {
         > th, > td {
@@ -134,10 +134,10 @@ th {
       }
     }
   }
-  @if $table-border-color != false {
+  @if $kittn-table-border-color != false {
     > .table-bordered {
       border: 0;
-      
+
       > thead, > tbody, > tfoot {
         > tr {
           > th:first-child, td:first-child {
@@ -150,7 +150,7 @@ th {
       }
     }
   }
-  
+
   > tbody, > tfoot {
     tr:last-child {
       > th, > td {

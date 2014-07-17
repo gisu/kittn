@@ -10,7 +10,7 @@
  *
  * @return {number}   Return the size in rem
  */
-@function rem($px, $base: 16 / 100 * $body-font-scale) {
+@function rem($px, $base: 16 / 100 * $kittn-typo-base-scale) {
   @if unitless($px) {
     @return #{$px / $base}rem;
   } @else {
@@ -26,20 +26,20 @@
  * @param   {Number}  $size  - Value
  */
 @mixin _remsize($arg, $lines) {
-  @if $body-typo-based == px {
-    #{$arg}: $lines * $body-line-height + 0px;
+  @if $kittn-typo-base-unit == px {
+    #{$arg}: $lines * $kittn-typo-lineheight + 0px;
   }
 
-  @if $body-typo-based == rem {
-    @if $comp-ie8 == true {
+  @if $kittn-typo-base-unit == rem {
+    @if $kittn-ie8 == true {
       @include jacket(modern) {
-        #{$arg}: rem($lines * $body-line-height);
+        #{$arg}: rem($lines * $kittn-typo-lineheight);
       }
       @include jacket(old) {
-        #{$arg}: $lines * $body-line-height + 0px;
+        #{$arg}: $lines * $kittn-typo-lineheight + 0px;
       }
     } @else {
-      #{$arg}: rem($lines * $body-line-height);
+      #{$arg}: rem($lines * $kittn-typo-lineheight);
     }
   }
 }
@@ -52,12 +52,12 @@
  */
 @mixin _pxsize($arg, $size) {
   @if unitless($size) {
-    @if $body-typo-based == px {
+    @if $kittn-typo-base-unit == px {
       #{$arg}: $size + 0px;
     }
 
-    @if $body-typo-based == rem {
-      @if $comp-ie8 == true {
+    @if $kittn-typo-base-unit == rem {
+      @if $kittn-ie8 == true {
         @include jacket(modern) {
           #{$arg}: rem($size);
         }
@@ -81,13 +81,13 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin rem($arg, $size, $baseline: $activate-baseline) {
+@mixin rem($arg, $size, $baseline: $kittn-active-baseline) {
   @if unitless($size) {
     $size: strip-units($size);
   }
 
   @if $baseline == true {
-    $lines: ceil($size / $body-line-height);
+    $lines: ceil($size / $kittn-typo-lineheight);
     @include _remsize($arg, $lines);
   } @else {
     @include _pxsize($arg, $size);
@@ -101,7 +101,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin lineheight($size, $baseline: $activate-baseline) {
+@mixin lineheight($size, $baseline: $kittn-active-baseline) {
   @include rem(line-height, $size, $baseline);
 }
 
@@ -112,7 +112,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin marginbottom($size, $baseline: $activate-baseline){
+@mixin marginbottom($size, $baseline: $kittn-active-baseline){
   @include rem(margin-bottom, $size, $baseline);
 }
 
@@ -123,7 +123,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin margintop($size, $baseline: $activate-baseline) {
+@mixin margintop($size, $baseline: $kittn-active-baseline) {
   @include rem(margin-top,$size, $baseline);
 }
 
@@ -134,7 +134,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin marginleft($size, $baseline: $activate-baseline) {
+@mixin marginleft($size, $baseline: $kittn-active-baseline) {
   @include rem(margin-left,$size, $baseline);
 }
 
@@ -145,7 +145,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin marginright($size, $baseline: $activate-baseline) {
+@mixin marginright($size, $baseline: $kittn-active-baseline) {
   @include rem(margin-right,$size, $baseline);
 }
 
@@ -156,7 +156,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin paddingtop($size, $baseline: $activate-baseline) {
+@mixin paddingtop($size, $baseline: $kittn-active-baseline) {
   @include rem(padding-top, $size, $baseline);
 }
 
@@ -167,7 +167,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin paddingbottom($size, $baseline: $activate-baseline) {
+@mixin paddingbottom($size, $baseline: $kittn-active-baseline) {
   @include rem(padding-bottom, $size, $baseline);
 }
 
@@ -178,7 +178,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin paddingleft($size, $baseline: $activate-baseline) {
+@mixin paddingleft($size, $baseline: $kittn-active-baseline) {
   @include rem(padding-left, $size, $baseline);
 }
 
@@ -189,7 +189,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin paddingright($size, $baseline: $activate-baseline) {
+@mixin paddingright($size, $baseline: $kittn-active-baseline) {
   @include rem(padding-right, $size, $baseline);
 }
 
@@ -200,7 +200,7 @@
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
  */
-@mixin height($size, $baseline: $activate-baseline) {
+@mixin height($size, $baseline: $kittn-active-baseline) {
   @include rem(height, $size, $baseline);
 }
 

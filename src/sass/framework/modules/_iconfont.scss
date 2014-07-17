@@ -10,8 +10,8 @@
  * @returns {*}
  */
 @function icon($name) {
-  @if map-has-key($icons,$name) {
-    @return map-get($icons,$name);
+  @if map-has-key($kittn-font-icons,$name) {
+    @return map-get($kittn-font-icons,$name);
   } @else {
     @warn 'The Icon "#{$name}" is not available!';
   }
@@ -43,8 +43,8 @@
  * @param  {*}  $iconFontName - Name off the Icon Font
  */
 @mixin icon-font-generator($iconFontName) {
-  [class^="#{$icon-class-prefix}#{$mark-bem-element}"],
-  [class*=" #{$icon-class-prefix}#{$mark-bem-element}"],
+  [class^="#{$kittn-icon-class-prefix}#{$kittn-bem-element-sign}"],
+  [class*=" #{$kittn-icon-class-prefix}#{$kittn-bem-element-sign}"],
   [data-icon] {
     &:before {
       @include iconfont($iconFontName);
@@ -57,11 +57,11 @@
 /**
  * Generate the Icon Classes
  *
- * @param {map}  $icons - Icon Font Map
+ * @param {map}  $kittn-font-icons - Icon Font Map
  */
-@mixin icon-generator($icons: $icons) {
+@mixin icon-generator($icons: $kittn-font-icons) {
   @each $name, $icon in $icons {
-    .#{$icon-class-prefix}#{$mark-bem-element}#{$name}:before {
+    .#{$kittn-icon-class-prefix}#{$kittn-bem-element-sign}#{$name}:before {
       content: $icon;
     }
   }
@@ -104,5 +104,5 @@
  * @param {*} $name - Name off the Icon (from the Map)
  */
 @mixin ext-icon($name) {
-  @extend .#{$icon-class-prefix}#{$mark-bem-element}#{$name};
+  @extend .#{$kittn-icon-class-prefix}#{$kittn-bem-element-sign}#{$name};
 }

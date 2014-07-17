@@ -2,7 +2,7 @@
 // Element Debugger
 // ===================================================
 
-@if $debug-mode == true {
+@if $kittn-debugging == true {
 
   $deb-color-error: #f00c00;
   $deb-color-double-check: #ffff00;

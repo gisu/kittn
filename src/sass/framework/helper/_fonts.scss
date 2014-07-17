@@ -12,11 +12,11 @@
  * @throw 'Not Availalbe' when the Font is not in hte stack
  */
 @function ff($family, $append...) {
-  @if map-has-key($fontstack-map, $family) {
+  @if map-has-key($kittn-fontstack-map, $family) {
     @if length($append) > 0 {
-      @return append($append, map-get($fontstack-map, $family), comma);
+      @return append($append, map-get($kittn-fontstack-map, $family), comma);
     } @else {
-      @return map-get($fontstack-map, $family);
+      @return map-get($kittn-fontstack-map, $family);
     }
 
   } @else {
@@ -48,11 +48,11 @@
   // Standardfont
   @font-face {
     font-family: $fontname;
-    src: url('#{$font-url}#{$filename}.eot');
-    src: url('#{$font-url}#{$filename}.eot?#iefix') format('eot'),
-         url('#{$font-url}#{$filename}.woff') format('woff'),
-         url('#{$font-url}#{$filename}.ttf') format('truetype'),
-         url('#{$font-url}#{$filename}.svg##{$filename}') format('svg');
+    src: url('#{$kittn-dir-font}#{$filename}.eot');
+    src: url('#{$kittn-dir-font}#{$filename}.eot?#iefix') format('eot'),
+         url('#{$kittn-dir-font}#{$filename}.woff') format('woff'),
+         url('#{$kittn-dir-font}#{$filename}.ttf') format('truetype'),
+         url('#{$kittn-dir-font}#{$filename}.svg##{$filename}') format('svg');
     font-weight : $fontweight;
     font-style  : $fontstyle; }
 
@@ -62,7 +62,7 @@
       @media screen and (-webkit-min-device-pixel-ratio: 0) {
         @font-face {
           font-family: $fontname;
-          src: url('#{$font-url}#{$filename}.svg') format('svg');
+          src: url('#{$kittn-dir-font}#{$filename}.svg') format('svg');
           font-weight : $fontweight;
           font-style  : $fontstyle;
         }
@@ -78,7 +78,7 @@
  * @access private
  */
 @mixin fontface-generator() {
-  @each $name, $entry in $fontmap {
+  @each $name, $entry in $kittn-fontface-map {
     $n: if(map-get($entry,filename) == false, $name, map-get($entry,filename));
     @include fontface(
         $fontname: $name,

@@ -9,7 +9,7 @@
  */
 @mixin element($name) {
   @at-root {
-    &#{$mark-bem-element}#{$name} {
+    &#{$kittn-bem-element-sign}#{$name} {
       @content;
     }
   }
@@ -27,7 +27,7 @@
   $e: &;
 
   @at-root {
-    &#{$mark-bem-modifier}#{$name} {
+    &#{$kittn-bem-modifier-sign}#{$name} {
       // Extend with the Parent Element
       @if $extend != false {
         @extend #{$e};
@@ -84,7 +84,7 @@
   $parent: str-slice('#{$p}',2,str-length('#{$p}'));
 
   @at-root {
-    [class^="#{$parent}"][class*="#{$mark-bem-modifier}#{$name}"] {
+    [class^="#{$parent}"][class*="#{$kittn-bem-modifier-sign}#{$name}"] {
       @content;
     }
   }

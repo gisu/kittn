@@ -36,9 +36,9 @@
  */
 @function unit-check($value) {
   @if unitless($value) {
-    @if $default-unit == rem {
+    @if $kittn-default-unit == rem {
       @return $value + 0rem;
-    } @else if $default-unit == em {
+    } @else if $kittn-default-unit == em {
       @return $value + 0em;
     } @else {
       @return $value + 0px;
@@ -83,7 +83,7 @@
  *
  * @returns {Color}
  */
-@function cp($target, $map: $stylecolors) {
+@function cp($target, $map: $kittn-color-map) {
   @if map-has-key($map,$target) {
     @return map-get(map-get($map,$target),color);
   } @else {
@@ -96,11 +96,11 @@
  *
  * @param   {Number} $lines - Multiplicator for Spacing
  * @param   {Bool}   $hard (false) - For including an !important
- * @param   {Number} $size ($spacing) - Connection to the Base Spacing
+ * @param   {Number} $size ($kittn-global-spacing) - Connection to the Base Spacing
  *
  * @returns {Value}
  */
-@function spacer($lines, $hard: false, $size: $spacing) {
+@function spacer($lines, $hard: false, $size: $kittn-global-spacing) {
   @if is-number($lines) {
     $u: unit-check(0);
     @return strip-units($lines) * if(unitless($size), $size + $u, $size) if($hard,!important,null);
@@ -114,11 +114,11 @@
  * @param   {Number} $lines - Multiplicator for Spacing
  * @param   {Bool}   $imp (false) - For including an !important
  * @param   {*}      $u (false) - Unit
- * @param   {Number} $size ($spacing) - Connection to the Base Spacing
+ * @param   {Number} $size ($kittn-global-spacing) - Connection to the Base Spacing
  *
  * @returns {Value}
  */
-@function s($lines, $imp: false, $u: false, $size: $spacing) {
+@function s($lines, $imp: false, $u: false, $size: $kittn-global-spacing) {
   @if type-of($lines) == 'number' {
 
     // When other unittype is used

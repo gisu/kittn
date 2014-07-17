@@ -361,11 +361,11 @@
  * Get the Named Z-Index from the z-map
  *
  * @param   {*}   $layer - The layer to use
- * @param   {map} $z-layers ($z-map) - Connection through Z-Map
+ * @param   {map} $z-layers ($kittn-zlayer-map) - Connection through Z-Map
  *
  * @returns Number
  */
-@function z($layer, $z-layers: $z-map) {
+@function z($layer, $z-layers: $kittn-zlayer-map) {
   @if not map-has-key($z-layers, $layer) {
     @warn "No z-index found in $z-layers map for `#{$layer}`. Operation aborted.";
     @return null;

@@ -42,7 +42,7 @@
     $imgExt    : map-get(map-get($map-images,$imageTarget),extension);
 
     // Include the Image and set the Repeat and Position (last only when is needed)
-    background-image: url('#{$single-url}#{$imgFile}');
+    background-image: url('#{$kittn-dir-single}#{$imgFile}');
     background-repeat: no-repeat;
     @if $pos != false { background-position: $pos; }
 
@@ -52,11 +52,11 @@
     // Write a Retina Fallback in the CSS file - Backgroundsize oriented to the the Size off the non retina Image
     @if $retina != false {
       $imageRetinaTarget: single-#{$image}-2x;
-      $secondaryImage: #{$single-url}#{$imgName}-2x#{$imgExt};
+      $secondaryImage: #{$kittn-dir-single}#{$imgName}-2x#{$imgExt};
 
       // Best use Case is to use Conditionizr and use .retina Classes
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        background-image: url('#{$single-url}#{$imgName}-2x#{$imgExt}');
+        background-image: url('#{$kittn-dir-single}#{$imgName}-2x#{$imgExt}');
         background-size: $imgWidth $imgHeight;
 
       }
@@ -86,7 +86,7 @@
     $imgExt    : map-get(map-get($map-images,$imageTarget),extension);
 
     // Include the Image and set the Repeat and Position (last only when is needed)
-    background-image: url('#{$svg-url}#{$imgFile}');
+    background-image: url('#{$kittn-dir-svg}#{$imgFile}');
     background-repeat: no-repeat;
 
     @if $pos != false { background-position: $pos; }
@@ -98,7 +98,7 @@
     // The Size is oriented on the PNG Fallback Image
     .svg & {
       $ext: '.svg';
-      background-image: url('#{$svg-url}#{$imgName}#{$ext}');
+      background-image: url('#{$kittn-dir-svg}#{$imgName}#{$ext}');
       background-size: $imgWidth $imgHeight;
     }
   } @else {
@@ -127,7 +127,7 @@
     $imgExt    : map-get(map-get($map-images,$imageTarget),extension);
 
     // Include the Image and set the Position
-    background-image: url('#{$texture-url}#{$imgFile}');
+    background-image: url('#{$kittn-dir-texture}#{$imgFile}');
     @if $pos != false { background-position: $pos; }
 
     // Set the Image Repeating - and the Dimensions
@@ -141,7 +141,7 @@
     // Write a Retina Fallback in the CSS file - Backgroundsize oriented to the the Size off the non retina Image
     @if $retina != false {
       @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
-        background-image: url('#{$texture-url}#{$imgName}-2x#{$imgExt}');
+        background-image: url('#{$kittn-dir-texture}#{$imgName}-2x#{$imgExt}');
         background-size: $imgWidth $imgHeight;
       }
     }
@@ -164,7 +164,7 @@
   $height: null !default;
   $width: null !default;
   $svgending: '.svg';
-  $mainImage: #{$svgonly-url}#{($image)}#{$svgending};
+  $mainImage: #{$kittn-dir-svgonly}#{($image)}#{$svgending};
 
   // Generate the Image Dimension Variables
   @if length($dimensions) > 1 {
@@ -199,18 +199,18 @@
  *
  * @param {*}  $spritename - The Master Sprite name
  */
-@mixin sprite-generator($spritename: $image-sprite-name) {
+@mixin sprite-generator($spritename: $kittn-sprite-name) {
   %sprite-container {
     $spriteEnding: '.png';
     background-repeat: no-repeat;
-    background-image: url('#{$img-url}#{$spritename}#{$spriteEnding}')
+    background-image: url('#{$kittn-dir-image}#{$spritename}#{$spriteEnding}')
   }
 
-  @if $image-sprite-retina == true {
+  @if $kittn-sprite-retina == true {
     %sprite-container-retina {
       $spriteEndingRetina: '@2x.png';
       background-repeat: no-repeat;
-      background-image: url('#{$img-url}#{$spritename}#{$spriteEndingRetina}')
+      background-image: url('#{$kittn-dir-image}#{$spritename}#{$spriteEndingRetina}')
     }
   }
 }

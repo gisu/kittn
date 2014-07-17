@@ -9,7 +9,5 @@
     "enquire": "~2.1.1",
     "media-match": "~2.0.2",
     "eq.js": "~1.4.1"
-  },
-  "devDependencies": {
   }
 }
