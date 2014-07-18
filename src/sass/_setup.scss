@@ -3,22 +3,22 @@
 // ------------------------------------------------------------
 
 // Route to the Font Directory
-$kittn-dir-font: '../fonts/';
+$kittn-dir-font: '/assets/fonts/';
 
 // Route to the base Image Directory
-$kittn-dir-image: '../img/';
+$kittn-dir-image: '/assets/img/';
 
 // Route to the Single Images Directory
-$kittn-dir-single: '../img/single/';
+$kittn-dir-single: '/assets/img/single/';
 
 // Route to the Texture Image Directory
-$kittn-dir-texture: '../img/textures/';
+$kittn-dir-texture: '/assets/img/textures/';
 
 // Route to the SVG Images (with Fallbacks)
-$kittn-dir-svg: '../img/svg/';
+$kittn-dir-svg: '/assets/img/svg/';
 
 // Route to the SVG Images (without Fallbacks)
-$kittn-dir-svgonly: '../img/svg/';
+$kittn-dir-svgonly: '/assets/img/svgonly/';
 
 // Markup Sign for BEM Elements
 $kittn-bem-element-sign: '__';
