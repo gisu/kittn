@@ -5,11 +5,11 @@
 /**
  * Tint up the Color - normally mix with white
  *
- * @param  {Color}  $color             - The Color value
- * @param  {number} $amount            - The Mix Value
- * @param  {color}  $tint-color (#fff) - Color for Tint
+ * @param  {Color}   $color             - The Color value
+ * @param  {Number}  $amount            - The Mix Value
+ * @param  {color}   $tint-color (#fff) - Color for Tint
  *
- * @returns Color
+ * @returns {Color}
  */
 @function tint($color, $amount, $tint-color: #fff) {
   @return mix($tint-color, $color, clamp(strip-units($amount), 0, 100));
@@ -19,10 +19,10 @@
  * Shade down the Color - normally mix with black
  *
  * @param  {Color}  $color              - The Color value
- * @param  {number} $amount             - The Mix Value
- * @param  {color}  $shade-color (#000) - Color for Tint
+ * @param  {Number} $amount             - The Mix Value
+ * @param  {Color}  $shade-color (#000) - Color for Tint
  *
- * @returns Color
+ * @returns {Color}
  */
 @function shade($color, $amount, $shade-color: #000) {
   @return mix($shade-color, $color, clamp(strip-units($amount), 0, 100));
@@ -31,9 +31,9 @@
 /**
  * Calculate the Luma Value from a Color
  *
- * @param  {color} $color - Color Value
+ * @param  {Color}  $color - Color Value
  *
- * @returns Number
+ * @returns {Number}
  */
 @function luma($color) {
   @return (red($color) * .299) + (green($color) * .587) + (blue($color) * .114);
@@ -42,10 +42,10 @@
 /**
  * Check if Color1 is greater than Color2, return true
  *
- * @param  {color} $color1 - Color Value
- * @param  {color} $color2 - Color Value
+ * @param  {Color}  $color1 - Color Value
+ * @param  {Color}  $color2 - Color Value
  *
- * @returns Bool
+ * @returns {Bool}
  */
 @function luma-gte($color1, $color2) {
   @if luma($color1) >= luma($color2) {
@@ -59,10 +59,10 @@
 /**
  * Check if Color1 is smaller than Color2, return true
  *
- * @param  {color} $color1 - Color Value
- * @param  {color} $color2 - Color Value
+ * @param  {Color}  $color1 - Color Value
+ * @param  {Color}  $color2 - Color Value
  *
- * @returns Bool
+ * @returns {Bool}
  */
 @function luma-lte($color1, $color2) {
   @if luma($color1) <= luma($color2) {
@@ -76,10 +76,10 @@
 /**
  * Calculate the Luma Difference between Color1 and Color2
  *
- * @param  {color} $color1 - Color Value
- * @param  {color} $color2 - Color Value
+ * @param  {Color}  $color1 - Color Value
+ * @param  {Color}  $color2 - Color Value
  *
- * @returns Number
+ * @returns {Number}
  */
 @function luma-diff($color1, $color2) {
   @return luma($color1) - luma($color2);
@@ -90,10 +90,10 @@
  *
  * @access private
  *
- * @param {*}    $target            - Color Key from Map
- * @param {*}    $attrib (color)    - The Color Attribute
- * @param {bool} $imp (false)       - For !important setting
- * @param {map}  $map (stylecolors) - Color Map
+ * @param  {*}     $target            - Color Key from Map
+ * @param  {*}     $attrib (color)    - The Color Attribute
+ * @param  {Bool}  $imp (false)       - For !important setting
+ * @param  {Map}   $map (stylecolors) - Color Map
  */
 @mixin _color($target, $attrib: color, $imp: false, $map: $kittn-color-map) {
 
@@ -129,10 +129,8 @@
 /**
  * Use the desired Color Value from the Map an build a Color Value
  *
- * @alias color
- *
- * @type {*}    $target - The Color Key
- * @type {bool} $hard   - For !important setting
+ * @param  {*}    $target - The Color Key
+ * @param  {Bool} $hard   - For !important setting
  */
 @mixin get_c($target, $hard: false) {
   @include _color($target, $attrib: color, $imp: $hard);
@@ -146,10 +144,8 @@
 /**
  * Use the desired Color Value from the Map an build a Background-Color Value
  *
- * @alias color
- *
- * @type {*}    $target - The Color Key
- * @type {bool} $hard   - For !important setting
+ * @param  {*}     $target - The Color Key
+ * @param  {Bool}  $hard   - For !important setting
  */
 @mixin get_bc($target, $hard: false) {
   @include _color($target, $attrib: background-color, $imp: $hard);
@@ -161,10 +157,11 @@
 }
 
 /**
- * Generate Color Classes (or Silent) with all Colors from
- * the Color Map.
+ * Generate Color Classes (or Silent) with all Colors from the Color Map.
  *
- * @type {map}  $colors - The Desired Map
+ * @access private
+ *
+ * @type {Map}  $colors - The Desired Map
  */
 @mixin colorgenerator($colors: $kittn-color-map) {
   @each $value, $entry in $colors {
@@ -207,7 +204,7 @@
 /**
  * Extend the Element with existing Color Classes
  *
- * @param {*}  $name - Color Key
+ * @param  {*}  $name - Color Key
  */
 @mixin ext-c($name) {
 
@@ -233,7 +230,7 @@
 /**
  * Extend the Element with existing Background-Color Classes
  *
- * @param {*}  $name - Color Key
+ * @param  {*}  $name - Color Key
  */
 @mixin ext-bc($name) {
 

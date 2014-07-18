@@ -5,7 +5,7 @@
 /**
  * Strip Units from Values
  *
- * @param {Number} $number - Value
+ * @param  {Number}  $number - Value
  *
  * @returns {Number}       - Unitless Value
  */
@@ -30,7 +30,7 @@
 /**
  * Add the Default Unit on unitless Values
  *
- * @param {Number} $value  - Value
+ * @param  {Number}  $value - Value
  *
  * @returns {Number}
  */
@@ -51,8 +51,8 @@
 /**
  * Shorthand for the CSS3 Calc function
  *
- * @param  {string}   $property   - Property that calculated
- * @param  {string}   $expression - Formula
+ * @param  {*}  $property   - Property that calculated
+ * @param  {*}  $expression - Formula
  */
 @mixin calc($property, $expression) {
   #{$property}: -moz-calc(#{$expression});
@@ -65,9 +65,9 @@
  * Clamp a Number between a min and max values,
  * Perfect for percentage
  *
- * @param   {Number} $value - The Value that need to be clamped
- * @param   {Number} $min   - The posible minimal value
- * @param   {Number} $max   - The possible max Value
+ * @param  {Number}  $value - The Value that need to be clamped
+ * @param  {Number}  $min   - The posible minimal value
+ * @param  {Number}  $max   - The possible max Value
  *
  * @returns {Number}        - Clamped Value
  */
@@ -78,10 +78,12 @@
 /**
  * Pick the Color Values from the Color Map
  *
- * @param  {string}    $target - Desired color
- * @param  {string}    $map    - Color Map
+ * @param  {*}  $target - Desired color
+ * @param  {*}  $map    - Color Map
  *
  * @returns {Color}
+ *
+ * @throws Color is not included in the map
  */
 @function cp($target, $map: $kittn-color-map) {
   @if map-has-key($map,$target) {
@@ -94,9 +96,9 @@
 /**
  * Multiply the Spacing Value to generate Spacings
  *
- * @param   {Number} $lines - Multiplicator for Spacing
- * @param   {Bool}   $hard (false) - For including an !important
- * @param   {Number} $size ($kittn-global-spacing) - Connection to the Base Spacing
+ * @param  {Number}  $lines - Multiplicator for Spacing
+ * @param  {Bool}    $hard (false) - For including an !important
+ * @param  {Number}  $size ($kittn-global-spacing) - Connection to the Base Spacing
  *
  * @returns {Value}
  */
@@ -104,6 +106,8 @@
   @if is-number($lines) {
     $u: unit-check(0);
     @return strip-units($lines) * if(unitless($size), $size + $u, $size) if($hard,!important,null);
+  } @else {
+    @warn "Value for '$lines' is no a number.";
   }
 }
 
@@ -111,10 +115,10 @@
  * Multiply the Spacing Value to generate Spacings
  * Calculates Spacings in a other Way - needed for map values
  *
- * @param   {Number} $lines - Multiplicator for Spacing
- * @param   {Bool}   $imp (false) - For including an !important
- * @param   {*}      $u (false) - Unit
- * @param   {Number} $size ($kittn-global-spacing) - Connection to the Base Spacing
+ * @param  {Number}  $lines - Multiplicator for Spacing
+ * @param  {Bool}    $imp (false) - For including an !important
+ * @param  {*}       $u (false) - Unit
+ * @param  {Number}  $size ($kittn-global-spacing) - Connection to the Base Spacing
  *
  * @returns {Value}
  */
@@ -142,12 +146,15 @@
 
       @if $imp != false {
         @return strip-units($lines) * $size + $u !important;
+
       } @else {
         @return strip-units($lines) * $size + $u;
       }
+
     } @else {
       @if $imp != false {
         @return strip-units($lines) * $size !important;
+
       } @else {
         @return strip-units($lines) * $size;
       }

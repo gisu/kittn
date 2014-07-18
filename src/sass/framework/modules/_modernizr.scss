@@ -42,7 +42,7 @@
 /**
  * Route the Yep Styling
  *
- * @param  {list}  $features - The checked features
+ * @param  {List}  $features - The checked features
  */
 @mixin yep($features...) {
   @include modernizr($features, $supports: true) {
@@ -53,7 +53,7 @@
 /**
  * Route the Nope Styling
  *
- * @param  {list}  $features - The checked features
+ * @param  {List}  $features - The checked features
  */
 @mixin nope($features...) {
   @include modernizr($features, $supports: false) {

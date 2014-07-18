@@ -3,13 +3,10 @@
 // ===================================================
 
 /**
- * For include Element Dimensions in Width, Height and Lineheight.
- * When '$size' have only one Value will height and width the same (square)
+ * For include Element Dimensions in Width, Height and Lineheight. When '$size' have only one Value will height and width the same (square)
  *
- *
- * @param {List} $size - Width and or Height
- * @param {Bool} $lineheight (false) - On 'true' lineheight will be set to the
- *                                     same $size, otherwise use a Number
+ * @param  {List}  $size - Width and or Height
+ * @param  {Bool}  $lineheight (false) - On 'true' lineheight will be set to the same $size, otherwise use a Number
  */
 @mixin size($size, $lineheight: false) {
   @if length($size) <= 2 {
@@ -49,8 +46,8 @@
 /**
  * Mixin to Insert Height and Lineheight on a Simple Way
  *
- * @param {Number}  $height - Heightvalue
- * @param {Number}  $factor - The multiply factor
+ * @param  {Number}  $height - Heightvalue
+ * @param  {Number}  $factor - The multiply factor
  */
 @mixin align-height($height, $factor: 1) {
   height: if(unitless($height), $height + 1px, $height);
@@ -60,8 +57,8 @@
 /**
  * Mixin to Insert Height and Lineheight on a Simple Way
  *
- * @param {Number}  $size - Fontsize
- * @param {Number}  $factor - The multiply factor
+ * @param  {Number}  $size - Fontsize
+ * @param  {Number}  $factor - The multiply factor
  */
 @mixin align-fontsize($size,$factor: 1) {
   font-size: if(unitless($size), $size + 1px, $size);
@@ -71,7 +68,7 @@
 /**
  * Center and Middle a Element in a box
  *
- * @param {number}  $size - Width and or Height
+ * @param  {number}  $size - Width and or Height
  */
 @mixin center($size) {
   @include size($size, $size);
@@ -81,7 +78,7 @@
 /**
  * Build a perfect Circle
  *
- * @param {value}  $size - The Size of the Circle
+ * @param  {value}  $size - The Size of the Circle
  */
 @mixin perfect-circle($size) {
   @include central($size);
@@ -91,8 +88,8 @@
 /**
  * A Floating Grid System
  *
- * @param {list}    $ratio (1)        - The Ratio between width and height
- * @param {string}  $selector (false) - Target selector
+ * @param  {list}    $ratio (1)        - The Ratio between width and height
+ * @param  {string}  $selector (false) - Target selector
  */
 @mixin ratio($ratio: 1, $selector: false) {
 
@@ -138,7 +135,7 @@
 /**
  * Remove Ratio Values
  *
- * @param {string}  $selector (false) - Target selector
+ * @param  {string}  $selector (false) - Target selector
  */
 @mixin unratio($selector: false) {
   $sel: null;
@@ -165,8 +162,7 @@
 }
 
 /**
- * Span a Element in the Height and Width
- * absolute positioned
+ * Span a Element in the Height and Width absolute positioned
  */
 @mixin tighten-up {
   position: absolute;

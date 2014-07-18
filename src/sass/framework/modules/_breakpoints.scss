@@ -6,7 +6,7 @@
  * Pick the Values from the Breakpoint Map
  *
  * @param   {*}   $target - The required Breakpoint
- * @param   {map} $entrys ($kittn-breakpoint-map) - Connection to the Breakpoint Map
+ * @param   {Map} $entrys ($kittn-breakpoint-map) - Connection to the Breakpoint Map
  *
  * @returns {Number}
  */
@@ -26,10 +26,9 @@
 /**
  * [$mode description]
  *
- * @param   {*}   $target - The required Breakpoint
- * @param   {*}   $mode - The Media Querie Mode
- *                        values: between | max | min | auto (default - setup with mobile-first:true/false)
- * @param   {map} $list ($kittn-breakpoint-map) - Connection to the Breakpoint Map
+ * @param  {*}  $target - The required Breakpoint
+ * @param  {*}  $mode - The Media Querie Mode. Values: 'between', 'max', 'min' ,'auto' (default - setup with mobile-first:true/false)
+ * @param  {Map} $list ($kittn-breakpoint-map) - Connection to the Breakpoint Map
  */
 @mixin break($target, $mode: auto, $list: $kittn-breakpoint-map) {
 
@@ -107,24 +106,24 @@
  *
  * @link https://github.com/snugug/eq.js
  *
- * @param {list}  $states - The Different Querie Types
+ * @param {List} $states - The Different Querie Types
  *
  * @example
- *    .test {
- *      @include eq('small', 'medium', 'large') {
- *        color: red;
- *      }
- *      @include eq('small') {
- *        p {
- *          @include fontcalc(300);
- *        }
- *      }
- *    }
+ *   .test {
+ *     @include eq('small', 'medium', 'large') {
+ *       color: red;
+ *     }
+ *     @include eq('small') {
+ *       p {
+ *         @include fontcalc(300);
+ *       }
+ *     }
+ *   }
  *
- *    <!-- The HTML -->
- *    <div data-eq-pts="small: 480, medium: 700, large: 800" class="test">
- *      <p>Test Block</p>
- *    </div>
+ *   <!-- The HTML -->
+ *   <div data-eq-pts="small: 480, medium: 700, large: 800" class="test">
+ *     <p>Test Block</p>
+ *   </div>
  */
 @mixin eq($states...) {
   @if (length($states) == 0) {

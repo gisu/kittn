@@ -9,7 +9,7 @@
  * @param  {*}    $family - Font-Family from the Stack
  * @param  {list} $append - The extra Fontfaces that prepanded to the stack
  *
- * @throw 'Not Availalbe' when the Font is not in hte stack
+ * @throws 'Not Availalbe' when the Font is not in the stack
  */
 @function ff($family, $append...) {
   @if map-has-key($kittn-fontstack-map, $family) {

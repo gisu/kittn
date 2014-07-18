@@ -5,7 +5,7 @@
 /**
  * Build a BEM Element
  *
- * @param {string}  $name - The selector name
+ * @param  {string}  $name - The selector name
  */
 @mixin element($name) {
   @at-root {
@@ -18,9 +18,8 @@
 /**
  * Build a BEM Modifier, with extend functionality
  *
- * @param {*}     $name - The selector name
- * @param {bool}  $extend (false) - If the Modifier need to be
- *                                  extended with parent
+ * @param  {*}      $name           - The selector name
+ * @param  {bool}   $extend (false) - If the Modifier need to be extended with parent
  */
 @mixin modifier($name, $extend: false) {
   // Internal Extend Var
@@ -41,14 +40,14 @@
 /**
  * Setup the Root Element for the following chained Modifers
  *
- * @param {string}  $name - The selector name
+ * @param  {*}  $name - The selector name
  *
  * @example
- * .test {
- *   @include chainroot {
- *    content: hello;
- *   }
- * }
+ *  .test {
+ *    @include chainroot {
+ *     content: hello;
+ *    }
+ *  }
  *
  */
 @mixin chainroot {
@@ -66,7 +65,7 @@
 /**
  * Chain the Modifiers
  *
- * @param {string}   $name - The selector name, only the name
+ * @param  {string} $name - The selector name, only the name
  *
  * @example
  *  .test {

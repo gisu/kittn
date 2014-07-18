@@ -7,10 +7,7 @@
  *
  * @access private
  *
- * @param {list} $position - Position Values. one value = top,
- *                           two values = top left,
- *                           four values = top right bottom left
- *                           For Zero Position (0) set the value to 'z'
+ * @param {list} $position - Position Values. one value = top, two values = top left, four values = top right bottom left. For Zero Position (0) set the value to 'z'
  */
 @mixin _set-position($position) {
 
@@ -56,10 +53,7 @@
 /**
  * Shorthand for Relative positioning
  *
- * @param {list} $position - Position Values. one value = top,
- *                           two values = top left,
- *                           four values = top right bottom left
- *                           For Zero Position (0) set the value to 'z'
+ * @param {list} $position - Position Values. one value = top, two values = top left, four values = top right bottom left. For Zero Position (0) set the value to 'z'
  */
 @mixin relative($pos: 0) {
   position: relative;
@@ -69,10 +63,7 @@
 /**
  * Shorthand for Absolute positioning
  *
- * @param {list} $position - Position Values. one value = top,
- *                           two values = top left,
- *                           four values = top right bottom left
- *                           For Zero Position (0) set the value to 'z'
+ * @param {list} $position - Position Values. one value = top, two values = top left, four values = top right bottom left. For Zero Position (0) set the value to 'z'
  */
 @mixin absolute($pos: 0) {
   position: absolute;
@@ -82,36 +73,15 @@
 /**
  * Shorthand for Fixed positioning
  *
- * @param {list} $position - Position Values. one value = top,
- *                           two values = top left,
- *                           four values = top right bottom left
- *                           For Zero Position (0) set the value to 'z'
+ * @param {List} $position - Position Values. one value = top, two values = top left, four values = top right bottom left. For Zero Position (0) set the value to 'z'
  */
 @mixin fixed($pos: 0) {
   position: fixed;
   @include _set-position($pos);
 }
 
-// Mixin: static
-// Reset CSS Position Method
-//
-// @mixin     static
-// @usage:    +static
-//    .container {
-//      @include static;
-//    }
-// @result:
-//    .container {
-//      position: static;
-//      left: inherit;
-//      right: inherit;
-//      top: inherit;
-//      bottom: inherit;
-//    }
-
 /**
- * Shorthand for Static positioning
- * reset all position values
+ * Shorthand for Static positioning reset all position values
  */
 @mixin static {
   position: static;
@@ -124,9 +94,9 @@
 /**
  * Setup a Bar Element
  *
- * @param {*}      $variant  - 'f' for fixed, 'a' for absolute
- * @param {*}      $position - 't' Top, 'b' Bottom, 'l' Left, 'r' Right
- * @param {value}  $z-index (9999)  - The Z-Index
+ * @param  {*}  $variant  - 'f' for fixed, 'a' for absolute
+ * @param  {*}  $position - 't' Top, 'b' Bottom, 'l' Left, 'r' Right
+ * @param  {*}  $z-index (9999)  - The Z-Index
  */
 @mixin bar($variant, $position, $z: 9999) {
 
@@ -188,10 +158,8 @@
  *
  * @access private
  *
- * @param {*} $pos - Position Value
- *                   [ left | center | right | top |
- *                     middle | bottom | number | bool]
- * @param {string} $axis - The Position Axis [vert | horz]
+ * @param  {*}  $pos - Position Value. Values: 'left', 'center', 'right', 'top', 'middle', 'bottom', 'number', 'bool'
+ * @param  {*}  $axis - The Position Axis. Values: 'vert', 'horz'
  */
 @function position-translate($pos, $axis) {
   @if is-number($pos) {
@@ -216,10 +184,8 @@
 /**
  * Move the Pivot Point from a Element, based on 2D CSS Transform
  *
- * @param {*} $vert (middle) - Vertical Position from the Pivot Point
- *                             [top | middle | bottom | number | bool]
- * @param {*} $horz (false)  - Horizontal Position from the Pivot Point
- *                             [left | center | right | number | bool]
+ * @param {*} $vert (middle) - Vertical Position from the Pivot Point. Values: 'top' ,'middle' ,'bottom' ,'number' ,'bool'
+ * @param {*} $horz (false)  - Horizontal Position from the Pivot Point. Values: 'left', 'center', 'right', 'number', 'bool'
  */
 @mixin pivot($vert: middle, $horz: false) {
   $v: null;
@@ -282,10 +248,9 @@
 }
 
 /**
- * Moving an absolute position element in the Center -
- * optional in the Middle (with Height)
+ * Moving an absolute position element in the Center - optional in the Middle (with Height)
  *
- * @param  {list}  $element  - Width and the Height of the Element
+ * @param  {List}  $element - Width and the Height of the Element
  */
 @mixin absolute-middle($element: 0 0) {
   $width  : 0 !default;
@@ -317,8 +282,8 @@
 /**
  * Moving an Element in the Middle and Center
  *
- * @param {list}  $container - The Width and the Height of the outer Container
- * @param {list}  $element   - The Width and the Height of the positioned inner Element
+ * @param  {List}  $container - The Width and the Height of the outer Container
+ * @param  {List}  $element   - The Width and the Height of the positioned inner Element
  */
 @mixin element-middle($container: 0, $element: 0) {
 
@@ -361,9 +326,9 @@
  * Get the Named Z-Index from the z-map
  *
  * @param   {*}   $layer - The layer to use
- * @param   {map} $z-layers ($kittn-zlayer-map) - Connection through Z-Map
+ * @param   {Map} $z-layers ($kittn-zlayer-map) - Connection through Z-Map
  *
- * @returns Number
+ * @returns {Number}
  */
 @function z($layer, $z-layers: $kittn-zlayer-map) {
   @if not map-has-key($z-layers, $layer) {
@@ -430,8 +395,7 @@
 /**
  * Overlapps a Element over the Side Padding
  *
- * @param  {list}  $size - The Sidevalues, one value can be used for two sides,
- *                         two values first for left second for right
+ * @param  {list}  $size - The Sidevalues, one value can be used for two sides, two values first for left second for right
  */
 @mixin overlap($size) {
   @if length($size) == 1 {

@@ -24,10 +24,10 @@
 /**
  * Including Single Images from the Single Directory as Background Image.
  *
- * @param {*}    $image       - Name of the Image
- * @param {*}    $dimensions  - 'both' = height & width | 'width' = width | 'height' = height
- * @param {*}    $pos         - The Image Position - can be 'false'
- * @param {Bool} $retina      - With set on 'true' the retina fallback will be included
+ * @param  {*}    $image       - Name of the Image
+ * @param  {*}    $dimensions  - 'both' = height & width | 'width' = width | 'height' = height
+ * @param  {*}    $pos         - The Image Position - can be 'false'
+ * @param  {Bool} $retina      - With set on 'true' the retina fallback will be included
  */
 @mixin image($image, $dimensions: both, $pos: false, $retina: false) {
 
@@ -69,9 +69,9 @@
 /**
  * Include the SVG Background Image with a PNG Fallback.
  *
- * @param {*}    $image       - Name of the Image - the SVG File must be in the Same directory
- * @param {*}    $dimensions  - 'both' = height & width | 'width' = width | 'height' = height
- * @param {list} $pos         - The Image Position - can be 'false'
+ * @param  {*}    $image       - Name of the Image - the SVG File must be in the Same directory
+ * @param  {*}    $dimensions  - 'both' = height & width | 'width' = width | 'height' = height
+ * @param  {List} $pos         - The Image Position - can be 'false'
  */
 @mixin svgpng($image, $dimensions: both, $pos: false) {
 
@@ -109,10 +109,10 @@
 /**
  * Including Textures Images from the textures Directory as Background Image.
  *
- * @param {*}     $image  - Name of the Image
- * @param {*}     $repeat - How the Image would be repeated. 'x' = repeat-x | 'y' = repeat-y
- * @param {List}  $pos    - The Image Position - can be 'false'
- * @param {Bool}  $retina - With set on 'true' the retina fallback will be included
+ * @param  {*}     $image  - Name of the Image
+ * @param  {*}     $repeat - How the Image would be repeated. 'x' = repeat-x | 'y' = repeat-y
+ * @param  {List}  $pos    - The Image Position - can be 'false'
+ * @param  {Bool}  $retina - With set on 'true' the retina fallback will be included
  */
 @mixin texture($image, $repeat: d, $pos: false, $retina: false) {
 
@@ -153,10 +153,10 @@
 /**
  * Include a SVG Background Image - without a PNG Fallback Image
  *
- * @param {*}     $image       - The Name of the SVG Image
- * @param {List}  $dimensions  - The Dimensions of the Image Container - can be 100%
- * @param {List}  $pos         - Native CSS Image Positions
- * @param {Bool}  $repeat      - Image Repeat - native CSS Declaration
+ * @param  {*}     $image       - The Name of the SVG Image
+ * @param  {List}  $dimensions  - The Dimensions of the Image Container - can be 100%
+ * @param  {List}  $pos         - Native CSS Image Positions
+ * @param  {Bool}  $repeat      - Image Repeat - native CSS Declaration
  */
 @mixin svg($image, $dimensions: 100, $pos: false, $repeat: false) {
 
@@ -197,7 +197,7 @@
 /**
  * Generate the Sprite Container - retina and nonRetina
  *
- * @param {*}  $spritename - The Master Sprite name
+ * @param  {*}  $spritename - The Master Sprite name
  */
 @mixin sprite-generator($spritename: $kittn-sprite-name) {
   %sprite-container {
@@ -218,12 +218,12 @@
 /**
  * Include the targeted Sprite from a Spritemap
  *
- * @param {*}       $name       - Name of the Sprite
- * @param {Bool}    $retina     - With set on 'true' the retina fallback will be included
- * @param {*}       $dimensions - 'both' = height & width | 'width' = width | 'height' = height
- * @param {Number}  $offset-x   - Offset the Background Position on the x axis
- * @param {Number}  $offset-y   - Offset the Background Position on the y axis
- * @param {*}       $display    - The display mode
+ * @param  {*}       $name       - Name of the Sprite
+ * @param  {Bool}    $retina     - With set on 'true' the retina fallback will be included
+ * @param  {*}       $dimensions - 'both' = height & width | 'width' = width | 'height' = height
+ * @param  {Number}  $offset-x   - Offset the Background Position on the x axis
+ * @param  {Number}  $offset-y   - Offset the Background Position on the y axis
+ * @param  {*}       $display    - The display mode
  */
 @mixin sprite($name, $retina: false, $dimensions: both, $offset-x: 0, $offset-y: 0, $display: inline) {
 

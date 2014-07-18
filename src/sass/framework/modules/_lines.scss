@@ -5,10 +5,10 @@
 /**
  * REM Calculator
  *
- * @param  {number}   $px   - The Size in PX
- * @param  {number}   $base - The Base for the calculation
+ * @param  {Number}  $px   - The Size in PX
+ * @param  {Number}  $base - The Base for the calculation
  *
- * @return {number}   Return the size in rem
+ * @return {Number}  Return the size in rem
  */
 @function rem($px, $base: 16 / 100 * $kittn-typo-base-scale) {
   @if unitless($px) {
@@ -95,8 +95,7 @@
 }
 
 /**
- * Calculate the Lineheight from PX to REM,
- * provides a px Fallback
+ * Calculate the Lineheight from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -106,8 +105,7 @@
 }
 
 /**
- * Calculate the Margin Bottom from PX to REM,
- * provides a px Fallback
+ * Calculate the Margin Bottom from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -117,8 +115,7 @@
 }
 
 /**
- * Calculate the Margin Top from PX to REM,
- * provides a px Fallback
+ * Calculate the Margin Top from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -128,8 +125,7 @@
 }
 
 /**
- * Calculate the Margin Left from PX to REM,
- * provides a px Fallback
+ * Calculate the Margin Left from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -139,8 +135,7 @@
 }
 
 /**
- * Calculate the Margin Right from PX to REM,
- * provides a px Fallback
+ * Calculate the Margin Right from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -150,8 +145,7 @@
 }
 
 /**
- * Calculate the Padding Top from PX to REM,
- * provides a px Fallback
+ * Calculate the Padding Top from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -161,8 +155,7 @@
 }
 
 /**
- * Calculate the Padding Bottom from PX to REM,
- * provides a px Fallback
+ * Calculate the Padding Bottom from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -172,8 +165,7 @@
 }
 
 /**
- * Calculate the Padding Left from PX to REM,
- * provides a px Fallback
+ * Calculate the Padding Left from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -183,8 +175,7 @@
 }
 
 /**
- * Calculate the Padding Right from PX to REM,
- * provides a px Fallback
+ * Calculate the Padding Right from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
@@ -194,8 +185,7 @@
 }
 
 /**
- * Calculate the Height from PX to REM,
- * provides a px Fallback
+ * Calculate the Height from PX to REM, provides a px Fallback
  *
  * @param  {Number}  $size     - Size
  * @param  {Bool}    $baseline - When 'true', the Value follow the Baselinerule
