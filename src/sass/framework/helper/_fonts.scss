@@ -20,7 +20,7 @@
     }
 
   } @else {
-    @warn 'Not available';
+    @warn 'The Fontstack "#{$family}" are not available in the Fontstackmap Map! Possible Fontstacks: #{map-keys($kittn-fontstack-map)}';
   }
 }
 

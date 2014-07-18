@@ -13,7 +13,7 @@
   @if map-has-key($kittn-font-icons,$name) {
     @return map-get($kittn-font-icons,$name);
   } @else {
-    @warn 'The Icon "#{$name}" is not available!';
+    @warn 'The Icon "#{$name}" is not available! Possible Icons: #{map-keys($kittn-font-icons)}';
   }
 }
 

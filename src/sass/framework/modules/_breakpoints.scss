@@ -19,7 +19,7 @@
   @if map-has-key($entrys,$target) {
     @return map-get(map-get($entrys,$target),size);
   } @else {
-    @warn 'The Breakpoint "#{$target}" are not available in the Breakpoint Map! Please add it or use a existing breakpoint.';
+    @warn 'The Breakpoint "#{$target}" are not available in the Breakpoint Map! Possible Breakpointkeys are: "#{map-keys($entrys)}"';
   }
 }
 
@@ -58,7 +58,7 @@
         @content;
       }
     } @else {
-      @warn 'Not enough target Values for a Breakpoint in mode "between"';
+      @warn "You have to use two values on '$target' for a breakpoint that sit between."
     }
 
 

@@ -367,7 +367,7 @@
  */
 @function z($layer, $z-layers: $kittn-zlayer-map) {
   @if not map-has-key($z-layers, $layer) {
-    @warn "No z-index found in $z-layers map for `#{$layer}`. Operation aborted.";
+    @warn "No z-index found in $z-layers map for '#{$layer}'. Possible ZLayers: #{map-keys($z-layers)}";
     @return null;
   } @else {
     @return map-get($z-layers, $layer);

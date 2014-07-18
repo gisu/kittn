@@ -122,7 +122,7 @@
     }
 
   } @else {
-    @warn 'The Color "#{$target}" are not available in the Color Map! Please add it to the map or use a existing color.';
+    @warn 'The Color "#{$target}" are not available in the Color Map! Possible Colorkeys: "#{map-keys($map)}"';
   }
 }
 
@@ -226,7 +226,7 @@
 
   } @else {
     @include get-c($name);
-    @warn 'There no Colors available for @extend!';
+    @warn "The Color '#{$name}' can't be extended, is included as attribute.";
   }
 }
 
@@ -252,6 +252,6 @@
   } @else {
     // Use the real Color Value
     @include get-bc($name);
-    @warn 'There no Colors available for @extend!';
+    @warn "The Color '#{$name}' can't be extended, is included as attribute.";
   }
 }

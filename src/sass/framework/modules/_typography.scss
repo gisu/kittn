@@ -15,7 +15,7 @@
     @return map-get(map-get($kittn-typostyles-map,$entry),$attribute);
 
   } @else {
-    @warn 'The Fontstyle "#{$entry}" is not available in your Fontstyle Map! Please add the additional style to the map or use a existing style.';
+    @warn 'The Fontstyle "#{$entry}" is not available in your Fontstyle Map! Possible Fontstyles: #{map-keys($kittn-typostyles-map)}';
   }
 }
 
