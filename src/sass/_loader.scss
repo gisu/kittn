@@ -9,6 +9,7 @@
 @import "maps/sprite";
 @import "maps/sprite-retina";
 @import "maps/iconfontlist";
+@import "maps/connectmap";
 @import "maps/zmap";
 
 // --- Import External Libs
@@ -20,6 +21,7 @@
 @import "framework/helper/fonts";
 @import "framework/helper/helper";
 @import "framework/helper/bem";
+@import "framework/helper/connect";
 
 // ---- Import the Setup ----
 @import "setup";

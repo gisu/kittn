@@ -22,3 +22,6 @@
 @if $kittn-sprite-name {
   @include sprite-generator($spritename: $kittn-sprite-name);
 }
+
+// Include Connect Classes
+@include connect-yield();

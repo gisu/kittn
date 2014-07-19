@@ -1,0 +1,91 @@
+// ===================================================
+// Connect Helper
+// ===================================================
+
+// Set the gloabel Connect variable
+$kittn-connect-extend: null !global;
+
+/**
+ * Generate the Yielding
+ *
+ * @access private
+ *
+ * @param  {*}  $key - Key to the Connect Map
+ * @param  {Bool}  $extend (true) - Extend to the Extend Class
+ * @param  {Bool}  $map ($kittn-connect-map) - Connection to the Map
+ */
+@mixin connect-gen($key, $extend: true, $map: $kittn-connect-map) {
+  // Check if Key is available
+  @if map-has-key($map, $key) {
+
+    @if $extend == true {
+      @extend %#{$key};
+    }
+
+    @else {
+      // Yield the Attributes
+      @each $property, $value in map-get($map,$key) {
+        #{$property}: $value;
+      }
+    }
+
+  } @else {
+    @warn "'#{$key}' doesn't exist in the Map. Possible Values: #{map-keys($map)}";
+  }
+}
+
+/**
+ * Yield the Style
+ *
+ * @access private
+ *
+ * @param  {Bool}  $map ($kittn-connect-map) - Connection to the Map
+ */
+@mixin connect-yield($map: $kittn-connect-map) {
+  // Check how many Key Values are integrated
+  $ck: length(map-keys($map));
+
+  @if $ck > 0 {
+
+    // Set Global Extend Key
+    $kittn-connect-extend: true !global;
+
+    @each $key, $content in $map {
+      %#{$key} {
+        @include connect-gen($key, $extend: false);
+      }
+    }
+  } @else {
+    @warn 'No Key available';
+  }
+}
+
+/**
+ * Connect to the Extend Class or Yield the Style
+ *
+ * @param  {*}  $key - Key to the Connect Map
+ * @param  {Bool}  $extend (true) - Extend to the Extend Class
+ * @param  {Bool}  $map ($kittn-connect-map) - Connection to the Map
+ */
+@mixin connect($key, $extend: true, $map: $kittn-connect-map) {
+
+  // Setup the Extend Variable
+  @if $kittn-connect-extend {
+    $extend: $extend;
+  } @else {
+    $extend: false;
+  }
+
+  // Remove Duplicates
+  $sh: sl-remove-duplicates($key);
+
+  // Build the Loop
+  @for $i from 1 through length($sh) {
+
+    // Move the Pointer
+    $s: nth($sh, $i);
+
+    // Include the Styling
+    @include connect-gen($s, $extend, $map);
+  }
+}
