@@ -122,7 +122,11 @@
     }
 
   } @else {
-    @warn 'The Color "#{$target}" are not available in the Color Map! Possible Colorkeys: "#{map-keys($map)}"';
+    @if map-filled($map) {
+      @warn "The color '#{$target}' is not included in the map. Possible Colorkeys: #{map-keys($map)}";
+    } @else {
+      @warn "The Color Map is Empty"
+    }
   }
 }
 

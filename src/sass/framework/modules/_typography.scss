@@ -13,9 +13,12 @@
 @function tw($entry, $attribute) {
   @if map-has-key($kittn-typostyles-map,$entry) {
     @return map-get(map-get($kittn-typostyles-map,$entry),$attribute);
-
   } @else {
-    @warn 'The Fontstyle "#{$entry}" is not available in your Fontstyle Map! Possible Fontstyles: #{map-keys($kittn-typostyles-map)}';
+    @if map-filled() {
+      @warn 'The Fontstyle "#{$entry}" is not available in your Fontstyle Map! Possible Fontstyles: #{map-keys($kittn-typostyles-map)}';
+    } @else {
+      @warn 'Fontstyle Map is empty';
+    }
   }
 }
 

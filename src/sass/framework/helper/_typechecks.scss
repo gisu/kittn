@@ -88,3 +88,16 @@
     @return false;
   }
 }
+
+/**
+ * Check if a map has entrys
+ *
+ * @returns {Bool}
+ */
+@function map-filled($map) {
+  @if length(map-keys($map)) > 0 {
+    @return true;
+  } @else {
+    @return false;
+  }
+}

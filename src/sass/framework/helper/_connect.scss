@@ -30,7 +30,11 @@ $kittn-connect-extend: null !global;
     }
 
   } @else {
-    @warn "'#{$key}' doesn't exist in the Map. Possible Values: #{map-keys($map)}";
+    @if map-filled($map) {
+      @warn "'#{$key}' doesn't exist in the Map. Possible Values: #{map-keys($key)}";
+    } @else {
+      @warn "Connect Map is Empty."
+    }
   }
 }
 
@@ -55,8 +59,6 @@ $kittn-connect-extend: null !global;
         @include connect-gen($key, $extend: false);
       }
     }
-  } @else {
-    @warn 'No Key available';
   }
 }
 

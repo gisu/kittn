@@ -62,7 +62,7 @@
       }
     }
   } @else {
-    @debug 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
+    @warn 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
   }
 }
 
@@ -102,7 +102,7 @@
       background-size: $imgWidth $imgHeight;
     }
   } @else {
-    @debug 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
+    @warn 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
   }
 }
 
@@ -146,7 +146,7 @@
       }
     }
   } @else {
-    @debug 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
+    @warn 'The Image "#{$image}" is not available in your Image Map! Please add the Image.';
   }
 }
 
@@ -250,7 +250,7 @@
     }
 
   } @else {
-    @debug 'The Sprite "#{$name}" is not available in your Sprite Map! Please add the Sprite.';
+    @warn 'The Sprite "#{$name}" is not available in your Sprite Map! Please add the Sprite.';
   }
 
   // Write a Retina Fallback in the CSS file - Backgroundsize oriented to the the Size off the non retina Image
@@ -266,7 +266,7 @@
         background-size: ($sp-r-file-width / 2) ($sp-r-file-height / 2);
       }
     } @else {
-      @debug 'The Retina Sprite "#{$name}" is not available in your Sprite Map! Please add the Sprite to your retina Sprites.';
+      @warn 'The Retina Sprite "#{$name}" is not available in your Sprite Map! Please add the Sprite to your retina Sprites.';
     }
   }
 }
