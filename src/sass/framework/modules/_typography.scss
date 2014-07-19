@@ -81,11 +81,11 @@
   }
 
   // // Clean up Duplicates
-  $list: remove-duplicates($list);
+  $list: sl-remove-duplicates($list);
 
   // Sort the List
   @if $kittn-mobile-first != true {
-    $list: reverse($list);
+    $list: sl-reverse($list);
   }
 
   font-size: strip-units($base) + 0%;
