@@ -139,7 +139,8 @@ $spacer-options: (
  *                                       values: w = width, h = height, lh = line-height, pt = padding-top
  *                                       pb = padding-bottom, pl = padding-left, pr = padding-right
  *                                       mt = margin-top, mb = margin-bottom, ml = margin-left
- *                                       mr = margin-right
+ *                                       mr = margin-right, mv = margin-vertical, mh = margin-horizontal,
+ *                                       pv = padding-vertical, ph = padding-horizontal
  * @param {Number}  $lines (1)         - Spacing Multiplicator
  * @param {Bool}    $important (false) - Overwrite Values with !important
  * @param {Number}  $size ($kittn-global-spacing)   - Global Size Value
@@ -167,7 +168,30 @@ $spacer-options: (
 
     // Check if the Key is Available in the List
     @if map-has-key($spacer-options,$option) {
-      #{map-get($spacer-options,$option)}: strip-units($line) * if(unitless($size), $size + 0px, $size) if($important == true, !important, null);
+      @if index(margin-vertical margin-horizontal padding-vertical padding-horizontal, map-get($spacer-options,$option)) {
+
+        // Setting the Dual variable
+        $sd: strip-units($line) * if(unitless($size), $size + 0px, $size) if($important == true, !important, null);
+
+        @if map-get($spacer-options,$option) == margin-vertical {
+          margin-left: $sd;
+          margin-right: $sd;
+        }
+        @if map-get($spacer-options,$option) == margin-horizontal {
+          margin-top: $sd;
+          margin-bottom: $sd;
+        }
+        @if map-get($spacer-options,$option) == padding-vertical {
+          padding-left: $sd;
+          padding-right: $sd;
+        }
+        @if map-get($spacer-options,$option) == padding-horizontal {
+          padding-top: $sd;
+          padding-bottom: $sd;
+        }
+      } @else {
+        #{map-get($spacer-options,$option)}: strip-units($line) * if(unitless($size), $size + 0px, $size) if($important == true, !important, null);
+      }
     } @else {
       @warn 'The Option "#{$option}" is not available.';
     }
@@ -181,7 +205,8 @@ $spacer-options: (
  *                                       values: w = width, h = height, lh = line-height, pt = padding-top
  *                                       pb = padding-bottom, pl = padding-left, pr = padding-right
  *                                       mt = margin-top, mb = margin-bottom, ml = margin-left
- *                                       mr = margin-right
+ *                                       mr = margin-right, mv = margin-vertical, mh = margin-horizontal,
+ *                                       pv = padding-vertical, ph = padding-horizontal
  * @param {Bool}    $important (false) - Overwrite Values with !important
  */
 @mixin spacer-reset($options, $important: false) {
@@ -195,7 +220,31 @@ $spacer-options: (
 
     // Check if the Key is Available in the List
     @if map-has-key($spacer-options,$option) {
-      #{map-get($spacer-options,$option)}: inherit if($important == true, !important, null);
+      @if index(margin-vertical margin-horizontal padding-vertical padding-horizontal, map-get($spacer-options,$option)) {
+
+        // Setting the Dual variable
+        $sd: inherit if($important == true, !important, null);
+
+        @if map-get($spacer-options,$option) == margin-vertical {
+          margin-left: $sd;
+          margin-right: $sd;
+        }
+        @if map-get($spacer-options,$option) == margin-horizontal {
+          margin-top: $sd;
+          margin-bottom: $sd;
+        }
+        @if map-get($spacer-options,$option) == padding-vertical {
+          padding-left: $sd;
+          padding-right: $sd;
+        }
+        @if map-get($spacer-options,$option) == padding-horizontal {
+          padding-top: $sd;
+          padding-bottom: $sd;
+        }
+      } @else {
+        #{map-get($spacer-options,$option)}: inherit if($important == true, !important, null);
+      }
+
     } @else {
       @warn 'The Option "#{$option}" is not available.';
     }

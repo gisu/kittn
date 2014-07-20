@@ -190,7 +190,6 @@ input[type="button"],input[type="reset"],input[type="submit"] {
 
 // ---- Paragraph ----
 p {
-  font-size: 1rem;
   @include marginbottom(map-get($kittn-typo-margin,bottom));
 
   @if map-get($kittn-typo-margin,top) > 0 {
