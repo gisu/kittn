@@ -3,21 +3,21 @@
 // ------------------------------------------------------------
 
 /**
- * Global Spacing Unit
+ * Global spacing unit, used for Spacer and Lines Mixins.
  *
  * @type Number
  */
 $kittn-global-spacing: 20;
 
 /**
- * Default unit for unitless values
+ * Default unit for unitless values.
  *
  * @type Number
  */
 $kittn-default-unit: px;
 
 /**
- * BEM Prefixes
+ * BEM Prefixes for Elements and Modifiers
  *
  * @type Map
  */
@@ -41,7 +41,16 @@ $kittn-directorys: (
 );
 
 /**
- * Activate Base Features (everything is Bool)
+ * Activate Base Features
+
+   - 'debugging' {Bool} - Activate the CSS Debugging Features
+   - 'box-sizing' {Bool} - Activate the new old Box Model ;P
+   - 'baseline' {Bool} - Activate Baseline Features
+   - 'hyphens' {Bool} - All Words would be breaked with Hyphens
+   - 'viewport-fix' {Bool} - Activate Viewport-Fixes for Windows Mobile 8
+   - 'mobile-first' {Bool} - Grid and Breakpoints oriented from Smallest to Biggest Size
+   - 'ie8-fallback' {Bool} - Integrate some IE8 Fallbacks
+
  *
  * @type Map
  */
@@ -58,26 +67,38 @@ $kittn-activate: (
 
 /**
  * Sprite Configuration
+
+   - 'name' {*|Bool} - Sprite Name
+   - 'retina-capable' {Bool} - Integrate an additional Retina Sprite
  *
  * @type Map
  */
 $kittn-sprite:(
-  name: false, // (String / Bool)
-  retina-capable: true, // (Bool)
+  name: false,
+  retina-capable: true,
 );
 
 /**
  * Iconfont Configuration
+
+   - 'name' {*|Bool} - Iconfont Name
+   - 'prefix' {*} - Icon Prefix
  *
  * @type Map
  */
 $kittn-iconfont: (
-  name: false, // (String / Bool)
+  name: false,
   prefix: 'f-icon'
 );
 
 /**
- * Map off all Breakpoints and Behaviors. 'size' = the width that activate the Trigger, 'visibility' = set it on true to activate the visibility classes, 'step' = set the threshold for the grid-stepper mixin, 'fontsize' = (bool|number) Rewrite the Basefontsize for this breakpoint
+ * Map off all Breakpoints and Behaviors
+
+   - 'Name' {*} - Breakpoint Name
+     - 'size' {Number} - The width that activate the Trigger
+     - 'visibility' {Bool} - Set it on true to activate the visibility classes
+     - 'step' {Bool} - Set the threshold for the grid-stepper mixin
+     - 'fontsize' {bool|number} - Rewrite the Basefontsize for this breakpoint
  *
  * @type Map
  */
@@ -127,7 +148,13 @@ $kittn-breakpoint-map: (
 );
 
 /**
- * Load and integrate all FontFaces. 'filename' = {bool|*} Filename, when 'false' the Fontname will be used, 'weight' = {*} The associated Fontweight, 'style' = {*} The associated Font Style, 'svgoption' = {bool} Activate the addition route to the SVG Font
+ * Load and integrate all FontFaces.
+
+   - 'fontname' {*}
+     - 'filename' {Bool|*} - Filename, when 'false' the Fontname will be used
+     - 'weight' {*} - The associated Fontweight
+     - 'style' {*} - The associated Font Style
+     - 'svgoption' {Bool} - Activate the addition route to the SVG Font
  *
  * @type Map
  */
@@ -143,14 +170,19 @@ $kittn-fontface-map: (
 
 /**
  * Base Typo Setup
+
+   - 'unit' {*} - 'px' or 'rem'
+   - 'base-scale' {Number} - Fontsize on &lt;html&gt;
+   - 'base-size' {Number} - Base Fontsize in Px
+   - 'line-height' {Number} - Base Line-Height
  *
  * @type Map
  */
 $kittn-typo: (
-  unit: rem, // (px | rem)
-  base-scale: 85, // (Number) percentage fontsize HTML
-  base-size: 16, // (Number)
-  line-height: 21 // (Number)
+  unit: rem,
+  base-scale: 85,
+  base-size: 16,
+  line-height: 21
 );
 
 /**
@@ -162,6 +194,9 @@ $kittn-active-responsive-fonts: 70;
 
 /**
  * Default Margin for Typographic Elements (set on '0' when not needed)
+
+   - 'top' {Number} - Top Margin Size
+   - 'botton' {Number} - Bottom Margin Size
  *
  * @type Map
  */
@@ -213,17 +248,29 @@ $kittn-typo-sizes: (
 
 /**
  * Global Heading Stylings
+
+   - 'lineheight' {Bool|*} - 'false' or 'd' (for line-height:1) or a unitless number
+   - 'marginbottom' {Bool|Number} - 'false' or 'number'
+   - 'fontweight' {Bool|*} - 'false' or 'number'
  *
  * @type Map
  */
 $kittn-global-heading: (
-  lineheight: false, // {* | boolean} 'false' or 'd' (for line-height:1) or a unitless number
-  marginbottom: 0, // {number | bool} 'false' or 'number'
-  fontweight: false // {* | boolean} 'false' or 'number'
+  lineheight: false,
+  marginbottom: 0,
+  fontweight: false
 );
 
 /**
- * All possible Typostyles in a Map. 'font-size' = {Number}, 'line-height' = (n = off, d = line-height: 1, c = sass calculated, number = lineheight), 'margin-bottom' = (n = off or Number), 'font-weight' = (n = off or Number), 'tag'= {boolean} (On 'true' it generates also tags, with 'false' only classes),  'extend' = {string | boolean} (When you want to Extend the Style you can enter here the Extend Classname like '%myclass')
+ * All possible Typostyles in a Map.
+
+   - 'Stylename' {*} - Fontstyle Name
+    - 'font-size' {Number}
+    - 'line-height' {*|Number} - 'n': off, 'd': line-height: 1, 'c': sass calculated, 'number'
+    - 'margin-bottom' {*|Number} - 'n': off or 'number'
+    - 'font-weight' {*|Number} - 'n': off or 'number'
+    - 'tag' {Bool} - On 'true' it generates also tags, with 'false' only classes
+    - 'extend' {*} - When you want to Extend the Style you can enter here the Extend Classname like '%myclass'
  *
  * @type Map
  */
@@ -286,7 +333,12 @@ $kittn-typostyles-map: (
 $kittn-generate-typostyles: true;
 
 /**
- * Color Definition Map. This is a collection from all used Colors. Use only use HEX Colors, when you enter a Opacity Value (between 0 to 1), Sass convert it to RGBA with a Fallback for old Browsers. 'color' = {string} Color Value, 'opactiy' = {bool|number} Opacity Value, 'type' = {*} (color-type = bc: background and textcolor, 'c': textcolor, 'b': background-color)
+ * Color Definition Map. This is a collection from all used Colors. Use only use HEX Colors, when you enter a Opacity Value (between 0 to 1), Sass convert it to RGBA with a Fallback for old Browsers.
+
+   - 'Colorname' {*} - Name for the Colorstyle, quoted
+    - 'color' {Color} - Color
+    - 'opacity' {Bool|Number} - Opacity Value
+    - 'type' {*} - 'bc': background & textcolor, 'c': textcolor, 'b': background-color
  *
  * @type Map
  */
@@ -345,12 +397,15 @@ $kittn-color-map: (
 
 /**
  * Generate the Color Classes from the Color Array
+
+   - 'generate' {Bool} - Activate the Generator
+   - 'type' {*} - 'class' or 'silent'
  *
  * @type Map
  */
 $kittn-color-generator: (
-  generate: true, // {Bool}
-  type: silent // {*} class or silent
+  generate: true,
+  type: silent
 );
 
 /**
@@ -372,8 +427,10 @@ $kittn-color-route: (
 
 /**
  * Hairline Styling
- *
- * TODO: Needs to be modified
+
+   - 'height' {Number}
+   - 'style' {*} - Line Styles
+   - 'color' {Color}
  *
  * @type Map
  */

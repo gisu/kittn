@@ -17,6 +17,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-svgmin');
   grunt.loadNpmTasks('grunt-svg-to-png');
   grunt.loadNpmTasks('grunt-responsive-images');
+  grunt.loadNpmTasks('grunt-sassdoc');
 
   var matchdep = require('matchdep');
 
@@ -361,6 +362,20 @@ module.exports = function (grunt) {
         push: true,
         pushTo: "origin",
         gitDescribeOptions: "--tags --always --abbrev=1 --dirty=-d"
+      }
+    },
+    sassdoc: {
+      default: {
+        src: 'src/sass',
+        dest: 'docs',
+        options: {
+          display: {
+            access: ['public', 'private'],
+            alias: true,
+            watermark: true
+          },
+          package: './package.json'
+        }
       }
     }
   });
