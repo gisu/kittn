@@ -14,7 +14,11 @@ $spacer-options: (
   mt: margin-top,
   mb: margin-bottom,
   ml: margin-left,
-  mr: margin-right
+  mr: margin-right,
+  mv: margin-vertical,
+  mh: margin-horizontal,
+  pv: padding-vertical,
+  ph: padding-horizontal
 ) !global;
 
 /**

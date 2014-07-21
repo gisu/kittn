@@ -89,6 +89,8 @@
   @if map-has-key($map,$target) {
     @return map-get(map-get($map,$target),color);
   } @else {
+
+
     @if map-filled($map) {
       @warn "The color '#{$target}' is not included in the map. Possible Colorkeys: #{map-keys($map)}";
     } @else {

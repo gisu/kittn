@@ -13,12 +13,9 @@
 @function tw($entry, $attribute) {
   @if map-has-key($kittn-typostyles-map,$entry) {
     @return map-get(map-get($kittn-typostyles-map,$entry),$attribute);
+
   } @else {
-    @if map-filled() {
-      @warn 'The Fontstyle "#{$entry}" is not available in your Fontstyle Map! Possible Fontstyles: #{map-keys($kittn-typostyles-map)}';
-    } @else {
-      @warn 'Fontstyle Map is empty';
-    }
+    @warn 'The Fontstyle "#{$entry}" is not available in your Fontstyle Map! Possible Fontstyles: #{map-keys($kittn-typostyles-map)}';
   }
 }
 
@@ -84,7 +81,7 @@
   $list: sl-remove-duplicates($list);
 
   // Sort the List
-  @if $kittn-mobile-first != true {
+  @if map-get($kittn-activate, mobile-first) != true {
     $list: sl-reverse($list);
   }
 
@@ -92,7 +89,7 @@
   // Build the Stepped Width
   @for $i from 1 through length($list) {
     $l: nth($list,$i);
-    @media screen and (if($kittn-mobile-first,min-width,max-width): nth($l,1)) {
+    @media screen and (if(map-get($kittn-activate, mobile-first),min-width,max-width): nth($l,1)) {
       font-size: nth($l,2) + 0%;
     }
   }

@@ -31,7 +31,7 @@
 
   // Move Values in a list
   @each $name, $entry in $kittn-breakpoint-map {
-    @if map-get($entry, layout) == true {
+    @if map-get($entry, step) == true {
       $list: append($list, map-get($entry,size), comma);
     }
   }
@@ -40,7 +40,7 @@
   $list: sl-remove-duplicates($list);
 
   // Sort the List
-  @if $kittn-mobile-first != true {
+  @if map-get($kittn-activate, mobile-first) != true {
     $list: sl-reverse($list);
   }
 
@@ -49,7 +49,7 @@
 
   // Build the Stepped Width
   @for $i from 2 through length($list) {
-    @media screen and (if($kittn-mobile-first, min-width, max-width): nth($list,$i)) {
+    @media screen and (if(map-get($kittn-activate, mobile-first), min-width, max-width): nth($list,$i)) {
       width: nth($list,$i);
     }
   }
@@ -83,6 +83,7 @@
     spacing: 10,
     static-ie: false
   ),$container);
+
 
   // Position for the Container
   @if map-get($container, position) == left {
@@ -281,21 +282,21 @@
   @if map-get($colums,extras) != false {
     min-height: 1px;
 
-    &#{$kittn-bem-modifier-sign}collapse {
+    &#{map-get($kittn-bem, modifier)}collapse {
       padding-left: 0;
       padding-right: 0;
     }
 
     @if map-get($colums,layout) == block {
-      &#{$kittn-bem-modifier-sign}left {
+      &#{map-get($kittn-bem, modifier)}left {
         float: left !important;
       }
 
-      &#{$kittn-bem-modifier-sign}right {
+      &#{map-get($kittn-bem, modifier)}right {
         float: right !important;
       }
 
-      &#{$kittn-bem-modifier-sign}center {
+      &#{map-get($kittn-bem, modifier)}center {
         float: none !important;
         margin-left: auto;
         margin-right: auto;
@@ -480,7 +481,7 @@
 
       // Use outer Classes or free defined selectors
       @if map-get($generator,name) == false {
-        &#{$kittn-bem-modifier-sign}#{$i} {
+        &#{map-get($kittn-bem, modifier)}#{$i} {
           @include grid-size((
             size: $i,
             max: strip-units(map-get($generator,colums))
@@ -493,7 +494,7 @@
         }
 
       } @else {
-        #{map-get($generator,name)}#{$kittn-bem-modifier-sign}#{$i} {
+        #{map-get($generator,name)}#{map-get($kittn-bem, modifier)}#{$i} {
           @include grid-size((
             size: $i,
             max: strip-units(map-get($generator,colums))
@@ -523,7 +524,7 @@
 
         // Use outer Classes or free defined selectors
         @if map-get($generator,name) == false {
-          &#{$kittn-bem-modifier-sign}#{nth($clean-list, $i)} {
+          &#{map-get($kittn-bem, modifier)}#{nth($clean-list, $i)} {
             @include grid-size((
               size: nth($clean-list, $i),
               max: strip-units(map-get($generator,colums))
@@ -535,7 +536,7 @@
             }
           }
         } @else {
-          #{map-get($generator,name)}#{$kittn-bem-modifier-sign}#{nth($clean-list, $i)} {
+          #{map-get($generator,name)}#{map-get($kittn-bem, modifier)}#{nth($clean-list, $i)} {
             @include grid-size((
               size: nth($clean-list, $i),
               max: strip-units(map-get($generator,colums))
@@ -585,7 +586,7 @@
 
         // Use outer Classes or free defined selectors
         @if map-get($devide,name) == false {
-          #{map-get($devide,name)}#{$kittn-bem-modifier-sign}#{$i + ($count * ($i1 - 1))} {
+          #{map-get($devide,name)}#{map-get($kittn-bem, modifier)}#{$i + ($count * ($i1 - 1))} {
             @include grid-size((
               size: $i,
               max: $count,
@@ -593,7 +594,7 @@
           }
 
         } @else {
-          &#{$kittn-bem-modifier-sign}#{$i + ($count * ($i1 - 1))} {
+          &#{map-get($kittn-bem, modifier)}#{$i + ($count * ($i1 - 1))} {
             @include grid-size((
               size: $i,
               max: $count,
@@ -664,13 +665,13 @@
   @for $i from 1 through ($m - 1) {
     // When 'name' is false use the Parent Class
     @if map-get($offset, name) == false {
-      &-left#{$kittn-bem-modifier-sign}#{$i} {
+      &-left#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m
         ));
       }
-      &-right#{$kittn-bem-modifier-sign}#{$i} {
+      &-right#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m,
@@ -678,13 +679,13 @@
         ));
       }
     } @else {
-      #{map-get($offset,name)}-left#{$kittn-bem-modifier-sign}#{$i} {
+      #{map-get($offset,name)}-left#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m
         ));
       }
-      #{map-get($offset,name)}-right#{$kittn-bem-modifier-sign}#{$i} {
+      #{map-get($offset,name)}-right#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-offset((
           size: $i,
           max: $m,
@@ -768,14 +769,14 @@
   @for $i from 1 through ($m - 1) {
     // When 'name' is false use the Parent Class
     @if map-get($pushpull, name) == false {
-      &-push#{$kittn-bem-modifier-sign}#{$i} {
+      &-push#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
           extend: map-get($pushpull,extend)
         ));
       }
-      &-pull#{$kittn-bem-modifier-sign}#{$i} {
+      &-pull#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
@@ -784,14 +785,14 @@
         ));
       }
     } @else {
-      #{map-get($pushpull,name)}-push#{$kittn-bem-modifier-sign}#{$i} {
+      #{map-get($pushpull,name)}-push#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
           extend: map-get($pushpull,extend)
         ));
       }
-      #{map-get($pushpull,name)}-pull#{$kittn-bem-modifier-sign}#{$i} {
+      #{map-get($pushpull,name)}-pull#{map-get($kittn-bem, modifier)}#{$i} {
         @include grid-pushpull((
           size: $i,
           max: $m,
@@ -837,24 +838,24 @@
   @if map-get($normalize,name) != false {
 
     @if map-get($normalize,option) == pushpull {
-      [class^="#{map-get($normalize,name)}-push#{$kittn-bem-modifier-sign}"],
-      [class*=" #{map-get($normalize,name)}-push#{$kittn-bem-modifier-sign}"] {
+      [class^="#{map-get($normalize,name)}-push#{map-get($kittn-bem, modifier)}"],
+      [class*=" #{map-get($normalize,name)}-push#{map-get($kittn-bem, modifier)}"] {
         left: 0 $i;
       }
 
-      [class^="#{map-get($normalize,name)}-pull#{$kittn-bem-modifier-sign}"],
-      [class*=" #{map-get($normalize,name)}-pull#{$kittn-bem-modifier-sign}"] {
+      [class^="#{map-get($normalize,name)}-pull#{map-get($kittn-bem, modifier)}"],
+      [class*=" #{map-get($normalize,name)}-pull#{map-get($kittn-bem, modifier)}"] {
         right: 0 $i;
       }
 
     } @else if map-get($normalize,option) == offset {
-      [class^="#{map-get($normalize,name)}-right#{$kittn-bem-modifier-sign}"],
-      [class*=" #{map-get($normalize,name)}-right#{$kittn-bem-modifier-sign}"] {
+      [class^="#{map-get($normalize,name)}-right#{map-get($kittn-bem, modifier)}"],
+      [class*=" #{map-get($normalize,name)}-right#{map-get($kittn-bem, modifier)}"] {
         margin-right: 0 $i;
       }
 
-      [class^="#{map-get($normalize,name)}-left#{$kittn-bem-modifier-sign}"],
-      [class*=" #{map-get($normalize,name)}-left#{$kittn-bem-modifier-sign}"] {
+      [class^="#{map-get($normalize,name)}-left#{map-get($kittn-bem, modifier)}"],
+      [class*=" #{map-get($normalize,name)}-left#{map-get($kittn-bem, modifier)}"] {
         margin-left: 0 $i;
       }
 

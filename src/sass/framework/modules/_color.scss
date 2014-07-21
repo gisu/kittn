@@ -122,11 +122,7 @@
     }
 
   } @else {
-    @if map-filled($map) {
-      @warn "The color '#{$target}' is not included in the map. Possible Colorkeys: #{map-keys($map)}";
-    } @else {
-      @warn "The Color Map is Empty"
-    }
+    @warn 'The Color "#{$target}" are not available in the Color Map! Possible Colorkeys: "#{map-keys($map)}"';
   }
 }
 
@@ -173,7 +169,7 @@
     // Set the Prefix
     $prefix: '';
 
-    @if $kittn-generate-colors-type == class {
+    @if map-get($kittn-color-generator, type) == class {
       $prefix: '.';
     } @else {
       $prefix: '%';
@@ -181,24 +177,24 @@
 
     // Set Class for Text Color
     @if map-get($entry,type) == c {
-      #{$prefix}c#{$kittn-bem-modifier-sign}#{$value} {
+      #{$prefix}c#{map-get($kittn-bem, modifier)}#{$value} {
         @include _color($value,color);
       }
     }
 
     // Set Class for Background-Color
     @if map-get($entry,type) == b {
-      #{$prefix}bc#{$kittn-bem-modifier-sign}#{$value} {
+      #{$prefix}bc#{map-get($kittn-bem, modifier)}#{$value} {
         @include _color($value,background-color);
       }
     }
 
     // Set two Classes for Text & Background-Color
     @if map-get($entry,type) == bc {
-      #{$prefix}c#{$kittn-bem-modifier-sign}#{$value} {
+      #{$prefix}c#{map-get($kittn-bem, modifier)}#{$value} {
         @include _color($value,color);
       }
-      #{$prefix}bc#{$kittn-bem-modifier-sign}#{$value} {
+      #{$prefix}bc#{map-get($kittn-bem, modifier)}#{$value} {
         @include _color($value,background-color);
       }
     }
@@ -214,16 +210,16 @@
 
   // Check if the Colors are generated
   // Otherwise switch to a normal color include
-  @if $kittn-generate-colors {
+  @if map-get($kittn-color-generator, generate) {
     $prefix: '';
 
-      @if $kittn-generate-colors-type == class {
+      @if map-get($kittn-color-generator, type) == class {
         $prefix: '.';
       } @else {
         $prefix: '%';
       }
 
-    @extend #{$prefix}tc#{$kittn-bem-modifier-sign}#{$name};
+    @extend #{$prefix}c#{map-get($kittn-bem, modifier)}#{$name};
 
   } @else {
     @include get-c($name);
@@ -240,15 +236,15 @@
 
   // Check if the Colors are generated
   // Otherwise switch to a normal color include
-  @if $kittn-generate-colors {
+  @if map-get($kittn-color-generator, generate) {
     $prefix: '';
 
-      @if $kittn-generate-colors-type == class {
+      @if map-get($kittn-color-generator, type) == class {
         $prefix: '.';
       } @else {
         $prefix: '%';
       }
-    @extend #{$prefix}bc#{$kittn-bem-modifier-sign}#{$name};
+    @extend #{$prefix}bc#{map-get($kittn-bem, modifier)}#{$name};
 
   } @else {
     // Use the real Color Value

@@ -1,19 +1,5 @@
-// ===================================================
-// Connect Helper
-// ===================================================
+$kittn-connect-extend: null;
 
-// Set the gloabel Connect variable
-$kittn-connect-extend: null !global;
-
-/**
- * Generate the Yielding
- *
- * @access private
- *
- * @param  {*}  $key - Key to the Connect Map
- * @param  {Bool}  $extend (true) - Extend to the Extend Class
- * @param  {Bool}  $map ($kittn-connect-map) - Connection to the Map
- */
 @mixin connect-gen($key, $extend: true, $map: $kittn-connect-map) {
   // Check if Key is available
   @if map-has-key($map, $key) {
@@ -38,13 +24,6 @@ $kittn-connect-extend: null !global;
   }
 }
 
-/**
- * Yield the Style
- *
- * @access private
- *
- * @param  {Bool}  $map ($kittn-connect-map) - Connection to the Map
- */
 @mixin connect-yield($map: $kittn-connect-map) {
   // Check how many Key Values are integrated
   $ck: length(map-keys($map));
@@ -62,13 +41,7 @@ $kittn-connect-extend: null !global;
   }
 }
 
-/**
- * Connect to the Extend Class or Yield the Style
- *
- * @param  {*}  $key - Key to the Connect Map
- * @param  {Bool}  $extend (true) - Extend to the Extend Class
- * @param  {Bool}  $map ($kittn-connect-map) - Connection to the Map
- */
+
 @mixin connect($key, $extend: true, $map: $kittn-connect-map) {
 
   // Setup the Extend Variable

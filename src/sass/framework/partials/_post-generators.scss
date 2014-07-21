@@ -3,7 +3,7 @@
 // ===================================================
 
 // Include Color and Visibility Generators
-@if $kittn-generate-colors != false {
+@if map-get($kittn-color-generator, generate) != false {
   @include colorgenerator($kittn-color-map);
 }
 
@@ -13,14 +13,14 @@
 }
 
 // Generate the Baseclasses for the Icons
-@if $kittn-icon-font-name {
-  @include icon-font-generator($kittn-icon-font-name);
+@if map-get($kittn-iconfont, name) {
+  @include icon-font-generator(map-get($kittn-iconfont, name));
   @include icon-generator($kittn-font-icons);
 }
 
 // Activate the Sprite Container
-@if $kittn-sprite-name {
-  @include sprite-generator($spritename: $kittn-sprite-name);
+@if map-get($kittn-sprite, name) {
+  @include sprite-generator($spritename: map-get($kittn-sprite, name));
 }
 
 // Include Connect Classes

@@ -7,36 +7,36 @@ html {
   -ms-text-size-adjust: 100%;
   background: transparent;
 
-  @if $kittn-active-box-sizing == true {
+  @if map-get($kittn-activate, box-sizing) == true {
     box-sizing: border-box;
   }
 
-  @if $kittn-typo-base-unit == rem {
+  @if map-get($kittn-typo, unit) == rem {
     @if $kittn-active-responsive-fonts != false {
       @include jacket(modern) {
         @include responsive-fontsize($kittn-active-responsive-fonts);
       }
 
       @include jacket(old) {
-        font-size: $kittn-typo-base-scale + 0%;
+        font-size: map-get($kittn-typo, base-scale) + 0%;
       }
 
     } @else {
-      font-size: $kittn-typo-base-scale + 0%;
+      font-size: map-get($kittn-typo, base-scale) + 0%;
     }
 
   } @else {
-    font-size: $kittn-typo-base-scale + 0%;
+    font-size: map-get($kittn-typo, base-scale) + 0%;
   }
 }
 
 // Global Activation
 * {
-  @if $kittn-active-antialias == true {
+  @if map-get($kittn-activate, antialias) == true {
     @include antialias;
   }
 
-  @if $kittn-active-box-sizing == true {
+  @if map-get($kittn-activate, box-sizing) == true {
     &, &:before, &:after {
       box-sizing: inherit;
     }
@@ -51,26 +51,26 @@ body {
 body {
   margin: 0;
   position: relative;
-  color: $kittn-color-text;
-  @include fontsize($kittn-typo-base-size);
-  @include lineheight($kittn-typo-lineheight);
+  color: map-get($kittn-color-route, text);
+  @include fontsize(map-get($kittn-typo, base-size));
+  @include lineheight(map-get($kittn-typo, line-height));
 
-  @if $kittn-active-hyphens == true {
+  @if map-get($kittn-activate, hyphens) == true {
     @include word-wrap;
   }
 
-  @if $kittn-background-color-body {
-    background-color: $kittn-background-color-body; }
+  @if map-get($kittn-color-route, body) {
+    background-color: map-get($kittn-color-route, body); }
 
-  @if map-get($kittn-font-basetypo, weight) {
-    font-weight: map-get($kittn-font-basetypo, weight); }
+  @if map-get($kittn-typo-style, base-weight) {
+    font-weight: map-get($kittn-typo-style, base-weight); }
 }
 
-@if $kittn-active-viewport-fix {
+@if map-get($kittn-activate, viewport-fix) {
   @-ms-viewport { width: device-width; }
 }
 
-@if $kittn-active-hyphens == true {
+@if map-get($kittn-activate, hyphens) == true {
   abbr, acronym, blockquote, code, dir, kbd,
   listing, plaintext, q, samp, tt, var, xmp {
     hyphens: none;
@@ -94,7 +94,7 @@ audio, canvas, video {
 }
 
 body, button, input, select, textarea {
-  font-family: map-get($kittn-font-basetypo, font);
+  font-family: map-get($kittn-typo-style, base-font);
 }
 
 audio:not([controls]) {
@@ -131,13 +131,13 @@ input[type="button"],input[type="reset"],input[type="submit"] {
     font-weight: map-get($kittn-global-heading,fontweight);
   }
 
-  @if $kittn-font-headingtypo != false OR $kittn-color-headline != false {
-    @if $kittn-font-headingtypo != false {
-      font-family: $kittn-font-headingtypo;
+  @if map-get($kittn-typo-style, heading-font) != false OR map-get($kittn-color-route, headline) != false {
+    @if map-get($kittn-typo-style, heading-font) != false {
+      font-family: map-get($kittn-typo-style, heading-font);
     }
 
-    @if $kittn-color-headline != false {
-      color: $kittn-color-headline;
+    @if map-get($kittn-color-route, headline) != false {
+      color: map-get($kittn-color-route, headline);
     }
   }
 }
@@ -190,6 +190,9 @@ input[type="button"],input[type="reset"],input[type="submit"] {
 
 // ---- Paragraph ----
 p {
+  // font-size: 1rem;
+  // line-height: 1.1rem;
+
   @include marginbottom(map-get($kittn-typo-margin,bottom));
 
   @if map-get($kittn-typo-margin,top) > 0 {
@@ -204,9 +207,9 @@ a {
   outline: 0;
   line-height: inherit;
   background: transparent;
-  color: map-get($kittn-color-textlink,normal);
+  color: map-get($kittn-color-route,link);
 
-  @if map-get($kittn-link-decoration,normal) == true {
+  @if map-get($kittn-typo-style,link-decoration) == true {
     text-decoration: underline;
   }
 
@@ -216,9 +219,9 @@ a {
 
   &:hover,
   &.link-hover {
-    color: map-get($kittn-color-textlink,hover);
+    color: map-get($kittn-color-route,link-hover);
 
-    @if map-get($kittn-link-decoration,hover) == true {
+    @if map-get($kittn-typo-style,link-decoration-hover) == true {
       text-decoration: underline;
     }
 
@@ -229,7 +232,7 @@ a {
 
   &:active,
   &.link-active {
-    color: map-get($kittn-color-textlink,active);
+    color: map-get($kittn-color-route,link-active);
   }
 
   &:hover,
@@ -253,28 +256,28 @@ abbr {
 }
 
 strong {
-  @if map-get($kittn-font-boldtypo,weight) {
-    font-weight: map-get($kittn-font-boldtypo,weight);
+  @if map-get($kittn-typo-style,bold-weight) {
+    font-weight: map-get($kittn-typo-style,bold-weight);
   }
 
-  @if map-get($kittn-font-boldtypo,font) {
-    font-family: map-get($kittn-font-boldtypo,font);
+  @if map-get($kittn-typo-style,bold-font) {
+    font-family: map-get($kittn-typo-style,bold-font);
   }
 }
 
 em, dfn {
-  @if map-get($kittn-font-italictypo,style) {
-    font-style: map-get($kittn-font-italictypo,style);
+  @if map-get($kittn-typo-style,italic-style) {
+    font-style: map-get($kittn-typo-style,italic-style);
   }
 
-  @if map-get($kittn-font-italictypo,font) != false {
-    font-family: map-get($kittn-font-italictypo,font);
+  @if map-get($kittn-typo-style,italic-font) != false {
+    font-family: map-get($kittn-typo-style,italic-font);
   }
 }
 
 mark, .hightlight, ::selection {
-  background: map-get($kittn-color-highlight,background);
-  color: map-get($kittn-color-highlight,text);
+  background: map-get($kittn-color-route,highlight-bg);
+  color: map-get($kittn-color-route,hightlight-text);
 }
 
 .lined {
@@ -282,8 +285,8 @@ mark, .hightlight, ::selection {
 }
 
 ul,dl {
-  list-style-type: map-get($kittn-typo-list-style,style);
-  padding-left: map-get($kittn-typo-list-style,left) + 0px;
+  list-style-type: map-get($kittn-typo-sizes,list-style);
+  padding-left: map-get($kittn-typo-sizes,list-margin) + 0px;
   @include marginbottom(map-get($kittn-typo-margin,bottom));
 
   nav > & {
@@ -294,17 +297,17 @@ ul,dl {
 }
 
 ol {
-  padding-left: map-get($kittn-typo-list-style,left) + 2px;
+  padding-left: map-get($kittn-typo-sizes,list-margin) + 2px;
   @include marginbottom(map-get($kittn-typo-margin,bottom));
 }
 
 li, dt, dd {
-  @if map-get($kittn-typo-list-style,fontsize) != false {
-    @include fontsize(map-get($kittn-typo-list-style,fontsize));
+  @if map-get($kittn-typo-sizes,list-fontsize) != false {
+    @include fontsize(map-get($kittn-typo-sizes,list-fontsize));
   }
 
-  @if map-get($kittn-typo-list-style,lineheight) != false {
-    @include lineheight(map-get($kittn-typo-list-style,lineheight));
+  @if map-get($kittn-typo-sizes,list-lineheight) != false {
+    @include lineheight(map-get($kittn-typo-sizes,list-lineheight));
   }
 }
 
@@ -321,11 +324,11 @@ dt, dd {
 }
 
 hr {
-  height: $kittn-hairline-style + 0px;
+  height: map-get($kittn-hairline,height) + 0px;
   border-left: 0;
   border-bottom: 0;
   border-right: 0;
-  border-top: ($kittn-hairline-style + 0px) $kittn-hairline-style-color;
+  border-top: (map-get($kittn-hairline,height) + 0px) map-get($kittn-hairline,style) map-get($kittn-hairline,color);
   position: relative;
   @include marginbottom(map-get($kittn-typo-margin,bottom));
 
@@ -335,20 +338,20 @@ hr {
 }
 
 code, kbd, pre, samp {
-  @if map-get($kittn-typo-code-style, fontsize) != false{
-    @include fontsize(map-get($kittn-typo-code-style, fontsize));
+  @if map-get($kittn-typo-sizes, code-fontsize) != false{
+    @include fontsize(map-get($kittn-typo-sizes, code-fontsize));
   }
 
-  @if map-get($kittn-typo-code-style, lineheight) != false {
-    @include lineheight(map-get($kittn-typo-code-style, lineheight));
+  @if map-get($kittn-typo-sizes, code-lineheight) != false {
+    @include lineheight(map-get($kittn-typo-sizes, code-lineheight));
   }
 
-  @if map-get($kittn-font-codetypo, fontweight) != false {
-    font-weight: map-get($kittn-font-codetypo, fontweight);
+  @if map-get($kittn-typo-style, code-weight) != false {
+    font-weight: map-get($kittn-typo-style, code-weight);
   }
 
-  @if map-get($kittn-font-codetypo, fontfamily) != false {
-    font-family: map-get($kittn-font-codetypo, fontfamily);
+  @if map-get($kittn-typo-style, code-font) != false {
+    font-family: map-get($kittn-typo-style, code-font);
 
   } @else {
     font-family: monospace, serif;
@@ -462,24 +465,24 @@ blockquote {
   @include marginbottom(map-get($kittn-typo-margin,bottom));
 
   & p {
-    @if map-get($kittn-typo-blockquote-style,fontsize) != false {
-      @include fontsize(map-get($kittn-typo-blockquote-style,fontsize));
+    @if map-get($kittn-typo-sizes,quote-fontsize) != false {
+      @include fontsize(map-get($kittn-typo-sizes,quote-fontsize));
     }
 
-    @if map-get($kittn-typo-blockquote-style,lineheight) != false {
-      @include lineheight(map-get($kittn-typo-blockquote-style,lineheight));
+    @if map-get($kittn-typo-sizes,quote-lineheight) != false {
+      @include lineheight(map-get($kittn-typo-sizes,quote-lineheight));
     }
   }
 
   cite {
     font-style: normal;
 
-    @if map-get($kittn-typo-cite-style,fontsize) != false {
-      @include fontsize(map-get($kittn-typo-cite-style,fontsize));
+    @if map-get($kittn-typo-sizes,cite-fontsize) != false {
+      @include fontsize(map-get($kittn-typo-sizes,cite-fontsize));
     }
 
-    @if map-get($kittn-typo-cite-style,lineheight) != false {
-      @include lineheight(map-get($kittn-typo-cite-style,lineheight));
+    @if map-get($kittn-typo-sizes,cite-lineheight) != false {
+      @include lineheight(map-get($kittn-typo-sizes,cite-lineheight));
     }
 
     &:before {
@@ -494,20 +497,20 @@ blockquote {
 }
 
 blockquote, q, cite {
-  @if map-get($kittn-font-quotetypo, fontfamily) != false {
-    font-family: map-get($kittn-font-quotetypo, fontfamily);
+  @if map-get($kittn-typo-style, quote-font) != false {
+    font-family: map-get($kittn-typo-style, quote-font);
   }
 
-  @if map-get($kittn-font-quotetypo, fontweight) != false {
-    font-weight: map-get($kittn-font-quotetypo, fontweight);
+  @if map-get($kittn-typo-style, quote-weight) != false {
+    font-weight: map-get($kittn-typo-style, quote-weight);
   }
 
-  @if map-get($kittn-font-quotetypo, fontstyle) != false {
-    font-style: map-get($kittn-font-quotetypo, fontstyle);
+  @if map-get($kittn-typo-style, quote-style) != false {
+    font-style: map-get($kittn-typo-style, quote-style);
   }
 
-  @if $kittn-color-blockquote != false {
-    color: $kittn-color-blockquote;
+  @if map-get($kittn-color-route, blockquote) != false {
+    color: map-get($kittn-color-route, blockquote);
   }
 }
 

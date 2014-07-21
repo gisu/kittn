@@ -2,175 +2,137 @@
 //          Base Setup
 // ------------------------------------------------------------
 
-// Route to the Font Directory
-$kittn-dir-font: '/assets/fonts/';
-
-// Route to the base Image Directory
-$kittn-dir-image: '/assets/img/';
-
-// Route to the Single Images Directory
-$kittn-dir-single: '/assets/img/single/';
-
-// Route to the Texture Image Directory
-$kittn-dir-texture: '/assets/img/textures/';
-
-// Route to the SVG Images (with Fallbacks)
-$kittn-dir-svg: '/assets/img/svg/';
-
-// Route to the SVG Images (without Fallbacks)
-$kittn-dir-svgonly: '/assets/img/svgonly/';
-
-// Markup Sign for BEM Elements
-$kittn-bem-element-sign: '__';
-
-// Markup Sign for BEM Modifiers
-$kittn-bem-modifier-sign: '--';
-
-// ---- Global Spacing Unit ----
+/**
+ * Global Spacing Unit
+ *
+ * @type Number
+ */
 $kittn-global-spacing: 20;
 
-// CSS Debug Mode - display css error
-$kittn-debugging: false;
-
-// Use the new Box Model box-sizing: border-box.
-// [boolean]
-$kittn-active-box-sizing: true;
-
-// Use the Baseline for height calculation
-// [boolean]
-$kittn-active-baseline: false;
-
-// Activate the Browser Antialias for Fonts
-// [boolean]
-$kittn-active-antialias: true;
-
-// Activate the Hyphen - automated Wordbreak won't work correctly on chrome
-// [boolean]
-$kittn-active-hyphens: false;
-
-// Activate Viewport Fix - when active make sure in the App.js is also activated
-// [boolean]
-$kittn-active-viewport-fix: false;
-
-// Activate some Fallbacks for IE8
-// [boolean]
-$kittn-ie8: false;
-
-// When the responsive behavior is oriented to mobile first - set it on true
-// [boolean]
-$kittn-mobile-first: true;
-
-// Setup the default unit for values that unitless
-// [string]
+/**
+ * Default unit for unitless values
+ *
+ * @type Number
+ */
 $kittn-default-unit: px;
 
-// Name of the Sprite file
-// [string/boolean]
-$kittn-sprite-name: false;
+/**
+ * BEM Prefixes
+ *
+ * @type Map
+ */
+$kittn-bem: (
+  element: '__',
+  modifier: '--'
+);
 
-// Include the retina Sprite
-// [boolean]
-$kittn-sprite-retina: true;
+/**
+ * Kittn Directory Organisation
+ *
+ * @type Map
+ */
+$kittn-directorys: (
+  fonts: '/assets/fonts/',
+  images: '/assets/img/',
+  single: '/assets/img/single/',
+  texture: '/assets/img/textures/',
+  svg: '/assets/img/svg/',
+  svgonly: '/assets/img/svgonly/'
+);
 
-// The Fontname for the Iconfont
-// [string/boolean]
-$kittn-icon-font-name: false;
+/**
+ * Activate Base Features (everything is Bool)
+ *
+ * @type Map
+ */
+$kittn-activate: (
+  debugging: false,
+  box-sizing: true,
+  baseline: false,
+  antialias: true,
+  hyphens: false,
+  viewport-fix: false,
+  mobile-first: true,
+  ie8-fallbacks: false
+);
 
-// Prefix for icon classes
-$kittn-icon-class-prefix: 'f-icon';
+/**
+ * Sprite Configuration
+ *
+ * @type Map
+ */
+$kittn-sprite:(
+  name: false, // (String / Bool)
+  retina-capable: true, // (Bool)
+);
 
-// List of Breakpoints for the Layout. First Value inside () is the target scope
-// size....: [value] Breakpoint Value
-// view....: [boolean] On 'true' the breakpoint will used for the visibility/hidden class
+/**
+ * Iconfont Configuration
+ *
+ * @type Map
+ */
+$kittn-iconfont: (
+  name: false, // (String / Bool)
+  prefix: 'f-icon'
+);
+
+/**
+ * Map off all Breakpoints and Behaviors. 'size' = the width that activate the Trigger, 'visibility' = set it on true to activate the visibility classes, 'step' = set the threshold for the grid-stepper mixin, 'fontsize' = (bool|number) Rewrite the Basefontsize for this breakpoint
+ *
+ * @type Map
+ */
 $kittn-breakpoint-map: (
   1: (
     size: 320px,
-    view: true,
-    layout: true,
+    visibility: true,
+    step: true,
     fontsize: false
   ),
   2: (
     size: 480px,
-    view: true,
-    layout: false,
-    fontsize: false
+    visibility: true,
+    step: false,
+    fontsize: 80
   ),
   3: (
     size: 560px,
-    view: false,
-    layout: true,
+    visibility: false,
+    step: true,
     fontsize: false
   ),
   4: (
     size: 768px,
-    view: false,
-    layout: true,
-    fontsize: false
+    visibility: false,
+    step: true,
+    fontsize: 85
   ),
   5: (
     size: 960px,
-    view: false,
-    layout: true,
-    fontsize: false
+    visibility: false,
+    step: true,
+    fontsize: 90
   ),
   6: (
     size: 1180px,
-    view: false,
-    layout: true,
-    fontsize: false
+    visibility: false,
+    step: true,
+    fontsize: 110
   ),
   7: (
     size: 1480px,
-    view: false,
-    layout: false,
+    visibility: false,
+    step: false,
     fontsize: false
   )
 );
 
-// Set the Font Size Value - REM With PX Fallback. Only Active without IE8 Compatibility
-// [string] (px | rem)
-$kittn-typo-base-unit: rem;
-
-// Set the percentage Font Scaling
-// [number] (unitless value)
-$kittn-typo-base-scale: 85;
-
-// Set the Base fontsize
-// [number] (unitless value)
-$kittn-typo-base-size: 16;
-
-// Set the Base Lineheight - needed for Baseline
-// [number] (unitless value)
-$kittn-typo-lineheight: 21;
-
-// Setup responsive Fonts. To activate enter a value between 0 and 100. Is the Base Font Size
-// [bool|number]
-$kittn-active-responsive-fonts: false;
-
-// The Default Margin for Typographic Elements (set on '0' when not needed)
-// [list:arg1] [value] {margin-top} (unitless value)
-// [list:arg2] [value] {margin-bottom} (unitless value)
-$kittn-typo-margin: (
-  top: s(1.25),
-  bottom: s(1)
-);
-
-// Global Heading Stylings
-// [list:arg1] [value/boolean] {line-height} 'false' or 'd' (for line-height:1) or a unitless number
-// [list:arg2] [number/boolean] {margin-bottom} 'false' or 'number'
-// [list:arg3] [value/boolean] {font-weight} 'false' or 'number'
-$kittn-global-heading: (
-  lineheight: false,
-  marginbottom: 0,
-  fontweight: false
-);
-
-// Map off all included Fontfaces
-// filename.......: Filename, when 'false' the Fontname will be used
-// weight.........: The associated Fontweight
-// style..........: The associated Font Style
-// svgoption......: [bool] Activate the addition route to the SVG Font
+/**
+ * Load and integrate all FontFaces. 'filename' = {bool|*} Filename, when 'false' the Fontname will be used, 'weight' = {*} The associated Fontweight, 'style' = {*} The associated Font Style, 'svgoption' = {bool} Activate the addition route to the SVG Font
+ *
+ * @type Map
+ */
 $kittn-fontface-map: (
+  // EXAMPLE
   // fontname: (
   //   filename: false,
   //   weight: normal,
@@ -178,23 +140,98 @@ $kittn-fontface-map: (
   //   svgoption: true
   // )
 );
-// Font Style Data Array for several Fontstyles - generate the Class
-// font-size.......: unitless value (will be automat)
-// line-height.....: n = off,
-//                   d = line-height: 1
-//                   c = sass calculated,
-//                   number = lineheight
-// margin-bottom...: n = off
-//                   or Number
-// font-weight.....: n = off
-//                   or Number
-// tag.............: [boolean] On 'true' it generates also tags, with 'false' only classes
-// extend..........: [string/boolean] When you want to Extend the Style you can enter here the Extend Classname like '%myclass'
+
+/**
+ * Base Typo Setup
+ *
+ * @type Map
+ */
+$kittn-typo: (
+  unit: rem, // (px | rem)
+  base-scale: 85, // (Number) percentage fontsize HTML
+  base-size: 16, // (Number)
+  line-height: 21 // (Number)
+);
+
+/**
+ * Activates the Responsive Fontsize Generator
+ *
+ * @type Bool | Number
+ */
+$kittn-active-responsive-fonts: 70;
+
+/**
+ * Default Margin for Typographic Elements (set on '0' when not needed)
+ *
+ * @type Map
+ */
+$kittn-typo-margin: (
+  top: s(1.25),
+  bottom: s(1)
+);
+
+/**
+ * Base Typo and Font Styling
+ *
+ * @type Map
+ */
+$kittn-typo-style: (
+  base-font: ff('helvetica'), // Base Font
+  base-weight: false, // {Bool}
+  heading-font: false, // {Bool|*} Headlinefont, 'false' will use the Basefont
+  heding-weight: 400, // {Bool|*}
+  bold-font: false, // {Bool|*} 'false' will use the Basefont
+  bold-weight: bold, // {*}
+  italic-font: false, // {Bool|*} 'false' will use the Basefont
+  italic-style: italic, // {*}
+  link-decoration: false, // Textlink Decoration for 'normal' state
+  link-decoration-hover: false, // Textlink Decoration for 'hover' state
+  quote-font: false, // {Bool|*} 'false' will use the Basefont
+  quote-weight: false, // {*}
+  quote-style: italic, // {*}
+  code-font: ff('monospace'), // {Bool|*} 'false' will use the Basefont
+  code-weight: normal // {*}
+);
+
+/**
+ * Base Typo Sizes
+ *
+ * @type Map
+ */
+$kittn-typo-sizes: (
+  list-fontsize: false, // {value/boolean} Can be 'false' or Fontsize
+  list-lineheight: false, // {value/boolean} Can be 'false' or Fontsize
+  list-margin: s(1), // {Number} Margin Left
+  list-style: disc, // {*} Possible Values : 'disc', 'square', 'circle'
+  quote-fontsize: map-get($kittn-typo, base-size) + 2, // {Bool|Number}
+  quote-lineheight: map-get($kittn-typo, line-height) + 6, // {Bool|Number}
+  cite-fontsize: map-get($kittn-typo, base-size) - 1, // {Bool|Number}
+  cite-lineheight: map-get($kittn-typo, line-height) + 0, // {Bool|Number}
+  code-fontsize: false, // {Bool|Number}
+  code-lineheight: false // {Bool|Number}
+);
+
+/**
+ * Global Heading Stylings
+ *
+ * @type Map
+ */
+$kittn-global-heading: (
+  lineheight: false, // {* | boolean} 'false' or 'd' (for line-height:1) or a unitless number
+  marginbottom: 0, // {number | bool} 'false' or 'number'
+  fontweight: false // {* | boolean} 'false' or 'number'
+);
+
+/**
+ * All possible Typostyles in a Map. 'font-size' = {Number}, 'line-height' = (n = off, d = line-height: 1, c = sass calculated, number = lineheight), 'margin-bottom' = (n = off or Number), 'font-weight' = (n = off or Number), 'tag'= {boolean} (On 'true' it generates also tags, with 'false' only classes),  'extend' = {string | boolean} (When you want to Extend the Style you can enter here the Extend Classname like '%myclass')
+ *
+ * @type Map
+ */
 $kittn-typostyles-map: (
   h1: (
     font-size: 36,
-    line-height: 40,
-    margin-bottom: 10,
+    line-height: d,
+    margin-bottom: s(0.5),
     font-weight: n,
     tag: true,
     extend: '%heading'
@@ -202,7 +239,7 @@ $kittn-typostyles-map: (
   h2: (
     font-size: 32,
     line-height: c,
-    margin-bottom: 10,
+    margin-bottom: s(0.5),
     font-weight: n,
     tag: true,
     extend: '%heading'
@@ -210,7 +247,7 @@ $kittn-typostyles-map: (
   h3: (
     font-size: 29,
     line-height: c,
-    margin-bottom: 10,
+    margin-bottom: s(0.5),
     font-weight: n,
     tag: true,
     extend: '%heading'
@@ -218,7 +255,7 @@ $kittn-typostyles-map: (
   h4: (
     font-size: 25,
     line-height: c,
-    margin-bottom: 10,
+    margin-bottom: s(0.5),
     font-weight: n,
     tag: true,
     extend: '%heading'
@@ -226,7 +263,7 @@ $kittn-typostyles-map: (
   h5: (
     font-size: 22,
     line-height: c,
-    margin-bottom: 10,
+    margin-bottom: s(0.5),
     font-weight: n,
     tag: true,
     extend: '%heading'
@@ -234,65 +271,25 @@ $kittn-typostyles-map: (
   h6: (
     font-size: 19,
     line-height: c,
-    margin-bottom: 10,
+    margin-bottom: s(0.5),
     font-weight: n,
     tag: true,
     extend: '%heading'
   )
 );
 
-// Generate the Fontstyles from the list
-// [boolean]
+/**
+ * Generate all Fontstyles with classes
+ *
+ * @type Bool
+ */
 $kittn-generate-typostyles: true;
 
-// Optional Style for List Elements
-// [list:arg1] [value/boolean] {font-size} Can be 'false'
-// [list:arg2] [value/boolean] {line-height} Can be 'false'
-// [list:arg3] [value] {margin-left}
-// [list:arg3] [string] {list-style} (disc/square/circle)
-$kittn-typo-list-style: (
-  fontsize: false,
-  lineheight: false,
-  left: s(1),
-  style: disc
-);
-
-// Optional Style for a blockquote
-// [list:arg1] [value/boolean] {font-size} Can be 'false'
-// [list:arg2] [value/boolean] {line-height} Can be 'false'
-$kittn-typo-blockquote-style: (
-  fontsize: $kittn-typo-base-size + 2,
-  lineheight: $kittn-typo-lineheight + 6
-);
-
-// Optional Style for cites
-// [list:arg1] [value/boolean] {font-size} Can be 'false'
-// [list:arg2] [value/boolean] {line-height} Can be 'false'
-$kittn-typo-cite-style: (
-  fontsize: $kittn-typo-base-size - 1,
-  lineheight: $kittn-typo-lineheight + 0
-);
-
-// Style the HR
-// [value] Height
-$kittn-hairline-style: 1;
-
-// Styling Code Elements
-// [list:arg1] [value/boolean] {font-size} Can be 'false'
-// [list:arg2] [value/boolean] {line-height} Can be 'false'
-$kittn-typo-code-style: (
-  fontsize: false,
-  lineheight: false
-);
-
-// ---- General Colors ----
-// Color Definition Map. This is a collection from all used Colors. Use only use HEX Colors, when you enter a Opacity Value (between 0 to 1), Sass convert it to RGBA with a Fallback for old Browsers.
-// [map]
-// color........: [string] Don't use css color names like 'black'
-// opactiy......: [boolean/number] Opacity Value
-// type.........: [string] color-type ==  bc: background and textcolor,
-//                                         c: textcolor,
-//                                         b: background-color
+/**
+ * Color Definition Map. This is a collection from all used Colors. Use only use HEX Colors, when you enter a Opacity Value (between 0 to 1), Sass convert it to RGBA with a Fallback for old Browsers. 'color' = {string} Color Value, 'opactiy' = {bool|number} Opacity Value, 'type' = {*} (color-type = bc: background and textcolor, 'c': textcolor, 'b': background-color)
+ *
+ * @type Map
+ */
 $kittn-color-map: (
   'primary': (
     color: #f29300,
@@ -306,6 +303,11 @@ $kittn-color-map: (
   ),
   'gray': (
     color: #636363,
+    opacity: false,
+    type: bc
+  ),
+  'darkwhite': (
+    color: #eeeeee,
     opacity: false,
     type: bc
   ),
@@ -341,131 +343,57 @@ $kittn-color-map: (
   )
 );
 
-// Generate the Color Classes from the Color Array
-// [boolean]
-$kittn-generate-colors: true;
-
-// Setup the type : class or silent
-// [value]
-$kittn-generate-colors-type: silent;
-
-// Base Body Background Color (use the color function cp())
-// [value]
-$kittn-background-color-body: cp('body');
-
-// Normal Text Color (used for p, body, lists) (use the color function cp())
-// [value]
-$kittn-color-text: cp('black');
-
-// Text Color for Headings. With 'false' the Basetextcolor is used
-// [value/boolean]
-$kittn-color-headline: cp('gray');
-
-// Text Color for Quotes. With 'false' the Basetextcolor is used
-// [value/boolean]
-$kittn-color-blockquote: cp('black');
-
-// Style the Highlight.
-// [list:arg1] [value] {background-color}
-// [list:arg2] [value] {color}
-$kittn-color-highlight: (
-  background: lighten(cp('primary'),25),
-  text: darken(cp('primary'),10)
+/**
+ * Generate the Color Classes from the Color Array
+ *
+ * @type Map
+ */
+$kittn-color-generator: (
+  generate: true, // {Bool}
+  type: silent // {*} class or silent
 );
 
-// Color the Link States
-// [list:arg1] [value] {text-color}
-// [list:arg2] [value] {hover-color}
-// [list:arg3] [value] {active-color}
-$kittn-color-textlink: (
-  normal: cp('primary'),
-  hover: darken(cp('primary'),15),
-  active: darken(cp('primary'),25)
+/**
+ * Route the Colors to the Elements
+ *
+ * @type Map
+ */
+$kittn-color-route: (
+  body: cp('body'), // Body Background
+  text: cp('black'), // Base Text Color
+  headline: cp('gray'), // {Color|Bool}
+  blockquote: cp('black'), // {Color|Bool}
+  highlight-bg: lighten(cp('primary'),25), // {Color|Bool}
+  hightlight-text: darken(cp('primary'),10), // {Color|Bool}
+  link: cp('primary'), // {Color|Bool}
+  link-hover: darken(cp('primary'),15), // {Color|Bool}
+  link-active: darken(cp('primary'),25), // {Color|Bool}
 );
 
-// Style the Link Decoration
-// [list:arg1] [boolean] Text Decoration for 'normal' state
-// [list:arg1] [boolean] Text Decoration for 'hover' state
-$kittn-link-decoration: (
-  normal: false,
-  hover: true
+/**
+ * Hairline Styling
+ *
+ * TODO: Needs to be modified
+ *
+ * @type Map
+ */
+$kittn-hairline: (
+  height: 1,
+  style: dashed,
+  color: cp('darkwhite')
 );
 
-// Font Family and Font Weight for base Texts
-// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()'
-// [list:arg2] [value/boolean] {font-weight} Can be 'false'
-$kittn-font-basetypo: (
-  font: ff('helvetica'),
-  weight: false
+/**
+ * Table Styling
+ *
+ * @type Map
+ */
+$kittn-tables: (
+  background: transparent, // {Color}
+  background-zebra: tint(cp(primary),20), // {Color}
+  background-hover: lighten(cp(primary),20), // {Color}
+  border-color: cp('gray'), // {Color}
+  margin: 20px, // {Number}
+  padding: 8px, // {Number}
+  trigger: 400px, // {Number} Trigger Size for responsive Tables
 );
-
-// Font Family and Font Weight for Bold Text
-// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
-// [list:arg2] [value/boolean] {font-weight} Can be 'false'
-$kittn-font-boldtypo: (
-  font: false,
-  weight: bold
-);
-
-// Font Family and Font Weight for Italic Text
-// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
-// [list:arg2] [value/boolean] {font-weight} Can be 'false'
-$kittn-font-italictypo: (
-  font: false,
-  style: italic
-);
-
-// Font Family for Headings, can be 'false'
-// [value/boolean] Can be 'false'
-$kittn-font-headingtypo: ff('helvetica');
-
-// Font Family and Font Weight for Quotes
-// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
-// [list:arg2] [value/boolean] {font-weight} Can be 'false'
-// [list:arg3] [value/boolean] {font-style} Can be 'false'
-$kittn-font-quotetypo: (
-  fontfamily: ff('helvetica'),
-  fontweight: false,
-  fontstyle: italic
-);
-
-// Font Family and Font Weight for Code Elements
-// [list:arg1] [value] {font-family} For Fontstacks use the function 'ff()', deactivate with 'false'
-// [list:arg2] [value/boolean] {font-weight} Can be 'false'
-$kittn-font-codetypo: (
-  fontfamily: ff("monospace"),
-  fontweight: normal
-);
-
-// Styling the HR (Border Style)
-// [list:arg1] [string] Line Style
-// [list:arg1] [value] Line Color
-$kittn-hairline-style-color: dashed #eee;
-
-// Background Color for Tables
-// [value]
-$kittn-table-background: transparent;
-
-// Background Color for accented tablerows
-// [value]
-$kittn-table-background-zebra: #f7f7f7;
-
-// Background Color for Hovered Rows
-// [value/boolean] 'false' will not include the hover class definition
-$kittn-table-background-hover: #f7f7f7;
-
-// Table Margin Bottom
-// [value]
-$kittn-table-margin: 20px;
-
-// Inner Padding for Table Cells
-// [value]
-$kittn-table-cell-padding: 8px;
-
-// Border Color for Tables
-// [value/boolean] 'false' will not include the hover class definition
-$kittn-table-border-color: #eee;
-
-// Trigger Size for responsive Tables
-// [value]
-$kittn-table-trigger-size: 400px;

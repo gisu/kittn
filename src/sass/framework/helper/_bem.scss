@@ -9,7 +9,7 @@
  */
 @mixin element($name) {
   @at-root {
-    &#{$kittn-bem-element-sign}#{$name} {
+    &#{map-get($kittn-bem, element)}#{$name} {
       @content;
     }
   }
@@ -26,7 +26,7 @@
   $e: &;
 
   @at-root {
-    &#{$kittn-bem-modifier-sign}#{$name} {
+    &#{map-get($kittn-bem, modifier)}#{$name} {
       // Extend with the Parent Element
       @if $extend != false {
         @extend #{$e};
@@ -83,7 +83,7 @@
   $parent: str-slice('#{$p}',2,str-length('#{$p}'));
 
   @at-root {
-    [class^="#{$parent}"][class*="#{$kittn-bem-modifier-sign}#{$name}"] {
+    [class^="#{$parent}"][class*="#{map-get($kittn-bem, modifier)}#{$name}"] {
       @content;
     }
   }
