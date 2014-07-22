@@ -270,7 +270,7 @@ module.exports = function (grunt) {
     modernizr: {
       dist: {
         // [REQUIRED] Path to the build you're using for development.
-        "devFile" : ["src/stash/bower/modernizr/modernizr.js"],
+        "devFile" : "src/stash/bower/modernizr/modernizr.js",
 
         // [REQUIRED] Path to save out the built file.
         "outputFile" : "<%= pkg.directory.js %>modernizr.js",
