@@ -1,5 +1,6 @@
 ![](https://cloud.githubusercontent.com/assets/442468/3564677/85e7f014-0a93-11e4-93b7-95137d7cf008.png)
 
+Please use the Kittn-Generator https://github.com/gisu/generator-kittn
 ----
 
 ## Introduction
