@@ -6,7 +6,6 @@ module.exports = function (grunt) {
   // Load Grunt Plugins -----------
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-clean');
-  grunt.loadNpmTasks('grunt-bumper');
   grunt.loadNpmTasks('grunt-uncss');
   grunt.loadNpmTasks('grunt-combine-media-queries');
   grunt.loadNpmTasks('grunt-newer');
@@ -347,23 +346,6 @@ module.exports = function (grunt) {
         'src/sass/**/*.scss'
       ],
     },
-    bumper: {
-      options: {
-        files: ['package.json', 'bower.json'],
-        releaseBranch: 'master',
-        add: true,
-        addFiles: ["."],
-        commit: true,
-        commitMessage: "Release v%VERSION%",
-        commitFiles: ["-a"],
-        createTag: true,
-        tagName: "v%VERSION%",
-        tagMessage: "Version %VERSION%",
-        push: true,
-        pushTo: "origin",
-        gitDescribeOptions: "--tags --always --abbrev=1 --dirty=-d"
-      }
-    },
     sassdoc: {
       default: {
         src: 'src/sass',
@@ -382,30 +364,30 @@ module.exports = function (grunt) {
 
 
   // Register Tasks
-  grunt.registerTask('spriteAssets',[
+  grunt.registerTask('build-sprite',[
     'clean:sprites',
     'copy:sprites',
     'sprite:nonRetinaSass',
     'sprite:retinaSass'
   ]);
 
-  grunt.registerTask('svgAssets',[
+  grunt.registerTask('build-svg',[
     'newer:svgmin:dist',
     'newer:svg2png',
     'sass_imagemapper:all'
   ]);
 
-  grunt.registerTask('svgMinify', [
+  grunt.registerTask('minify-svg', [
     'newer:svgmin:pure'
   ]);
 
-  grunt.registerTask('imageAssets',[
+  grunt.registerTask('copy-images',[
     'newer:copy:single',
     'newer:copy:textures',
     'sass_imagemapper:all'
   ]);
 
-  grunt.registerTask('imageInit', [
+  grunt.registerTask('build-images', [
     'copy:sprites',
     'sprite:nonRetinaSass',
     'sprite:retinaSass',
@@ -418,7 +400,7 @@ module.exports = function (grunt) {
   ]);
 
   // Cleanup the Target Image Directorys and Copy the File from Src to Tmp
-  grunt.registerTask('imageUpdate', [
+  grunt.registerTask('rebuild-images', [
     'clean:sprites',
     'clean:single',
     'clean:textures',
@@ -456,13 +438,11 @@ module.exports = function (grunt) {
     'modernizr'
   ]);
 
-  grunt.registerTask('resImage',[
+  grunt.registerTask('responsive-images',[
     'newer:responsive_images:dev'
   ]);
 
-  grunt.registerTask('bump', [
-    'bumper'
-  ]);
-
-
+  grunt.registerTask('documentation', [
+    'sassdoc'
+  ])
 };

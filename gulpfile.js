@@ -107,11 +107,10 @@ var path        = require('path'),
 // Ruby SASS
 // TODO: Gulp Notify will not work right
 gulp.task('rubysass', function () {
-    gulp.src(sassSrc)
+  gulp.src(sassSrc)
     .pipe(plumber())
     .pipe(rubysass({
       sourcemap    : false,
-      sourcemapPath: '../sass',
       style        : 'nested',
       precision    : 6
     }))
@@ -119,8 +118,7 @@ gulp.task('rubysass', function () {
       return "SASS Compile Error: " + error.message;
     }))
     .pipe(prefix("last 2 version", "> 1%", "ie 9", "chrome 30", "firefox 24"))
-    .pipe(gulp.dest(targetDirCSS))
-    .pipe(notify({message: 'SCSS processed!'}));
+    .pipe(gulp.dest(targetDirCSS));
 });
 
 // Jade Compile Task only the Components
@@ -143,8 +141,7 @@ gulp.task('jade', function(){
     .pipe(prettify({
       'indent_size': 2
     }))
-    .pipe(gulp.dest(targetDirMarkup))
-    .pipe(notify({message: 'Jade processed!'}));
+    .pipe(gulp.dest(targetDirMarkup));
 });
 
 // Jade Compile Task for rebuilding all Files
@@ -167,7 +164,7 @@ gulp.task('jade-rebuild', function(){
       'indent_size': 2
     }))
     .pipe(gulp.dest(targetDirMarkup))
-    .pipe(notify({message: 'Jade processed!'}));
+    .pipe(notify({message: 'Jade Files rebuilded'}));
 });
 
 // Jade Compile Task only the Components
@@ -348,7 +345,7 @@ gulp.task('init', [
     'move-first',
     'move-js',
     'move-images',
-    'grunt-imageInit',
+    'grunt-build-images',
     cssCompiler,
     'jade',
     'build-js',
@@ -379,10 +376,10 @@ gulp.task('watch-bin', function() {
 gulp.task('watch-images', function() {
 
   // Watch SVGOnly Folder for changes - minify SVG and move it into tmp
-  gulp.watch('src/stash/images/css-images/svgonly/*.svg', ['grunt-svgMin']);
+  gulp.watch('src/stash/images/css-images/svgonly/*.svg', ['grunt-minify-svg']);
 
   // Watch SVG Folder for changes - build PNG Fallback and write the Imagemap
-  gulp.watch('src/stash/images/css-images/svg/*.svg', ['grunt-svgAssets']);
+  gulp.watch('src/stash/images/css-images/svg/*.svg', ['grunt-build-svg']);
 
   // Watch the Single/Texture Folder - modify the Imagemap and move the Images to tmp folder
   gulp.watch(
@@ -390,11 +387,11 @@ gulp.task('watch-images', function() {
       'src/stash/images/css-images/single-assets/*.{jpg,gif,png}',
       'src/stash/images/css-images/texture-assets/*.{jpg,gif,png}'
     ],
-      ['grunt-imageAssets']
+      ['grunt-copy-images']
     );
 
   // Watch for Sprite Changes - modify the Spritemap and move the images (renamed) to tmp
-  gulp.watch('src/stash/images/css-images/sprite-assets/*.png', ['grunt-spriteAssets']);
+  gulp.watch('src/stash/images/css-images/sprite-assets/*.png', ['grunt-build-sprite']);
 });
 
 // Default gulp Task 'gulp' - watch the Binarys Directory, start the compile and browser-sync
@@ -406,7 +403,7 @@ gulp.task('extended', ['browser-sync', 'watch-bin', 'watch-images']);
 // Testing code quality
 gulp.task('code-quality', [
   'js-quality'
-  ]);
+]);
 
 // Publish Task
 gulp.task('publish',[
@@ -415,4 +412,5 @@ gulp.task('publish',[
     'compress-js',
     'compress-css-images',
     'compress-html-images',
+    'grunt-documentation'
 ]);
