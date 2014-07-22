@@ -1,7 +1,9 @@
 // ===================================================
 // SassyLists
-// 
-// Is a shorter Version from Hugo Giraudels Library 
+//
+// Is a shorter Version from Hugo Giraudels Library
+//
+// Author: Hugo Giraudel
 //
 // @link https://github.com/Team-Sass/SassyLists
 // ===================================================
@@ -12,14 +14,14 @@
 //
 // @param {List} $list - list to run test against
 //
-// @example 
+// @example
 // sl-has-multiple-values(a)
 // // false
 //
-// @example 
+// @example
 // sl-has-multiple-values(a b)
 // // true
-// 
+//
 // @return {Bool}
 @function sl-has-multiple-values($list) {
   @return length($list) > 1;
@@ -41,7 +43,7 @@
 
   $a: to-lower-case($a + unquote(""));
   $b: to-lower-case($b + unquote(""));
-  
+
   @for $i from 1 through min(str-length($a), str-length($b)) {
     $char-a: str-slice($a, $i, $i);
     $char-b: str-slice($b, $i, $i);
@@ -49,7 +51,7 @@
       @return index($order, $char-a) < index($order, $char-b);
     }
   }
-  
+
   @return str-length($a) < str-length($b);
 }
 
@@ -63,7 +65,7 @@
 // @example
 // sl-to-list(a b c, comma)
 // // a, b, c
-// 
+//
 // @return {List}
 @function sl-to-list($value, $separator: list-separator($value)) {
   @return join((), $value, $separator);
@@ -87,7 +89,7 @@
 // @example
 // sl-reverse(a b c)
 // // c b a
-// 
+//
 // @return {List}
 @function sl-reverse($list) {
   @if sl-missing-dependencies(sl-to-list) == true { @return null; }
@@ -165,7 +167,7 @@
 //
 // @example
 // sl-sort(3 5 1)
-// // 1 3 5 
+// // 1 3 5
 //
 // @return {List}
 @function sl-sort($list, $order: "!" "#" "$" "%" "&" "'" "(" ")" "*" "+" "," "-" "." "/" "[" "\\" "]" "^" "_" "{" "|" "}" "~" "0" "1" "2" "3" "4" "5" "6" "7" "8" "9" "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s" "t" "u" "v" "w" "x" "y" "z") {
@@ -177,7 +179,7 @@
 
   @if sl-has-multiple-values($list) {
     $seed: nth($list, ceil(length($list) / 2));
-    
+
     @each $item in $list {
       @if $item == $seed {
         $equal: append($equal, $item, list-separator($list));
@@ -186,7 +188,7 @@
       @else if sl-str-compare($item, $seed, $order) {
         $less: append($less, $item, list-separator($list));
       }
-      
+
       @else if not sl-str-compare($item, $seed, $order) {
         $large: append($large, $item, list-separator($list));
       }
